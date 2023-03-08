@@ -33,10 +33,13 @@ const Footer = () => {
             </Link>
           </div>
           <div className="col-md-2 text-end">
-            <Link to="/" className="me-3">
+            <Link to="https://www.facebook.com/10KG.Co" className="me-3">
               <FaFacebook className="text-light" />
             </Link>
-            <Link to="/" className="me-3">
+            <Link
+              to="https://www.instagram.com/10kg_collective/"
+              className="me-3"
+            >
               <FaInstagram className="text-light" />
             </Link>
             <Link to="/">
