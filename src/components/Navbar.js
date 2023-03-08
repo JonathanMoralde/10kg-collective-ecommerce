@@ -53,12 +53,12 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarIcon">
             <ul className="navbar-nav flex-row">
               <li className="nav-item">
-                <NavLink to="/" className="nav-link">
+                <NavLink to="/About" className="nav-link">
                   <FaUser size="1.5rem" />
                 </NavLink>
               </li>
               <li className="nav-item ms-1 ">
-                <NavLink to="/" className="nav-link padding-right-fix">
+                <NavLink to="/About" className="nav-link padding-right-fix">
                   <FaShoppingCart size="1.5rem" />
                 </NavLink>
               </li>

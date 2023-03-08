@@ -165,14 +165,14 @@ const Home = () => {
             </p>
           </div>
           <div className="col-lg-4">
-            <FaTshirt size="6.25rem" />
+            <FaTshirt size="6.25rem" className="" />
             <h5 className="quality-title mt-4">Quality Material</h5>
             <p className="quality-text mt-2">
               Each garment is made of 100% cotton
             </p>
           </div>
           <div className="col-lg-4">
-            <FaShippingFast size="6.25rem" />
+            <FaShippingFast size="6.25rem" className="" />
             <h5 className="quality-title mt-4">Free Shipping</h5>
             <p className="quality-text mt-2">
               We provide free shipping in Polangui Area
