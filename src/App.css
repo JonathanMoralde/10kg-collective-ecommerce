@@ -289,6 +289,23 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: unset !important;
 }
 
+.item-card-container .col-md-3 {
+  padding: unset !important;
+  width: 24%;
+}
+.card {
+  box-shadow: none !important;
+}
+.card-title {
+  font-size: 1.25rem !important;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.card-text {
+  font-size: 1.25rem !important;
+  font-weight: 700;
+}
+
 /* FOOTER */
 .footer-section {
   padding-top: 4rem !important;
