@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarIcon">
             <ul className="navbar-nav flex-row">
               <li className="nav-item">
-                <NavLink to="/About" className="nav-link">
+                <NavLink to="/User" className="nav-link">
                   <FaUser size="1.5rem" />
                 </NavLink>
               </li>

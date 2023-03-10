@@ -1,7 +1,6 @@
 import React from "react";
 
 const ShowProducts = ({ filter }) => {
-  // console.log(filter);
   return (
     <>
       {filter.map((product) => {

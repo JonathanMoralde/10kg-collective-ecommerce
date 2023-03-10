@@ -21,7 +21,9 @@ const Home = () => {
               <p className="hero-sub-title mt-3">
                 Simplicity is the ultimate sophistication
               </p>
-              <Link className="btn btn-secondary">SHOP NOW</Link>
+              <Link to="/Shop" className="btn btn-secondary">
+                SHOP NOW
+              </Link>
             </div>
           </div>
           {/* VIDEO / CAROUSEL */}
@@ -127,7 +129,9 @@ const Home = () => {
                 <img src={poster1} className="card-img" alt="Plain Series" />
                 <div className="card-img-overlay">
                   <h5 className="card-title">Plain Series</h5>
-                  <Link className="btn btn-secondary">SHOP NOW</Link>
+                  <Link to="/Shop" className="btn btn-secondary">
+                    SHOP NOW
+                  </Link>
                 </div>
               </div>
             </div>
@@ -140,14 +144,18 @@ const Home = () => {
                 />
                 <div className="card-img-overlay">
                   <h5 className="card-title">Weightless</h5>
-                  <Link className="btn btn-secondary">SHOP NOW</Link>
+                  <Link to="/Shop" className="btn btn-secondary">
+                    SHOP NOW
+                  </Link>
                 </div>
               </div>
               <div className="card text-bg-dark side-card mt-md-3 ">
                 <img src={ttpPoster} className="card-img" alt="Plain Series" />
                 <div className="card-img-overlay">
                   <h5 className="card-title">Trust the Process</h5>
-                  <Link className="btn btn-secondary">SHOP NOW</Link>
+                  <Link to="/Shop" className="btn btn-secondary">
+                    SHOP NOW
+                  </Link>
                 </div>
               </div>
             </div>

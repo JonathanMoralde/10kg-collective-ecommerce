@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Searchbar from "../components/Searchbar";
 import ShowProducts from "../components/ShowProducts";
 import ProductSkeleton from "../components/ProductSkeleton";
-import Skeleton from "react-loading-skeleton";
 
 const Shop = () => {
   const [data, setData] = useState([]);
@@ -14,7 +13,7 @@ const Shop = () => {
     const getProducts = async () => {
       setLoading(true);
 
-      const response = await fetch("https://fakestoreapi.com/products");
+      const response = await fetch("https://fakestoreapi.com/products"); //change this URL to the PHP MYSQL backend API endpoint
 
       if (componentMounted) {
         setData(await response.clone().json());
@@ -31,7 +30,7 @@ const Shop = () => {
   }, []);
 
   const filterProduct = (cat) => {
-    const filteredList = data.filter((product) => product.category === cat);
+    const filteredList = data.filter((product) => product.category === cat); // product.category may be different from the actual PHP MYSQL data
     setFilter(filteredList);
   };
 
