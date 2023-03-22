@@ -1,74 +1,135 @@
 import React from "react";
+import { useState } from "react";
+import axios from "axios";
 
 const LoginRegisterForm = () => {
+  // HANDLE SING UP
+  const [fName, setFName] = useState("");
+  const [address, setAddress] = useState("");
+  const [cNumber, setCNumber] = useState("");
+  const [reg_Email, setReg_Email] = useState("");
+  const [reg_Password, setReg_Password] = useState("");
+
+  const signUpSubmit = (e) => {
+    e.preventDefault();
+
+    if (fName && address && cNumber && reg_Email && reg_Password) {
+      // POST
+      const url = "http://localhost/10kg-collective/userModule/reg_user.php";
+
+      // associative array
+      let regData = new FormData();
+      regData.append("completeName", fName);
+      regData.append("contactNo", cNumber);
+      regData.append("completeAddress", address);
+      regData.append("emailAddress", reg_Email);
+      regData.append("password", reg_Password);
+
+      axios
+        .post(url, regData)
+        .then((response) => alert(response.data))
+        .catch((error) => alert(error));
+    } else {
+      alert("Please fill out the empty fields");
+    }
+  };
+
+  // Sign In
+  const [log_Email, setLog_Email] = useState("");
+  const [log_Password, setLog_Password] = useState("");
+
+  const signInSubmit = (e) => {
+    e.preventDefault();
+
+    console.log("Test");
+  };
+
   return (
     <>
       <div className="container-fluid form-section-background">
         <div className="container-md form-section-container">
           <div className="row">
             <div className="col-md-6 sign-up-container">
-              {/* ETO YUNG FORM NG SIGN UP */}
-              <form action="/">
-                {" "}
-                {/* ACTION */}
+              {/* SIGN UP FORM */}
+              <form>
                 <h3 className="section-title mb-5">Sign Up</h3>
-                <div className="row mb-3">
-                  <div className="col form-floating">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Jonathan"
-                    />
-                    <label for="floatingInput">First Name</label>
-                  </div>
-                  <div className="col form-floating">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Moralde"
-                    />
-                    <label for="floatingInput">Last Name</label>
-                  </div>
-                </div>
+                {/* Sign up FNAME */}
                 <div className="form-floating mb-3">
                   <input
                     type="text"
                     className="form-control"
-                    id="floatingInput"
-                    placeholder="Zone 3, Anayan, Pili, Camarines Sur"
+                    id="floatingFName"
+                    placeholder="Full Name"
+                    required
+                    value={fName}
+                    onChange={(e) => setFName(e.target.value)}
+                    name="fname"
                   />
-                  <label for="floatingInput">Address</label>
+                  <label htmlFor="floatingFName">Full Name</label>
                 </div>
+                {/* Sign up ADDRESS */}
+                <div className="form-floating mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="floatingAddress"
+                    placeholder="Enter your Address"
+                    required
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    name="address"
+                  />
+                  <label htmlFor="floatingAddress">Address</label>
+                </div>
+                {/* Sign up CNumber */}
                 <div className="form-floating mb-3">
                   <input
                     type="number"
                     className="form-control"
-                    id="floatingInput"
+                    id="floatingCNumber"
                     placeholder="name@example.com"
+                    required
+                    value={cNumber}
+                    onChange={(e) => setCNumber(e.target.value)}
+                    name="cnumber"
                   />
-                  <label for="floatingInput">Contact Number</label>
+                  <label htmlFor="floatingCNumber">Contact Number</label>
                 </div>
+                {/* SIgn up EAddress */}
                 <div className="form-floating mb-3">
                   <input
                     type="email"
                     className="form-control"
-                    id="floatingInput"
+                    id="floatingEAddress"
                     placeholder="name@example.com"
+                    required
+                    value={reg_Email}
+                    onChange={(e) => setReg_Email(e.target.value)}
+                    name="email"
                   />
-                  <label for="floatingInput">Email address</label>
+                  <label htmlFor="floatingEAddress">Email address</label>
                 </div>
+                {/* Sign up Password */}
                 <div className="form-floating mb-4">
                   <input
                     type="password"
                     className="form-control"
                     id="floatingPassword"
                     placeholder="Password"
+                    required
+                    value={reg_Password}
+                    onChange={(e) => setReg_Password(e.target.value)}
+                    name="password"
                   />
-                  <label for="floatingPassword">Password</label>
+                  <label htmlFor="floatingPassword">Password</label>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                {/* Sign up BTN */}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={(e) => signUpSubmit(e)}
+                  name="submit"
+                >
                   Sign Up
                 </button>
               </form>
@@ -79,26 +140,44 @@ const LoginRegisterForm = () => {
               <form action="/">
                 {/* ACTION */}
                 <h3 className="section-title mb-5">Sign In</h3>
+
+                {/* Sign in EMAIL */}
                 <div className="form-floating mb-3">
                   <input
                     type="email"
                     className="form-control"
-                    id="floatingInput"
+                    id="floatingEmail"
                     placeholder="name@example.com"
+                    required
+                    value={log_Email}
+                    onChange={(e) => setLog_Email(e.target.value)}
+                    name="log_email"
                   />
-                  <label for="floatingInput">Email address</label>
+                  <label htmlFor="floatingEmail">Email address</label>
                 </div>
+
+                {/* Sign in PASSWORD */}
                 <div className="form-floating mb-4">
                   <input
                     type="password"
                     className="form-control"
-                    id="floatingPassword"
+                    id="floatingLPassword"
                     placeholder="Password"
+                    required
+                    value={log_Password}
+                    onChange={(e) => setLog_Password(e.target.value)}
+                    name="log_password"
                   />
-                  <label for="floatingPassword">Password</label>
+                  <label htmlFor="floatingLPassword">Password</label>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                {/* Sign in BTN */}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={(e) => signInSubmit(e)}
+                  name="submit"
+                >
                   Sign In
                 </button>
               </form>
