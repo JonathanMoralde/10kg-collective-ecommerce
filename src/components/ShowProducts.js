@@ -5,17 +5,17 @@ const ShowProducts = ({ filter }) => {
     <>
       {filter.map((product) => {
         return (
-          <div className="col-md-3" key={product.id}>
+          <div className="col-md-3" key={product.item_id}>
             <div className="card mb-3">
               <img
-                src={product.image}
+                src={product.item_image}
                 className="card-img-top"
                 alt="product-img"
                 height="234px"
               />
               <div className="card-body">
-                <h5 className="card-title">{product.title.substring(0, 12)}</h5>
-                <p className="card-text">{product.price}</p>
+                <h5 className="card-title">{product.item_name}</h5>
+                <p className="card-text">{product.item_price}</p>
               </div>
             </div>
           </div>

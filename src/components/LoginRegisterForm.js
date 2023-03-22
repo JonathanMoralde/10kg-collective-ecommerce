@@ -17,7 +17,7 @@ const LoginRegisterForm = () => {
       // POST
       const url = "http://localhost/10kg-collective/userModule/reg_user.php";
 
-      // associative array
+      // data
       let regData = new FormData();
       regData.append("completeName", fName);
       regData.append("contactNo", cNumber);
@@ -41,7 +41,22 @@ const LoginRegisterForm = () => {
   const signInSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Test");
+    // POST
+    const url = "http://localhost/10kg-collective/userModule/login_user.php";
+
+    // data
+    let logData = new FormData();
+    logData.append("log_email", log_Email);
+    logData.append("log_password", log_Password);
+
+    if (log_Email && log_Password) {
+      axios
+        .post(url, logData)
+        .then((response) => alert(response.data))
+        .catch((error) => alert(error));
+    } else {
+      alert("Please fill out the empty fields");
+    }
   };
 
   return (

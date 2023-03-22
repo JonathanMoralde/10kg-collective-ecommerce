@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Searchbar from "../components/Searchbar";
 import ShowProducts from "../components/ShowProducts";
 import ProductSkeleton from "../components/ProductSkeleton";
+import axios from "axios";
 
 const Shop = () => {
   const [data, setData] = useState([]);
@@ -13,11 +14,24 @@ const Shop = () => {
     const getProducts = async () => {
       setLoading(true);
 
-      const response = await fetch("https://fakestoreapi.com/products"); //change this URL to the PHP MYSQL backend API endpoint
+      //  const response = await fetch("https://fakestoreapi.com/products"); //change this URL to the PHP MYSQL backend API endpoint
+
+      //  if (componentMounted) {
+      //    setData(await response.clone().json());
+      //    setFilter(await response.json());
+      //    setLoading(false);
+      //  }
+
+      const response = await axios.get(
+        "https:/localhost/10kg-collective/displayModule/display.php"
+      );
+
+      // Get the itemlist object from the response
+      const itemlist = await response.data;
 
       if (componentMounted) {
-        setData(await response.clone().json());
-        setFilter(await response.json());
+        setData(itemlist);
+        setFilter(itemlist);
         setLoading(false);
       }
 
@@ -30,7 +44,9 @@ const Shop = () => {
   }, []);
 
   const filterProduct = (cat) => {
-    const filteredList = data.filter((product) => product.category === cat); // product.category may be different from the actual PHP MYSQL data
+    const filteredList = data.filter(
+      (product) => product.item_category === cat
+    );
     setFilter(filteredList);
   };
 
@@ -49,21 +65,24 @@ const Shop = () => {
               <button className="menu-btn" onClick={() => setFilter(data)}>
                 All Item
               </button>
-              <button
+              {/* <button
                 className="menu-btn"
-                onClick={() => filterProduct("men's clothing")}
+                // onClick={() => filterProduct("men's clothing")}
+                onClick={() => filterProduct("Newest Release")}
               >
                 Newest Release
-              </button>
+              </button> */}
               <button
                 className="menu-btn"
-                onClick={() => filterProduct("women's clothing")}
+                // onClick={() => filterProduct("women's clothing")}
+                onClick={() => filterProduct("Tees")}
               >
                 Tees
               </button>
               <button
                 className="menu-btn"
-                onClick={() => filterProduct("jewelery")}
+                // onClick={() => filterProduct("jewelery")}
+                onClick={() => filterProduct("Shorts")}
               >
                 Shorts
               </button>
