@@ -56,6 +56,10 @@ a {
 }
 .card-title {
   letter-spacing: 2px;
+  color: #000 !important;
+}
+.card-text {
+  color: #000 !important;
 }
 
 .section-title {

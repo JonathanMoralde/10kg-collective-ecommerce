@@ -6,6 +6,7 @@ import About from "./pages/About";
 import User from "./pages/User";
 import "./App.css";
 import "react-loading-skeleton/dist/skeleton.css";
+import SingleProduct from "./pages/SingleProduct";
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />}></Route>
-            <Route path="/Shop" element={<Shop />}></Route>
-            <Route path="/About" element={<About />}></Route>
+            <Route index element={<Home />} />
+            <Route path="/Shop" element={<Shop />} />
+            <Route path="/Shop/:id" element={<SingleProduct />} />
+            <Route path="/About" element={<About />} />
           </Route>
           <Route path="/User" element={<User />} />
         </Routes>

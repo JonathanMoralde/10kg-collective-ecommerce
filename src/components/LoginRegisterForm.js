@@ -9,6 +9,7 @@ const LoginRegisterForm = () => {
   const [cNumber, setCNumber] = useState("");
   const [reg_Email, setReg_Email] = useState("");
   const [reg_Password, setReg_Password] = useState("");
+  // let history = useNavigate();
 
   const signUpSubmit = (e) => {
     e.preventDefault();
@@ -29,6 +30,8 @@ const LoginRegisterForm = () => {
         .post(url, regData)
         .then((response) => alert(response.data))
         .catch((error) => alert(error));
+
+      // history("/Home");
     } else {
       alert("Please fill out the empty fields");
     }

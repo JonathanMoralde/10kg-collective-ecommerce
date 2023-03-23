@@ -9,6 +9,8 @@ const Shop = () => {
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
+  const [clickedFilter, setClickedFilter] = useState("All Item");
+  // let clickedFilter = "All Items";
 
   useEffect(() => {
     const getProducts = async () => {
@@ -47,6 +49,7 @@ const Shop = () => {
     const filteredList = data.filter(
       (product) => product.item_category === cat
     );
+
     setFilter(filteredList);
   };
 
@@ -62,7 +65,13 @@ const Shop = () => {
           <div className="col-md-3">
             <h3 className="section-title">Categories</h3>
             <div className="category-btns d-flex flex-column align-items-start justify-content-between mt-3">
-              <button className="menu-btn" onClick={() => setFilter(data)}>
+              <button
+                className="menu-btn"
+                onClick={(e) => {
+                  setFilter(data);
+                  setClickedFilter(e.currentTarget.textContent);
+                }}
+              >
                 All Item
               </button>
               {/* <button
@@ -75,14 +84,20 @@ const Shop = () => {
               <button
                 className="menu-btn"
                 // onClick={() => filterProduct("women's clothing")}
-                onClick={() => filterProduct("Tees")}
+                onClick={(e) => {
+                  filterProduct(1);
+                  setClickedFilter(e.currentTarget.textContent);
+                }}
               >
                 Tees
               </button>
               <button
                 className="menu-btn"
                 // onClick={() => filterProduct("jewelery")}
-                onClick={() => filterProduct("Shorts")}
+                onClick={(e) => {
+                  filterProduct(2);
+                  setClickedFilter(e.currentTarget.textContent);
+                }}
               >
                 Shorts
               </button>
@@ -90,7 +105,7 @@ const Shop = () => {
           </div>
           <div className="col-md-9 ps-5">
             <div className="d-flex justify-content-between">
-              <h3 className="section-title">All Items</h3>
+              <h3 className="section-title">{clickedFilter}</h3>
               <div className="btn-group dropdown-fix">
                 <button
                   className="btn dropdown-toggle"
@@ -115,7 +130,7 @@ const Shop = () => {
             </div>
 
             <div className="container-fluid">
-              <div className="row item-card-container mt-3 d-flex justify-content-between">
+              <div className="row item-card-container mt-3 d-flex align-items-centert">
                 {loading ? (
                   <ProductSkeleton />
                 ) : (
