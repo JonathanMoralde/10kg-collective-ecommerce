@@ -60,31 +60,35 @@ const SingleProduct = () => {
         return null;
       }
 
-      if (selectedSize && selectedVariant && quantity) {
-        // POST TO THIS FILE (cart.php can be changed)
-        const url = "http://localhost/10kg-collective/orderModule/cart.php";
+      // if (selectedSize && selectedVariant && quantity) {
+      //   // POST TO THIS FILE (cart.php can be changed)
+      //   const url = "http://localhost/10kg-collective/orderModule/cart.php";
 
-        let cartData = new FormData();
+      //   let cartData = new FormData();
 
-        // this are the POST data if(isset("cart"))
-        cartData.append("item_id", product.item_id);
-        cartData.append("item_name", product.item_name);
-        cartData.append("item_price", product.item_price);
-        cartData.append("item_size", selectedSize);
-        cartData.append("item_variant", selectedVariant);
-        cartData.append("order_qty", quantity);
+      //   // this are the POST data if(isset("cart"))
+      //   cartData.append("item_id", product.item_id);
+      //   cartData.append("item_name", product.item_name);
+      //   cartData.append("item_price", product.item_price);
+      //   cartData.append("item_size", selectedSize);
+      //   cartData.append("item_variant", selectedVariant);
+      //   cartData.append("order_qty", quantity);
 
-        axios
-          .post(url, cartData)
-          .then((response) => alert(response.data))
-          .catch((error) => alert(error));
-      }
+      //   axios
+      //     .post(url, cartData)
+      //     .then((response) => alert(response.data))
+      //     .catch((error) => alert(error));
+      // }
     }
 
     if (e.target.name === "buy") {
       // check first if user is logged in
       if (!loggedIn) {
-        navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
+        // navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
+        navigate(
+          `/User?redirect=/Shop/Checkout/${id}/${selectedSize}/${selectedVariant}/${quantity}`
+        ); // or navigate("/register");
+        // navigate(`/User/${id}`);
         return null;
       }
       if (selectedSize && selectedVariant && quantity) {
@@ -94,6 +98,7 @@ const SingleProduct = () => {
         let buyData = new FormData();
 
         // this are the POST data if(isset("buy"))
+
         buyData.append("item_id", product.item_id);
         buyData.append("item_name", product.item_name);
         buyData.append("item_price", product.item_price);
