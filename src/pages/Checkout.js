@@ -1,12 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const { id, size, variant, qty } = useParams();
   const [data, setData] = useState([]);
   const [userID, setUserID] = useState(null);
+  const navigate = useNavigate();
 
   // this will get all Items
   useEffect(() => {
@@ -51,15 +52,16 @@ const Checkout = () => {
       // this are the POST data if(isset("buy"))
       buyData.append("user_id", userID);
       buyData.append("item_id", product.item_id);
-      buyData.append("item_name", product.item_name);
-      buyData.append("item_price", product.item_price);
       buyData.append("item_size", size);
       buyData.append("item_variant", variant);
       buyData.append("order_qty", qty);
 
       axios
         .post(url, buyData)
-        .then((response) => alert(response.data))
+        .then((response) => {
+          alert(response.data);
+          navigate("/");
+        })
         .catch((error) => alert(error));
     }
   };
@@ -101,7 +103,11 @@ const Checkout = () => {
           </div>
           <div className="col-md-6"></div>
         </div> */}
-        <button type="button" class="btn btn-secondary">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onClick={(e) => handleClick(e)}
+        >
           Checkout
         </button>
       </div>
