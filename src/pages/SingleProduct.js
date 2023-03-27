@@ -27,6 +27,7 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedVariant, setSelectedVariant] = useState("Gray");
   const [quantity, setQuantity] = useState("1");
+  const [itemSize, setItemSize] = useState("");
 
   // this will get all Items
   useEffect(() => {
@@ -91,26 +92,26 @@ const SingleProduct = () => {
         // navigate(`/User/${id}`);
         return null;
       }
-      if (selectedSize && selectedVariant && quantity) {
-        // POST TO THIS FILE (checkout.php can be changed)
-        const url = "http://localhost/10kg-collective/orderModule/checkout.php";
+      // if (selectedSize && selectedVariant && quantity) {
+      //   // POST TO THIS FILE (checkout.php can be changed)
+      //   const url = "http://localhost/10kg-collective/orderModule/checkout.php";
 
-        let buyData = new FormData();
+      //   let buyData = new FormData();
 
-        // this are the POST data if(isset("buy"))
+      //   // this are the POST data if(isset("buy"))
 
-        buyData.append("item_id", product.item_id);
-        buyData.append("item_name", product.item_name);
-        buyData.append("item_price", product.item_price);
-        buyData.append("item_size", selectedSize);
-        buyData.append("item_variant", selectedVariant);
-        buyData.append("order_qty", quantity);
+      //   buyData.append("item_id", product.item_id);
+      //   buyData.append("item_name", product.item_name);
+      //   buyData.append("item_price", product.item_price);
+      //   buyData.append("item_size", selectedSize);
+      //   buyData.append("item_variant", selectedVariant);
+      //   buyData.append("order_qty", quantity);
 
-        axios
-          .post(url, buyData)
-          .then((response) => alert(response.data))
-          .catch((error) => alert(error));
-      }
+      //   axios
+      //     .post(url, buyData)
+      //     .then((response) => alert(response.data))
+      //     .catch((error) => alert(error));
+      // }
     }
   };
 

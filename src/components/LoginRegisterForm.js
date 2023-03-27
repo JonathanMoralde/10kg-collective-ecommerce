@@ -80,6 +80,7 @@ const LoginRegisterForm = ({ setUser }) => {
       axios
         .post(url, logData)
         .then((response) => {
+          alert(response.data);
           if (redirectUrl) {
             navigate(redirectUrl);
           } else {
