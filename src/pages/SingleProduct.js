@@ -3,8 +3,25 @@ import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaPlus, FaMinus } from "react-icons";
+import { useNavigate } from "react-router-dom";
 
 const SingleProduct = () => {
+  const navigate = useNavigate();
+  // handle Log in
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/10kg-collective/userModule/check_session.php")
+      .then((response) => {
+        const isLoggedIn = response.data.loggedIn;
+        setLoggedIn(isLoggedIn);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [selectedSize, setSelectedSize] = useState("S");
@@ -37,6 +54,12 @@ const SingleProduct = () => {
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {
+      // check first if user is logged in
+      if (!loggedIn) {
+        navigate("/User"); // or navigate("/register");
+        return null;
+      }
+
       if (selectedSize && selectedVariant && quantity) {
         // POST TO THIS FILE (cart.php can be changed)
         const url = "http://localhost/10kg-collective/orderModule/cart.php";
@@ -44,7 +67,6 @@ const SingleProduct = () => {
         let cartData = new FormData();
 
         // this are the POST data if(isset("cart"))
-        cartData.append("cart", e.target.name);
         cartData.append("item_id", product.item_id);
         cartData.append("item_name", product.item_name);
         cartData.append("item_price", product.item_price);
@@ -60,6 +82,11 @@ const SingleProduct = () => {
     }
 
     if (e.target.name === "buy") {
+      // check first if user is logged in
+      if (!loggedIn) {
+        navigate("/User"); // or navigate("/register");
+        return null;
+      }
       if (selectedSize && selectedVariant && quantity) {
         // POST TO THIS FILE (checkout.php can be changed)
         const url = "http://localhost/10kg-collective/orderModule/checkout.php";
@@ -67,7 +94,6 @@ const SingleProduct = () => {
         let buyData = new FormData();
 
         // this are the POST data if(isset("buy"))
-        buyData.append("buy", e.target.name);
         buyData.append("item_id", product.item_id);
         buyData.append("item_name", product.item_name);
         buyData.append("item_price", product.item_price);
