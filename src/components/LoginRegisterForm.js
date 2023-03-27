@@ -1,9 +1,26 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginRegisterForm = ({ setUser }) => {
+  const { search } = useLocation();
+  const redirectUrl = new URLSearchParams(search).get("redirect");
+  // // handle Log in
+  // const [loggedIn, setLoggedIn] = useState(false);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost/10kg-collective/userModule/check_session.php")
+  //     .then((response) => {
+  //       const isLoggedIn = response.data.loggedIn;
+  //       setLoggedIn(isLoggedIn);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
   // HANDLE SING UP
   const [fName, setFName] = useState("");
   const [address, setAddress] = useState("");
@@ -21,18 +38,22 @@ const LoginRegisterForm = ({ setUser }) => {
 
       // data
       let regData = new FormData();
-      regData.append("full_name", fName);
-      regData.append("contact_no", cNumber);
-      regData.append("address", address);
-      regData.append("email_address", reg_Email);
+      regData.append("completeName", fName);
+      regData.append("contactNo", cNumber);
+      regData.append("completeAddress", address);
+      regData.append("emailAddress", reg_Email);
       regData.append("password", reg_Password);
 
       axios
         .post(url, regData)
-        .then((response) => alert(response.data))
+        .then((response) => {
+          if (redirectUrl) {
+            navigate(redirectUrl);
+          } else {
+            navigate("/");
+          }
+        })
         .catch((error) => alert(error));
-
-      navigate("/");
     } else {
       alert("Please fill out the empty fields");
     }
@@ -56,10 +77,14 @@ const LoginRegisterForm = ({ setUser }) => {
     if (log_Email && log_Password) {
       axios
         .post(url, logData)
-        .then((response) => alert(response.data))
+        .then((response) => {
+          if (redirectUrl) {
+            navigate(redirectUrl);
+          } else {
+            navigate("/");
+          }
+        })
         .catch((error) => alert(error));
-
-      navigate("/");
     } else {
       alert("Please fill out the empty fields");
     }
