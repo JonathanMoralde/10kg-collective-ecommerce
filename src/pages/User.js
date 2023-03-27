@@ -2,11 +2,11 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import LoginRegisterForm from "../components/LoginRegisterForm";
 
-const User = () => {
+const User = (setUser) => {
   return (
     <>
       <Navbar />
-      <LoginRegisterForm />
+      <LoginRegisterForm setUser={setUser} />
     </>
   );
 };
