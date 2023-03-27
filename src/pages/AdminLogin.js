@@ -1,31 +1,38 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
+const AdminLogin = ({ setAdminUser }) => {
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
+  const navigate = useNavigate();
 
   //   BTN HANDLER
   const signInSubmit = (e) => {
     e.target.preventDefault();
 
-    // POST
-    const url = "http://localhost/10kg-collective/userModule/admin_login.php";
-
-    // data
-    let logData = new FormData();
-    logData.append("admin_email", adminEmail);
-    logData.append("admin_password", adminPassword);
-
-    if (adminEmail && adminPassword) {
-      axios
-        .post(url, logData)
-        .then((response) => alert(response.data))
-        .catch((error) => alert(error));
-    } else {
-      alert("Please fill out the empty fields");
+    if (!adminEmail || !adminPassword) {
+      setAdminUser({ email: adminEmail, password: adminPassword });
+      navigate("/admin");
     }
+
+    // // POST
+    // const url = "http://localhost/10kg-collective/userModule/admin_login.php";
+
+    // // data
+    // let logData = new FormData();
+    // logData.append("admin_email", adminEmail);
+    // logData.append("admin_password", adminPassword);
+
+    // if (adminEmail && adminPassword) {
+    //   axios
+    //     .post(url, logData)
+    //     .then((response) => alert(response.data))
+    //     .catch((error) => alert(error));
+    // } else {
+    //   alert("Please fill out the empty fields");
+    // }
   };
 
   return (

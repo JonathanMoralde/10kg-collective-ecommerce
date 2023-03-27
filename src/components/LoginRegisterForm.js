@@ -1,15 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const LoginRegisterForm = () => {
+const LoginRegisterForm = ({ setUser }) => {
   // HANDLE SING UP
   const [fName, setFName] = useState("");
   const [address, setAddress] = useState("");
   const [cNumber, setCNumber] = useState("");
   const [reg_Email, setReg_Email] = useState("");
   const [reg_Password, setReg_Password] = useState("");
-  // let history = useNavigate();
+  const navigate = useNavigate();
 
   const signUpSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const LoginRegisterForm = () => {
         .then((response) => alert(response.data))
         .catch((error) => alert(error));
 
-      // history("/Home");
+      navigate("/");
     } else {
       alert("Please fill out the empty fields");
     }
@@ -57,6 +58,8 @@ const LoginRegisterForm = () => {
         .post(url, logData)
         .then((response) => alert(response.data))
         .catch((error) => alert(error));
+
+      navigate("/");
     } else {
       alert("Please fill out the empty fields");
     }
