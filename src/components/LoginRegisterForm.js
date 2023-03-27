@@ -21,10 +21,10 @@ const LoginRegisterForm = ({ setUser }) => {
 
       // data
       let regData = new FormData();
-      regData.append("completeName", fName);
-      regData.append("contactNo", cNumber);
-      regData.append("completeAddress", address);
-      regData.append("emailAddress", reg_Email);
+      regData.append("full_name", fName);
+      regData.append("contact_no", cNumber);
+      regData.append("address", address);
+      regData.append("email_address", reg_Email);
       regData.append("password", reg_Password);
 
       axios
