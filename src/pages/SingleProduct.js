@@ -27,7 +27,8 @@ const SingleProduct = () => {
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedVariant, setSelectedVariant] = useState("Gray");
   const [quantity, setQuantity] = useState("1");
-  const [itemSize, setItemSize] = useState("");
+  const [itemSize, setItemSize] = useState([]);
+  const [itemVariant, setItemVariant] = useState([]);
 
   // this will get all Items
   useEffect(() => {
@@ -44,6 +45,48 @@ const SingleProduct = () => {
 
     getProduct();
   }, []);
+
+  // GET SIZES
+
+  // this will get all item sizes
+  useEffect(() => {
+    const getSizes = async () => {
+      const response = await axios.get(
+        "https:/localhost/10kg-collective/displayModule/sizes.php"
+      );
+
+      // Get the size list object from the response
+      const sizeList = await response.data;
+
+      setItemSize(sizeList);
+    };
+    const getVariants = async () => {
+      const response = await axios.get(
+        "https:/localhost/10kg-collective/displayModule/variant.php"
+      );
+
+      // Get the size list object from the response
+      const variantList = await response.data;
+
+      setItemVariant(variantList);
+    };
+
+    getSizes();
+    getVariants();
+  }, []);
+
+  // Filter to the Single product
+
+  const productSize = itemSize.filter((product) => product.item_id == id);
+  const productVariant = itemVariant.filter((product) => product.item_id == id);
+  // console.log(itemSize);
+  // const productSize = [];
+
+  // itemSize.forEach((item) => {
+  //   if (item.item_id == id) {
+  //     productSize.push(item);
+  //   }
+  // });
 
   // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
@@ -133,10 +176,11 @@ const SingleProduct = () => {
               className="form-select form-select-sm"
               name="size"
             >
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
+              {productSize.map((product) => (
+                <option key={product.size_id} value={product.size_id}>
+                  {product.size_name}
+                </option>
+              ))}
             </select>
 
             {/* variation */}
@@ -146,10 +190,11 @@ const SingleProduct = () => {
               className="form-select form-select-sm"
               name="variant"
             >
-              <option value="Gray">Gray</option>
-              <option value="Cream">Cream</option>
-              <option value="Arctic">Arctic</option>
-              <option value="Mustard">Mustard</option>
+              {productVariant.map((product) => (
+                <option key={product.variation_id} value={product.variation_id}>
+                  {product.varitaion_name}
+                </option>
+              ))}
             </select>
           </div>
 
