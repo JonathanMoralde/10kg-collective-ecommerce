@@ -27,7 +27,7 @@ const Checkout = () => {
 
   // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
-  //   console.log(product);
+    // console.log(product);
 
   useEffect(() => {
     axios
@@ -43,7 +43,8 @@ const Checkout = () => {
   });
 
   const handleClick = (e) => {
-    if (size && variant && qty) {
+    // e.target.preventDefault()
+    
       // POST TO THIS FILE (checkout.php can be changed)
       const url = "http://localhost/10kg-collective/orderModule/checkout.php";
 
@@ -56,15 +57,21 @@ const Checkout = () => {
       buyData.append("item_variant", variant);
       buyData.append("order_qty", qty);
 
+      for (const [key, value] of buyData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
       axios
         .post(url, buyData)
         .then((response) => {
           alert(response.data);
-          navigate("/");
+          // navigate("/");
         })
         .catch((error) => alert(error));
-    }
+    
   };
+
+  console.log(userID, size, variant, qty)
 
   return (
     <>
@@ -105,7 +112,7 @@ const Checkout = () => {
         </div> */}
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn btn-secondary" type="submit"
           onClick={(e) => handleClick(e)}
         >
           Checkout

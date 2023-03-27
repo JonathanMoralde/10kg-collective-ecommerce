@@ -46,6 +46,10 @@ const LoginRegisterForm = ({ setUser }) => {
       regData.append("email_address", reg_Email);
       regData.append("password", reg_Password);
 
+      for (const [key, value] of regData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+
       axios
         .post(url, regData)
         .then((response) => {
@@ -75,6 +79,8 @@ const LoginRegisterForm = ({ setUser }) => {
     let logData = new FormData();
     logData.append("log_email", log_Email);
     logData.append("log_password", log_Password);
+
+   
 
     if (log_Email && log_Password) {
       axios

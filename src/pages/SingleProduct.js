@@ -73,6 +73,7 @@ const SingleProduct = () => {
 
     getSizes();
   }, []);
+
   useEffect(() => {
     const getVariants = async () => {
       const response = await axios.get(
@@ -91,6 +92,7 @@ const SingleProduct = () => {
 
   const productSize = itemSize.filter((product) => product.item_id == id);
   const productVariant = itemVariant.filter((product) => product.item_id == id);
+  // console.log(productVariant)
   // console.log(itemSize);
   // const productSize = [];
 
@@ -204,7 +206,8 @@ const SingleProduct = () => {
             >
               {productVariant.map((product) => (
                 <option key={product.variation_id} value={product.variation_id}>
-                  {product.varitaion_name}
+                  {product.variation_name
+                  }
                 </option>
               ))}
             </select>
