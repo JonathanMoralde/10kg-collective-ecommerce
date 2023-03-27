@@ -72,6 +72,18 @@ const SingleProduct = () => {
     };
 
     getSizes();
+  }, []);
+  useEffect(() => {
+    const getVariants = async () => {
+      const response = await axios.get(
+        "https:/localhost/10kg-collective/displayModule/variant.php"
+      );
+
+      // Get the size list object from the response
+      const variantList = await response.data;
+
+      setItemVariant(variantList);
+    };
     getVariants();
   }, []);
 
