@@ -56,7 +56,7 @@ const SingleProduct = () => {
     if (e.target.name === "cart") {
       // check first if user is logged in
       if (!loggedIn) {
-        navigate("/User"); // or navigate("/register");
+        navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
         return null;
       }
 
@@ -84,7 +84,7 @@ const SingleProduct = () => {
     if (e.target.name === "buy") {
       // check first if user is logged in
       if (!loggedIn) {
-        navigate("/User"); // or navigate("/register");
+        navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
         return null;
       }
       if (selectedSize && selectedVariant && quantity) {
