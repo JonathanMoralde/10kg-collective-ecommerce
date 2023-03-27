@@ -54,10 +54,7 @@ a {
   border-radius: unset;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
 }
-.card-title {
-  letter-spacing: 2px;
-  color: #000 !important;
-}
+
 .card-text {
   color: #000 !important;
 }
@@ -300,7 +297,9 @@ input[type="search"]::-webkit-search-cancel-button {
 .card {
   box-shadow: none !important;
 }
+
 .card-title {
+  letter-spacing: 2px;
   font-size: 1.25rem !important;
   font-weight: 400;
   white-space: nowrap;

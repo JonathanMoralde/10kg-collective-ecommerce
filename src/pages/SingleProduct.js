@@ -11,6 +11,7 @@ const SingleProduct = () => {
   const [selectedVariant, setSelectedVariant] = useState("Gray");
   const [quantity, setQuantity] = useState("1");
 
+  // this will get all Items
   useEffect(() => {
     const getProduct = async () => {
       const response = await axios.get(
@@ -26,20 +27,23 @@ const SingleProduct = () => {
     getProduct();
   }, []);
 
+  // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
 
   if (!product) {
     return <div>Loading...</div>;
   }
 
-  // BUTTON
+  // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {
       if (selectedSize && selectedVariant && quantity) {
+        // POST TO THIS FILE (cart.php can be changed)
         const url = "http://localhost/10kg-collective/orderModule/cart.php";
 
         let cartData = new FormData();
 
+        // this are the POST data if(isset("cart"))
         cartData.append("cart", e.target.name);
         cartData.append("item_id", product.item_id);
         cartData.append("item_name", product.item_name);
@@ -57,10 +61,12 @@ const SingleProduct = () => {
 
     if (e.target.name === "buy") {
       if (selectedSize && selectedVariant && quantity) {
+        // POST TO THIS FILE (checkout.php can be changed)
         const url = "http://localhost/10kg-collective/orderModule/checkout.php";
 
         let buyData = new FormData();
 
+        // this are the POST data if(isset("buy"))
         buyData.append("buy", e.target.name);
         buyData.append("item_id", product.item_id);
         buyData.append("item_name", product.item_name);

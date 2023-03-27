@@ -15,7 +15,7 @@ const ShowProducts = ({ filter }) => {
                 height="234px"
               />
               <div className="card-body">
-                <h5 className="card-title">{product.item_name}</h5>
+                <h5 className="card-title text-black">{product.item_name}</h5>
                 <p className="card-text">{product.item_price}</p>
               </div>
             </Link>
