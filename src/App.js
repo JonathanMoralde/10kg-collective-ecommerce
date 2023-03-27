@@ -14,6 +14,7 @@ import Orders from "./pages/Orders";
 import AdminLogin from "./pages/AdminLogin";
 import ProductForm from "./components/ProductForm";
 import { useState } from "react";
+import Checkout from "./pages/Checkout";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
@@ -26,6 +27,10 @@ function App() {
             <Route index element={<Home user={user} />} />
             <Route path="/Shop" element={<Shop />} />
             <Route path="/Shop/:id" element={<SingleProduct />} />
+            <Route
+              path="/Shop/Checkout/:id/:size/:variant/:qty"
+              element={<Checkout />}
+            />
             <Route path="/About" element={<About />} />
           </Route>
           <Route path="/User" element={<User setUser={setUser} />} />

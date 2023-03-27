@@ -1,11 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const LoginRegisterForm = ({ setUser }) => {
+  // const { id } = useParams();
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get("redirect");
+  // console.log(id);
   // // handle Log in
   // const [loggedIn, setLoggedIn] = useState(false);
 
@@ -62,7 +64,7 @@ const LoginRegisterForm = ({ setUser }) => {
   // Sign In
   const [log_Email, setLog_Email] = useState("");
   const [log_Password, setLog_Password] = useState("");
-
+  console.log(redirectUrl);
   const signInSubmit = (e) => {
     e.preventDefault();
 
