@@ -52,8 +52,6 @@ const Checkout = () => {
       // this are the POST data if(isset("buy"))
       buyData.append("user_id", userID);
       buyData.append("item_id", product.item_id);
-      buyData.append("item_name", product.item_name);
-      buyData.append("item_price", product.item_price);
       buyData.append("item_size", size);
       buyData.append("item_variant", variant);
       buyData.append("order_qty", qty);
