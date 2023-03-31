@@ -30,7 +30,7 @@ const Products = () => {
         <div className="d-flex justify-content-between align-items-center py-5">
           <h3 className="section-title">Products</h3>
           <Link
-            className="btn btn-primary"
+            className="btn btn-secondary"
             to="/admin/product-form"
             role="button"
           >

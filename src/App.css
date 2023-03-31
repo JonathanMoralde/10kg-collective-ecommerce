@@ -319,3 +319,97 @@ input[type="search"]::-webkit-search-cancel-button {
   font-size: 1.5625rem !important;
   font-weight: 400 !important;
 }
+
+/* LOG IN REGISTER FORM */
+.form-section-background {
+  display: grid;
+  place-items: center;
+  height: 90vh;
+}
+.user-form .form-floating {
+  width: 75%;
+}
+/* .user-form .form-floating input {
+  height: 75%;
+} */
+label {
+  font-size: 1rem;
+}
+.sign-up-container {
+  position: relative;
+}
+
+.sliding-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #6c757d;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 5rem;
+  z-index: 1;
+  color: #fff;
+  transition: all 0.2s linear;
+}
+
+.toggle-text {
+  font-weight: 300;
+}
+
+.form-toggle {
+  translate: 100%;
+}
+
+.display-none {
+  display: none;
+}
+.toggle-display {
+  display: block;
+}
+
+/* END OF LOGIN REGISTER FORM */
+
+/* SINGLE PRODUCT PAGE */
+
+.product-title {
+  text-transform: capitalize;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.product-price {
+  font-weight: 500;
+}
+.product-stock-status {
+  font-size: 1rem;
+}
+
+.form-select,
+#quantity {
+  width: 30%;
+}
+
+.product-btn-container button {
+  width: 48%;
+  text-transform: uppercase;
+}
+
+/* END OF SINGLE PRODUCT PAGE */
+
+/* ABOUT PAGE */
+/* .about-page {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+} */
+
+.about-text {
+  text-align: justify;
+  text-indent: 10%;
+}
+
+/* END OF ABOUT PAGE */

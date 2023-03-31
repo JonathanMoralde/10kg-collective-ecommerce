@@ -4,6 +4,11 @@ import axios from "axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const LoginRegisterForm = ({ setUser }) => {
+  // TOGGLE SLIDER
+  const [isToggle, setIsToggle] = useState(false);
+
+  // END OF TOGGLE SLIDER
+
   // const { id } = useParams();
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get("redirect");
@@ -53,11 +58,12 @@ const LoginRegisterForm = ({ setUser }) => {
       axios
         .post(url, regData)
         .then((response) => {
-          if (redirectUrl) {
-            navigate(redirectUrl);
-          } else {
-            navigate("/");
-          }
+          // if (redirectUrl) {
+          //   navigate(redirectUrl);
+          // } else {
+          //   navigate("/");
+          // }
+          alert(response.data);
         })
         .catch((error) => alert(error));
     } else {
@@ -80,8 +86,6 @@ const LoginRegisterForm = ({ setUser }) => {
     logData.append("log_email", log_Email);
     logData.append("log_password", log_Password);
 
-   
-
     if (log_Email && log_Password) {
       axios
         .post(url, logData)
@@ -102,12 +106,70 @@ const LoginRegisterForm = ({ setUser }) => {
   return (
     <>
       <div className="container-fluid form-section-background">
-        <div className="container-md form-section-container">
+        <div className="container-md form-section-container shadow">
           <div className="row">
+            {/* sign up form */}
             <div className="col-md-6 sign-up-container">
+              {/* SLIDING TOGGLE */}
+              <div
+                className={`sliding-container ${isToggle ? "form-toggle" : ""}`}
+              >
+                {/* SIGN UP TOGGLE */}
+                <h3
+                  className={`section-title mb-5 ${
+                    isToggle ? "display-none" : ""
+                  }`}
+                >
+                  Hello, Friend!
+                </h3>
+                <p
+                  className={`toggle-text mb-4 ${
+                    isToggle ? "display-none" : ""
+                  }`}
+                >
+                  Don't have an account yet? Enter your personal details and
+                  shop with us
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsToggle(!isToggle)}
+                  class={`btn btn-outline-light ${
+                    isToggle ? "display-none" : ""
+                  }`}
+                >
+                  SIGN UP
+                </button>
+
+                {/* SIGN IN TOGGLE */}
+                <h3
+                  className={`section-title mb-5 display-none ${
+                    isToggle ? "toggle-display" : ""
+                  }`}
+                >
+                  Welcome back!
+                </h3>
+                <p
+                  className={`toggle-text mb-4 display-none ${
+                    isToggle ? "toggle-display" : ""
+                  }`}
+                >
+                  Already have an account? Sign in and start shopping our new
+                  releases.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setIsToggle(!isToggle)}
+                  class={`btn btn-outline-light display-none ${
+                    isToggle ? "toggle-display" : ""
+                  }`}
+                >
+                  SIGN IN
+                </button>
+              </div>
+
               {/* SIGN UP FORM */}
-              <form>
-                <h3 className="section-title mb-5">Sign Up</h3>
+              <form className="d-flex flex-column align-items-center justify-content-center h-100 user-form py-5">
+                <h3 className="section-title mb-3">Sign Up</h3>
                 {/* Sign up FNAME */}
                 <div className="form-floating mb-3">
                   <input
@@ -181,18 +243,19 @@ const LoginRegisterForm = ({ setUser }) => {
                 {/* Sign up BTN */}
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-secondary"
                   onClick={(e) => signUpSubmit(e)}
                   name="submit"
                 >
-                  Sign Up
+                  SIGN UP
                 </button>
               </form>
             </div>
 
+            {/* sign in form */}
             <div className="col-md-6 sign-in-container">
               {/* ETO YUNG FORM NG SIGN IN */}
-              <form action="/">
+              <form className="d-flex flex-column align-items-center justify-content-center h-100 user-form">
                 {/* ACTION */}
                 <h3 className="section-title mb-5">Sign In</h3>
 
@@ -229,11 +292,11 @@ const LoginRegisterForm = ({ setUser }) => {
                 {/* Sign in BTN */}
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-secondary"
                   onClick={(e) => signInSubmit(e)}
                   name="submit"
                 >
-                  Sign In
+                  SIGN IN
                 </button>
               </form>
             </div>
