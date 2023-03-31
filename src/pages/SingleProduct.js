@@ -147,7 +147,7 @@ const SingleProduct = () => {
           `/User?redirect=/Shop/Checkout/${id}/${selectedSize}/${selectedVariant}/${quantity}`
         ); // or navigate("/register");
         // navigate(`/User/${id}`);
-        return null;
+        // return null;
       }
       // if (selectedSize && selectedVariant && quantity) {
       //   // POST TO THIS FILE (checkout.php can be changed)

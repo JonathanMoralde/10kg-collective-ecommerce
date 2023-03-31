@@ -10,29 +10,43 @@ const AdminLogin = ({ setAdminUser }) => {
 
   //   BTN HANDLER
   const signInSubmit = (e) => {
-    e.target.preventDefault();
+    e.preventDefault();
 
     if (!adminEmail || !adminPassword) {
       setAdminUser({ email: adminEmail, password: adminPassword });
-      navigate("/admin");
     }
 
-    // // POST
-    // const url = "http://localhost/10kg-collective/userModule/admin_login.php";
+    // POST
+    const url = "http://localhost/10kg-collective/userModule/admin_login.php";
 
-    // // data
-    // let logData = new FormData();
-    // logData.append("admin_email", adminEmail);
-    // logData.append("admin_password", adminPassword);
+    // data
+    let logData = new FormData();
+    logData.append("admin_email", adminEmail);
+    logData.append("admin_password", adminPassword);
 
-    // if (adminEmail && adminPassword) {
-    //   axios
-    //     .post(url, logData)
-    //     .then((response) => alert(response.data))
-    //     .catch((error) => alert(error));
-    // } else {
-    //   alert("Please fill out the empty fields");
-    // }
+    if (adminEmail && adminPassword) {
+      axios
+        .post(url, logData)
+        .then((response) => {
+          if (response.data === "uy gagi") {
+            // Check for the expected response
+            navigate("/admin");
+          } else {
+            navigate("/admin/login");
+            alert("Wrong Password.");
+          }
+        })
+        .catch((error) => {
+          if (error.response && error.response.data === "maintenance mode") {
+            // Check for the "maintenance mode" error message
+            alert(
+              "The website is currently under maintenance. Please try again later."
+            );
+          }
+        });
+    } else {
+      alert("Please fill out the empty fields");
+    }
   };
 
   return (
@@ -42,7 +56,7 @@ const AdminLogin = ({ setAdminUser }) => {
           <div className="row">
             <div className="col-md-6">
               {/* ETO YUNG FORM NG SIGN IN */}
-              <form action="/">
+              <form>
                 {/* ACTION */}
                 <h3 className="section-title mb-5">Sign In</h3>
 
@@ -81,7 +95,6 @@ const AdminLogin = ({ setAdminUser }) => {
                   type="submit"
                   className="btn btn-primary"
                   onClick={(e) => signInSubmit(e)}
-                  name="submit"
                 >
                   Sign In
                 </button>

@@ -71,10 +71,10 @@ const LoginRegisterForm = ({ setUser }) => {
     }
   };
 
-  // Sign In
+  // HANDLE SIGN IN
   const [log_Email, setLog_Email] = useState("");
   const [log_Password, setLog_Password] = useState("");
-  console.log(redirectUrl);
+
   const signInSubmit = (e) => {
     e.preventDefault();
 
@@ -90,14 +90,26 @@ const LoginRegisterForm = ({ setUser }) => {
       axios
         .post(url, logData)
         .then((response) => {
-          alert(response.data);
-          if (redirectUrl) {
-            navigate(redirectUrl);
+          if (response.data == "Welcome to 10KG Collective!") {
+            // Check for the expected response
+            if (redirectUrl) {
+              navigate(redirectUrl);
+            } else {
+              navigate("/");
+            }
           } else {
-            navigate("/");
+            // navigate("/user");
+            alert("Wrong Password.");
           }
         })
-        .catch((error) => alert(error));
+        .catch((error) => {
+          if (error.response && error.response.data === "maintenance mode") {
+            // Check for the "maintenance mode" error message
+            alert(
+              "The website is currently under maintenance. Please try again later."
+            );
+          }
+        });
     } else {
       alert("Please fill out the empty fields");
     }
