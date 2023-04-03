@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-const Checkout = () => {
+const Checkout = ({ user }) => {
   const { id, size, variant, qty } = useParams();
   const [data, setData] = useState([]);
   const [userID, setUserID] = useState(null);
@@ -27,55 +27,53 @@ const Checkout = () => {
 
   // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
-    // console.log(product);
+  // console.log(product);
 
+  // GET THE USER ID THROUGH SESSION //method 1 error
   useEffect(() => {
     axios
       .get("https:/localhost/10kg-collective/userModule/checksession.php")
       .then((response) => {
-        const userId = response.data.user_id;
+        const userId = response.user_id;
         // use the `userId` variable here
         setUserID(userId);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
-  });
+  }, []);
+
+  // console.log(userID);
 
   const handleClick = (e) => {
     // e.target.preventDefault()
-    
-      // POST TO THIS FILE (checkout.php can be changed)
-      const url = "http://localhost/10kg-collective/orderModule/checkout.php";
 
-      let buyData = new FormData();
+    // POST
+    const url = "http://localhost/10kg-collective/orderModule/checkout.php";
 
-      // this are the POST data if(isset("buy"))
-      buyData.append("user_id", userID);
-      buyData.append("item_id", product.item_id);
-      buyData.append("item_size", size);
-      buyData.append("item_variant", variant);
-      buyData.append("order_qty", qty);
+    let buyData = new FormData();
 
-      for (const [key, value] of buyData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
+    // buyy
+    buyData.append("email_address", user); //method 2 error
+    buyData.append("user_id", userID);
+    buyData.append("item_id", product.item_id);
+    buyData.append("item_size", size);
+    buyData.append("item_variant", variant);
+    buyData.append("order_qty", qty);
 
-      axios
-        .post(url, buyData)
-        .then((response) => {
-          alert(response.data);
-          // navigate("/");
-        })
-        .catch((error) => alert(error));
-    
+    axios
+      .post(url, buyData)
+      .then((response) => {
+        alert(response.data);
+        // navigate("/");
+      })
+      .catch((error) => alert(error));
   };
 
-  console.log(userID, size, variant, qty)
-
+  // console.log(user);
   return (
     <>
-      <div className="container-fluid container-fix">
+      <div className="container-fluid container-fix checkout-page">
         <h3 className="section-title">Checkout</h3>
         <div className="row mb-3">
           <div className="col-md-6">
@@ -91,28 +89,37 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* <div className="row">
-          <div className="col-md-6 d-flex " key={product.item_id}>
-             <div className="card mb-3 me-3">
+        <div className="row">
+          <div className="col-md-6 d-flex ">
+            <div className="card mb-3 me-3">
               <img
-                src={product.item_image}
+                src=""
                 className="card-img-top"
                 alt="product-img"
                 height="234px"
               />
-            </div> 
+            </div>
             <div>
-              <h5 className="checkout-product-title">{product.item_name}</h5>
-              <button type="button" class="btn btn-outline-danger">
-                Danger
+              {/* <h5 className="checkout-product-title">{product.item_name}</h5>  */}
+              {/* ERROR DISPLAYING NAME ON FIRST */}
+              <button type="button" className="btn btn-outline-danger">
+                Remove
               </button>
             </div>
           </div>
-          <div className="col-md-6"></div>
-        </div> */}
+          <div className="col-md-6">
+            <div className="d-flex justify-content-between">
+              <h3 className="col-title">{size}</h3>
+              <h3 className="col-title">{variant}</h3>
+              <h3 className="col-title">{qty}</h3>
+              {/* <h3 className="col-title">{product.item_price}</h3> */}
+              {/* ERROR DISPLAYING PRICE ON FIRST */}
+            </div>
+          </div>
+        </div>
         <button
           type="button"
-          class="btn btn-secondary" type="submit"
+          className="btn btn-secondary"
           onClick={(e) => handleClick(e)}
         >
           Checkout

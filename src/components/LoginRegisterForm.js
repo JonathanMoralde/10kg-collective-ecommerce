@@ -51,10 +51,6 @@ const LoginRegisterForm = ({ setUser }) => {
       regData.append("email_address", reg_Email);
       regData.append("password", reg_Password);
 
-      for (const [key, value] of regData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-
       axios
         .post(url, regData)
         .then((response) => {
@@ -63,7 +59,26 @@ const LoginRegisterForm = ({ setUser }) => {
           // } else {
           //   navigate("/");
           // }
-          alert(response.data);
+
+          // alert(response);
+          if (response.data.response_status) {
+            alert(`Welcome ${response.data.full_name}`);
+            setUser(response.data);
+            if (redirectUrl) {
+              navigate(redirectUrl);
+            } else {
+              navigate("/");
+            }
+          } else {
+            alert("Error");
+          }
+
+          // if (response.) {
+          //   // alert(response.data);
+          //   navigate("/");
+          // } else {
+          //   alert("Eror");
+          // }
         })
         .catch((error) => alert(error));
     } else {
@@ -87,19 +102,23 @@ const LoginRegisterForm = ({ setUser }) => {
     logData.append("log_password", log_Password);
 
     if (log_Email && log_Password) {
+      console.log(log_Email, log_Password);
+      console.log(logData);
       axios
         .post(url, logData)
         .then((response) => {
-          if (response.data == "Welcome to 10KG Collective!") {
-            // Check for the expected response
+          if (response.data.response_status) {
+            alert(`Welcome ${response.data.full_name}`);
+            setUser(response.data);
             if (redirectUrl) {
               navigate(redirectUrl);
             } else {
               navigate("/");
             }
+          } else if (response.data == 3) {
+            alert("Password incorrect");
           } else {
-            // navigate("/user");
-            alert("Wrong Password.");
+            alert("Incorrect Email or Password");
           }
         })
         .catch((error) => {
@@ -145,7 +164,7 @@ const LoginRegisterForm = ({ setUser }) => {
                 <button
                   type="button"
                   onClick={() => setIsToggle(!isToggle)}
-                  class={`btn btn-outline-light ${
+                  className={`btn btn-outline-light ${
                     isToggle ? "display-none" : ""
                   }`}
                 >
@@ -171,7 +190,7 @@ const LoginRegisterForm = ({ setUser }) => {
                 <button
                   type="button"
                   onClick={() => setIsToggle(!isToggle)}
-                  class={`btn btn-outline-light display-none ${
+                  className={`btn btn-outline-light display-none ${
                     isToggle ? "toggle-display" : ""
                   }`}
                 >

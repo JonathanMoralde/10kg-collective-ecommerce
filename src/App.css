@@ -413,3 +413,17 @@ label {
 }
 
 /* END OF ABOUT PAGE */
+
+/* CHECKOUT PAGE */
+.checkout-page {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/* END OF CHECKOUT PAGE */
+
+/* DASHBOARD PAGE */
+.user-details-section {
+  padding: 1rem;
+}
+/* END OF DASHBOARD PAGE */

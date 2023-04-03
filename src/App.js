@@ -15,6 +15,7 @@ import AdminLogin from "./pages/AdminLogin";
 import ProductForm from "./components/ProductForm";
 import { useState } from "react";
 import Checkout from "./pages/Checkout";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
@@ -29,11 +30,26 @@ function App() {
             <Route path="/Shop/:id" element={<SingleProduct />} />
             <Route
               path="/Shop/Checkout/:id/:size/:variant/:qty"
-              element={<Checkout />}
+              element={<Checkout user={user} />}
             />
             <Route path="/About" element={<About />} />
           </Route>
-          <Route path="/User" element={<User setUser={setUser} />} />
+          {/* <Route path="/User" element={<User setUser={setUser} />} /> */}
+          <Route
+            path="/User"
+            element={
+              user ? (
+                <UserDashboard user={user} setUser={setUser} />
+              ) : (
+                <User setUser={setUser} />
+              )
+            }
+          />
+          {/* 
+          <Route
+            path="/UserDashboard"
+            element={<UserDashboard user={user} />}
+          /> */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Admin adminUser={adminUser} />} />
             <Route path="/admin/Products" element={<Products />} />
