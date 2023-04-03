@@ -26,10 +26,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home user={user} />} />
-            <Route path="/Shop" element={<Shop />} />
-            <Route path="/Shop/:id" element={<SingleProduct />} />
+            <Route path="/Shop" element={<Shop user={user} />} />
+            <Route path="/Shop/:id" element={<SingleProduct user={user} />} />
             <Route
-              path="/Shop/Checkout/:id/:size/:variant/:qty"
+              path="/Shop/Checkout/:id/:size/:variant/:qty/:name/:price"
               element={<Checkout user={user} />}
             />
             <Route path="/About" element={<About />} />

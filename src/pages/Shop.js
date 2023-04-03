@@ -4,7 +4,7 @@ import ShowProducts from "../components/ShowProducts";
 import ProductSkeleton from "../components/ProductSkeleton";
 import axios from "axios";
 
-const Shop = () => {
+const Shop = ({ user }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
@@ -134,7 +134,7 @@ const Shop = () => {
                 {loading ? (
                   <ProductSkeleton />
                 ) : (
-                  <ShowProducts filter={filter} />
+                  <ShowProducts filter={filter} user={user} />
                 )}
               </div>
             </div>

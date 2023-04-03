@@ -5,22 +5,8 @@ import axios from "axios";
 import { FaPlus, FaMinus } from "react-icons";
 import { useNavigate } from "react-router-dom";
 
-const SingleProduct = () => {
+const SingleProduct = ({ user }) => {
   const navigate = useNavigate();
-  // handle Log in
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost/10kg-collective/userModule/check_session.php")
-      .then((response) => {
-        const isLoggedIn = response.data.loggedIn;
-        setLoggedIn(isLoggedIn);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -46,8 +32,6 @@ const SingleProduct = () => {
     getProduct();
   }, []);
 
-  // GET SIZES
-
   // this will get all item sizes
   useEffect(() => {
     const getSizes = async () => {
@@ -64,6 +48,7 @@ const SingleProduct = () => {
     getSizes();
   }, []);
 
+  // this will get variants
   useEffect(() => {
     const getVariants = async () => {
       const response = await axios.get(
@@ -82,17 +67,6 @@ const SingleProduct = () => {
 
   const productSize = itemSize.filter((product) => product.item_id == id);
   const productVariant = itemVariant.filter((product) => product.item_id == id);
-  // console.log(productVariant)
-  // console.log(itemSize);
-  // const productSize = [];
-
-  // itemSize.forEach((item) => {
-  //   if (item.item_id == id) {
-  //     productSize.push(item);
-  //   }
-  // });
-
-  // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
 
   if (!product) {
@@ -102,11 +76,7 @@ const SingleProduct = () => {
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {
-      // check first if user is logged in
-      if (!loggedIn) {
-        navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
-        return null;
-      }
+      alert("ADDED TO CART");
 
       // if (selectedSize && selectedVariant && quantity) {
       //   // POST TO THIS FILE (cart.php can be changed)
@@ -130,35 +100,9 @@ const SingleProduct = () => {
     }
 
     if (e.target.name === "buy") {
-      // check first if user is logged in
-      if (!loggedIn) {
-        // navigate(`/User?redirect=/Shop/${id}`); // or navigate("/register");
-        navigate(
-          `/User?redirect=/Shop/Checkout/${id}/${selectedSize}/${selectedVariant}/${quantity}`
-        ); // or navigate("/register");
-        // navigate(`/User/${id}`);
-        // return null;
-      }
-      // if (selectedSize && selectedVariant && quantity) {
-      //   // POST TO THIS FILE (checkout.php can be changed)
-      //   const url = "http://localhost/10kg-collective/orderModule/checkout.php";
-
-      //   let buyData = new FormData();
-
-      //   // this are the POST data if(isset("buy"))
-
-      //   buyData.append("item_id", product.item_id);
-      //   buyData.append("item_name", product.item_name);
-      //   buyData.append("item_price", product.item_price);
-      //   buyData.append("item_size", selectedSize);
-      //   buyData.append("item_variant", selectedVariant);
-      //   buyData.append("order_qty", quantity);
-
-      //   axios
-      //     .post(url, buyData)
-      //     .then((response) => alert(response.data))
-      //     .catch((error) => alert(error));
-      // }
+      navigate(
+        `/Shop/Checkout/${id}/${selectedSize}/${selectedVariant}/${quantity}/${product.item_name}/${product.item_price}`
+      );
     }
   };
 

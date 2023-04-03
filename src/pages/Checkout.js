@@ -4,9 +4,8 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 const Checkout = ({ user }) => {
-  const { id, size, variant, qty } = useParams();
+  const { id, size, variant, qty, name, price } = useParams();
   const [data, setData] = useState([]);
-  const [userID, setUserID] = useState(null);
   const navigate = useNavigate();
 
   // this will get all Items
@@ -29,19 +28,19 @@ const Checkout = ({ user }) => {
   const product = data.find((product) => product.item_id == id);
   // console.log(product);
 
-  // GET THE USER ID THROUGH SESSION //method 1 error
-  useEffect(() => {
-    axios
-      .get("https:/localhost/10kg-collective/userModule/checksession.php")
-      .then((response) => {
-        const userId = response.user_id;
-        // use the `userId` variable here
-        setUserID(userId);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+  // // GET THE USER ID THROUGH SESSION //method 1 error
+  // useEffect(() => {
+  //   axios
+  //     .get("https:/localhost/10kg-collective/userModule/checksession.php")
+  //     .then((response) => {
+  //       const userId = response.user_id;
+  //       // use the `userId` variable here
+  //       setUserID(userId);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error);
+  //     });
+  // }, []);
 
   // console.log(userID);
 
@@ -54,8 +53,7 @@ const Checkout = ({ user }) => {
     let buyData = new FormData();
 
     // buyy
-    buyData.append("email_address", user); //method 2 error
-    buyData.append("user_id", userID);
+    buyData.append("user_id", user.user_id);
     buyData.append("item_id", product.item_id);
     buyData.append("item_size", size);
     buyData.append("item_variant", variant);
@@ -65,9 +63,10 @@ const Checkout = ({ user }) => {
       .post(url, buyData)
       .then((response) => {
         alert(response.data);
-        // navigate("/");
+        navigate("/User");
       })
       .catch((error) => alert(error));
+    // console.log(user.user_id, product.item_id, size, variant, qty);
   };
 
   // console.log(user);
@@ -100,7 +99,7 @@ const Checkout = ({ user }) => {
               />
             </div>
             <div>
-              {/* <h5 className="checkout-product-title">{product.item_name}</h5>  */}
+              <h5 className="checkout-product-title">{name}</h5>
               {/* ERROR DISPLAYING NAME ON FIRST */}
               <button type="button" className="btn btn-outline-danger">
                 Remove
@@ -112,7 +111,7 @@ const Checkout = ({ user }) => {
               <h3 className="col-title">{size}</h3>
               <h3 className="col-title">{variant}</h3>
               <h3 className="col-title">{qty}</h3>
-              {/* <h3 className="col-title">{product.item_price}</h3> */}
+              <h3 className="col-title">{price}</h3>
               {/* ERROR DISPLAYING PRICE ON FIRST */}
             </div>
           </div>
