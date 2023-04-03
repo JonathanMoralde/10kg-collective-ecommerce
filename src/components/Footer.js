@@ -11,24 +11,21 @@ const Footer = () => {
           <img src={whiteLogo} height="30" alt="" />
         </Link>
         <div className="row d-flex justify-content-between">
-          <div className="col-md-6 d-flex justify-content-between">
-            <Link to="/" className="text-light footer-links">
-              About Us
-            </Link>
+          <div className="col-md-4 d-flex justify-content-between">
 
-            <Link to="/" className="text-light footer-links">
+            <Link to="/Privacy" className="text-light footer-links">
               Privacy Policy
             </Link>
 
-            <Link to="/" className="text-light footer-links">
+            <Link to="/SizeGuide" className="text-light footer-links">
               Size Guide
             </Link>
 
-            <Link to="/" className="text-light footer-links">
+            <Link to="/Faqs" className="text-light footer-links">
               FAQs
             </Link>
 
-            <Link to="/" className="text-light footer-links">
+            <Link to="/Returns" className="text-light footer-links">
               Returns
             </Link>
           </div>

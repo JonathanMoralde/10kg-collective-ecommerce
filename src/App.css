@@ -22,6 +22,15 @@ a {
   padding: unset;
 }
 
+/* cart icon */
+.shopping-cart {
+  color: #575757;
+
+}
+.shopping-cart:hover {
+  color: #373838;
+}
+
 .container-fix {
   padding: 0 7.625rem !important;
 }
@@ -355,7 +364,7 @@ label {
   padding: 5rem;
   z-index: 1;
   color: #fff;
-  transition: all 0.2s linear;
+  transition: all 0.2s ease-out;
 }
 
 .toggle-text {

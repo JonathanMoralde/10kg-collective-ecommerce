@@ -68,7 +68,7 @@ const Navbar = ({user, setUser}) => {
               </li>
               <li className="nav-item ms-1 ">
                 <button className="btn padding-right-fix" onClick={()=> setActive(!active)}>
-                  <FaShoppingCart size="1.5rem" />
+                  <FaShoppingCart size="1.5rem" className="shopping-cart"/>
                 </button>
               </li>
             </ul>
