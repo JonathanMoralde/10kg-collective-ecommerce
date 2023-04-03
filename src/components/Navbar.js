@@ -1,11 +1,14 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import blackLogo from "../images/logo/10KG BLACK trimmed.png";
-
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import UserDropdown from "./UserDropdown";
+import Cart from "./Cart"
+import { useState } from "react";
 
 const Navbar = ({user, setUser}) => {
+  const [active, setActive] = useState(false);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -64,14 +67,16 @@ const Navbar = ({user, setUser}) => {
                 
               </li>
               <li className="nav-item ms-1 ">
-                <NavLink to="/About" className="nav-link padding-right-fix">
+                <button className="btn padding-right-fix" onClick={()=> setActive(!active)}>
                   <FaShoppingCart size="1.5rem" />
-                </NavLink>
+                </button>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+
+      <Cart user={user} active={active} setActive={setActive} />
     </>
   );
 };
