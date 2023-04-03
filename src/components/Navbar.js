@@ -3,8 +3,9 @@ import { NavLink, Link } from "react-router-dom";
 import blackLogo from "../images/logo/10KG BLACK trimmed.png";
 
 import { FaUser, FaShoppingCart } from "react-icons/fa";
+import UserDropdown from "./UserDropdown";
 
-const Navbar = () => {
+const Navbar = ({user, setUser}) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -51,11 +52,16 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="collapse navbar-collapse" id="navbarIcon">
-            <ul className="navbar-nav flex-row">
+            <ul className="navbar-nav flex-row align-items-center">
               <li className="nav-item">
-                <NavLink to="/User" className="nav-link">
+                {/* <NavLink to="/User" className="nav-link">
                   <FaUser size="1.5rem" />
-                </NavLink>
+                </NavLink> */}
+                {/* If the user is logged in, the user icon will have different functionality */}
+                {user ? <UserDropdown user={user} setUser={setUser} /> : <NavLink to="/User" className="nav-link">
+                  <FaUser size="1.5rem" />
+                </NavLink>}
+                
               </li>
               <li className="nav-item ms-1 ">
                 <NavLink to="/About" className="nav-link padding-right-fix">

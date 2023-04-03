@@ -1,30 +1,12 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const UserDashboard = ({ user, setUser }) => {
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    const url = "http://localhost/10kg-collective/userModule/updateSession.php";
-
-    const logData = new FormData();
-    logData.append("logout", 1);
-
-    axios.post(url, logData).then((response) => {
-      if (response.data == 1) {
-        alert("Signing Out");
-        setUser(null);
-        navigate("/");
-      } else {
-        alert(response.data);
-      }
-    });
-  };
+  
   return (
     <>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
 
       <section className="container-fluid container-fix user-dashboard-section my-5">
         <h3 className="section-title">Dashboard</h3>
@@ -35,13 +17,6 @@ const UserDashboard = ({ user, setUser }) => {
           <h5 className="address">{user.address}</h5>
           <h5 className="contact-number">{user.contact_no}</h5>
           <h5 className="email-address">{user.email_address}</h5>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => handleLogout()}
-          >
-            Logout
-          </button>
         </div>
 
         {/* order list of the user */}

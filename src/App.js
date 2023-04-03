@@ -24,7 +24,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout user={user} setUser={setUser} />}>
             <Route index element={<Home user={user} />} />
             <Route path="/Shop" element={<Shop user={user} />} />
             <Route path="/Shop/:id" element={<SingleProduct user={user} />} />
@@ -34,22 +34,23 @@ function App() {
             />
             <Route path="/About" element={<About />} />
           </Route>
-          {/* <Route path="/User" element={<User setUser={setUser} />} /> */}
-          <Route
+          <Route path="/User" element={<User setUser={setUser} />} />
+          {/* <Route
             path="/User"
             element={
               user ? (
-                <UserDashboard user={user} setUser={setUser} />
+                // <UserDashboard user={user} setUser={setUser} />
+                // <UserDropdown />
               ) : (
                 <User setUser={setUser} />
               )
             }
-          />
-          {/* 
+          /> */}
+          
           <Route
             path="/UserDashboard"
-            element={<UserDashboard user={user} />}
-          /> */}
+            element={<UserDashboard user={user} setUser={setUser} />}
+          />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Admin adminUser={adminUser} />} />
             <Route path="/admin/Products" element={<Products />} />
