@@ -7,7 +7,7 @@ const Cart = ({user, active, setActive}) => {
             <div className='cart-title-container d-flex justify-content-between align-items-center'>
 
             <h5 className='section-title'>Cart</h5>
-            <button type="button" class="btn-close" aria-label="Close" onClick={()=>setActive(!active)}></button>
+            <button type="button" className="btn-close" aria-label="Close" onClick={()=>setActive(!active)}></button>
             </div>
 
             {/* Order list */}

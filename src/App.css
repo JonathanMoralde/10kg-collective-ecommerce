@@ -31,6 +31,13 @@ a {
   color: #373838;
 }
 
+
+
+/* btn fix */
+.btn:active {
+  border-color: transparent !important;
+}
+
 .container-fix {
   padding: 0 7.625rem !important;
 }
@@ -411,10 +418,9 @@ label {
 /* END OF SINGLE PRODUCT PAGE */
 
 /* ABOUT PAGE */
-/* .about-page {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-} */
+.about-page {
+  height: 60.3vh;
+}
 
 .about-text {
   text-align: justify;
@@ -427,13 +433,14 @@ label {
 .checkout-page {
   padding-top: 4rem;
   padding-bottom: 4rem;
+  height: 100vh;
 }
 
 /* END OF CHECKOUT PAGE */
 
 /* DASHBOARD PAGE */
 .user-details-section {
-  padding: 1rem;
+  padding: 2rem 1.5rem;
 }
 /* END OF DASHBOARD PAGE */
 
@@ -457,3 +464,11 @@ label {
 
 
 /* END OF CART */
+
+
+/* ADMIN PANEL */
+
+
+
+
+/* END OF ADMIN PANEL */
