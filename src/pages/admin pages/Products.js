@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Products = () => {
+const Products = ({adminUser}) => {
   const [data, setData] = useState([]);
 
   // this will get all Items

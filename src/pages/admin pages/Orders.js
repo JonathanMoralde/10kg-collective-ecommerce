@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from 'axios'
 
-const Orders = () => {
+const Orders = ({adminUser}) => {
   const [orderList, setOrderList] = useState()
 
   // get all the orders from backend

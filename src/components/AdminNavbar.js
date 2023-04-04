@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import blackLogo from "../images/logo/10KG BLACK trimmed.png";
-
+import AdminUserDropdown from "./AdminUserDropdown";
 import { FaUser } from "react-icons/fa";
 
-const AminNavbar = () => {
+const AminNavbar = ({adminUser, setAdminUser}) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -57,9 +57,10 @@ const AminNavbar = () => {
           <div className="collapse navbar-collapse" id="navbarIcon">
             <ul className="navbar-nav flex-row">
               <li className="nav-item">
-                <NavLink to="/User" className="nav-link">
+                <AdminUserDropdown setAdminUser={setAdminUser} />
+                {/* <NavLink to="/User" className="nav-link">
                   <FaUser size="1.5rem" />
-                </NavLink>
+                </NavLink> */}
               </li>
             </ul>
           </div>

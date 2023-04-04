@@ -12,31 +12,33 @@ const AdminLogin = ({ setAdminUser }) => {
   const signInSubmit = (e) => {
     e.preventDefault();
 
-    if (!adminEmail || !adminPassword) {
-      setAdminUser({ email: adminEmail, password: adminPassword });
-    }
 
     // POST
     const url = "http://localhost/10kg-collective/userModule/admin_login.php";
 
-    // data
-    let logData = new FormData();
-    logData.append("admin_email", adminEmail);
-    logData.append("admin_password", adminPassword);
+    // create POST data
+    let adminData = new FormData();
+    adminData.append("admin_email", adminEmail);
+    adminData.append("admin_password", adminPassword);
 
+    // if email & pass form has value
     if (adminEmail && adminPassword) {
       axios
-        .post(url, logData)
+        .post(url, adminData)
         .then((response) => {
-          if (response.data === "uy gagi") {
+          if (response.data === 1) {
             // Check for the expected response
+            alert("Wazzup Boss!")
+            // get the session data and store in variable
+            setAdminUser(response.data)
+            // navigate to admin panel
             navigate("/admin");
           } else {
-            navigate("/admin/login");
-            alert("Wrong Password.");
+            // wrong password or email
+            alert("Wrong Email or Password.");
           }
         })
-        .catch((error) => {
+        .catch((error) => { //error handling
           if (error.response && error.response.data === "maintenance mode") {
             // Check for the "maintenance mode" error message
             alert(
@@ -44,7 +46,7 @@ const AdminLogin = ({ setAdminUser }) => {
             );
           }
         });
-    } else {
+    } else { //if email & pass form has no value
       alert("Please fill out the empty fields");
     }
   };

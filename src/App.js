@@ -62,16 +62,20 @@ function App() {
           />
 
           {/* admin routes */}
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Admin adminUser={adminUser} />} />
-            <Route exact path="/admin/Products" element={<Products />} />
-            <Route exact path="/admin/product-form" element={<ProductForm />} />
-            <Route path="/admin/Orders" element={<Orders />} />
-          </Route>
+          <Route path="/admin" element={adminUser ? <AdminLayout adminUser={adminUser} setAdminUser={setAdminUser} /> : <AdminLogin /> }>
+            <Route index element={adminUser ? <Admin adminUser={adminUser} />: <AdminLogin /> } />
+            <Route exact path="/admin/Products" element={adminUser ? <Products adminUser={adminUser} />: <AdminLogin />} />
+            <Route exact path="/admin/product-form" element={adminUser ? <ProductForm adminUser={adminUser} /> : <AdminLogin /> } />
+            <Route path="/admin/Orders" element={adminUser ? <Orders adminUser={adminUser} /> : <AdminLogin /> } />
+          </Route> 
+          
           <Route
               path="/admin/Login"
               element={<AdminLogin setAdminUser={setAdminUser} />}
             />
+          
+          
+          
 
           {/* footer routes */}
           <Route element={<FooterPageLayout user={user} setUser={setUser} />} >
