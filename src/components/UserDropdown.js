@@ -28,8 +28,8 @@ const UserDropdown = ({user, setUser}) => {
   return (
     <>
         <div className="dropdown-center align-items-center">
-            <button className="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <FaUser size="1.5rem" />
+            <button className="btn dropdown-toggle user-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <FaUser size="1.5rem"  />
             </button>
             <ul class="dropdown-menu">
                 <li><NavLink className="dropdown-item" to="/UserDashboard">My Profile</NavLink></li>

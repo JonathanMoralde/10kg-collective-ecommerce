@@ -62,7 +62,7 @@ const Navbar = ({user, setUser}) => {
                 </NavLink> */}
                 {/* If the user is logged in, the user icon will have different functionality */}
                 {user ? <UserDropdown user={user} setUser={setUser} /> : <NavLink to="/User" className="nav-link">
-                  <FaUser size="1.5rem" />
+                  <FaUser size="1.5rem" className="user-icon"/>
                 </NavLink>}
                 
               </li>

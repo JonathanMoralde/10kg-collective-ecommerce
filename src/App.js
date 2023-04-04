@@ -10,7 +10,7 @@ import SingleProduct from "./pages/SingleProduct";
 import AdminLayout from "./components/AdminLayout";
 import Admin from "./pages/admin pages/Admin";
 import Products from "./pages/admin pages/Products";
-import Orders from "./pages/Orders";
+import Orders from "./pages/admin pages/Orders";
 import AdminLogin from "./pages/admin pages/AdminLogin";
 import ProductForm from "./components/ProductForm";
 import { useState } from "react";
@@ -26,6 +26,7 @@ import Returns from "./pages/footer pages/Returns";
 function App() {
   const [adminUser, setAdminUser] = useState(null);
   const [user, setUser] = useState(null);
+
   return (
     <>
       <BrowserRouter>
@@ -66,11 +67,11 @@ function App() {
             <Route exact path="/admin/Products" element={<Products />} />
             <Route exact path="/admin/product-form" element={<ProductForm />} />
             <Route path="/admin/Orders" element={<Orders />} />
-            <Route
+          </Route>
+          <Route
               path="/admin/Login"
               element={<AdminLogin setAdminUser={setAdminUser} />}
             />
-          </Route>
 
           {/* footer routes */}
           <Route element={<FooterPageLayout user={user} setUser={setUser} />} >

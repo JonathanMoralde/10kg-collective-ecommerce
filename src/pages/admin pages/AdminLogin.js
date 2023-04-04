@@ -52,13 +52,13 @@ const AdminLogin = ({ setAdminUser }) => {
   return (
     <>
       <div className="container-fluid form-section-background">
-        <div className="container-md form-section-container">
+        <div className="container-md form-section-container shadow w-50 py-5">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-12 d-flex flex-column align-items-center">
               {/* ETO YUNG FORM NG SIGN IN */}
               <form>
                 {/* ACTION */}
-                <h3 className="section-title mb-5">Sign In</h3>
+                <h3 className="section-title mb-5">Welcome Back Boss Sheesh!</h3>
 
                 {/* Sign in EMAIL */}
                 <div className="form-floating mb-3">
@@ -93,7 +93,7 @@ const AdminLogin = ({ setAdminUser }) => {
                 {/* Sign in BTN */}
                 <button
                   type="submit"
-                  className="btn btn-primary"
+                  className="btn btn-secondary"
                   onClick={(e) => signInSubmit(e)}
                 >
                   Sign In

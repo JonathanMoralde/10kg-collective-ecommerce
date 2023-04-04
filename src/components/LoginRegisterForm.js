@@ -102,8 +102,6 @@ const LoginRegisterForm = ({ setUser }) => {
     logData.append("log_password", log_Password);
 
     if (log_Email && log_Password) {
-      console.log(log_Email, log_Password);
-      console.log(logData);
       axios
         .post(url, logData)
         .then((response) => {
