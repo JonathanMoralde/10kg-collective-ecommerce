@@ -26,7 +26,7 @@ const AdminLogin = ({ setAdminUser }) => {
       axios
         .post(url, adminData)
         .then((response) => {
-          if (response.data === 1) {
+          if (response.data.response_status === 1) {
             // Check for the expected response
             alert("Wazzup Boss!")
             // get the session data and store in variable

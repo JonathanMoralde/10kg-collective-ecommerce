@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import axios from 'axios'
 
 const ProductForm = () => {
   const [name, setName] = useState();
@@ -20,6 +21,16 @@ const ProductForm = () => {
     productData.append("variation_name", variant) //insert new row to table with item's item_id as foreign
 
     const url = "http://localhost/10kg-collective/admin/add_product.php"
+
+    if(name && price && category && size && variant){
+      axios.post(url, productData)
+      .then((response)=>{
+        alert(response.data)
+      })
+      .catch((error)=>{
+        alert(error.data)
+      })
+    }
 
 
   };
