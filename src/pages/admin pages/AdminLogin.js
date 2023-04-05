@@ -26,11 +26,13 @@ const AdminLogin = ({ setAdminUser }) => {
       axios
         .post(url, adminData)
         .then((response) => {
+          // alert(response.data.response_status)
           if (response.data.response_status === 1) {
             // Check for the expected response
-            alert("Wazzup Boss!")
-            // get the session data and store in variable
+            
+            alert("Login Successful")
             setAdminUser(response.data)
+            // get the session data and store in variable
             // navigate to admin panel
             navigate("/admin");
           } else {

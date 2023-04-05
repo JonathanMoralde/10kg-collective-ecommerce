@@ -92,16 +92,16 @@ function App() {
           />
 
           {/* admin routes */}
-          <Route path="/admin" element={adminUser ? <AdminLayout adminUser={adminUser} setAdminUser={setAdminUser} /> : <AdminLogin /> }>
-            <Route index element={adminUser ? <Admin adminUser={adminUser} />: <AdminLogin /> } />
-            <Route exact path="/admin/Products" element={adminUser ? <Products adminUser={adminUser} />: <AdminLogin />} />
-            <Route exact path="/admin/product-form" element={adminUser ? <ProductForm adminUser={adminUser} /> : <AdminLogin /> } />
-            <Route path="/admin/Orders" element={adminUser ? <Orders adminUser={adminUser} /> : <AdminLogin /> } />
+          <Route path="/admin" element={adminUser ? <AdminLayout adminUser={adminUser} setAdminUser={setAdminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> }>
+            <Route index element={adminUser ? <Admin adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} /> } />
+            <Route exact path="/admin/Products" element={adminUser ? <Products adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} />} />
+            <Route exact path="/admin/product-form" element={adminUser ? <ProductForm adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
+            <Route path="/admin/Orders" element={adminUser ? <Orders adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
           </Route> 
           
           <Route
               path="/admin/Login"
-              element={<AdminLogin setAdminUser={setAdminUser} />}
+              element={adminUser ? <Admin adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} />}
             />
           
           
