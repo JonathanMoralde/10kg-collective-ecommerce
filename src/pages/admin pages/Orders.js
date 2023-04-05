@@ -7,7 +7,7 @@ const Orders = ({adminUser}) => {
 
   // get all the orders from backend
   useEffect(()=>{
-    const url = "https:/localhost/10kg-collective/displayModule/display.php"
+    const url = "https:/localhost/10kg-collective/admin/orderlist.php"
 
     const response = axios.get(url)
 

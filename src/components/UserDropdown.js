@@ -31,7 +31,7 @@ const UserDropdown = ({user, setUser}) => {
             <button className="btn dropdown-toggle user-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <FaUser size="1.5rem"  />
             </button>
-            <ul class="dropdown-menu">
+            <ul className="dropdown-menu">
                 <li><NavLink className="dropdown-item" to="/UserDashboard">My Profile</NavLink></li>
                 <li><button className="dropdown-item" onClick={()=>handleLogout()}>Sign Out</button></li>
             </ul>

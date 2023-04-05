@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -13,7 +15,6 @@ import Products from "./pages/admin pages/Products";
 import Orders from "./pages/admin pages/Orders";
 import AdminLogin from "./pages/admin pages/AdminLogin";
 import ProductForm from "./components/ProductForm";
-import { useState } from "react";
 import Checkout from "./pages/Checkout";
 import UserDashboard from "./pages/UserDashboard";
 // footer pages
@@ -26,6 +27,35 @@ import Returns from "./pages/footer pages/Returns";
 function App() {
   const [adminUser, setAdminUser] = useState(null);
   const [user, setUser] = useState(null);
+
+  // check session on initial render or when reloaded
+  useEffect(()=>{
+    // const response = axios.get("https:/localhost/10kg-collective/userModule/checksession.php")
+
+    // // setUser(response.data)
+    // // user or admin
+    // if(response.data.user_type === "c"){
+    //   setUser(response.data)
+    // } else if(response.data.user_type === "a"){
+    //   setAdminUser(response.data)
+    // } else {
+    //   setUser(null)
+    //   setAdminUser(null)
+    // }
+    axios.get("https:/localhost/10kg-collective/userModule/checksession.php")
+    .then((response)=>{
+     if(response.data.user_type === 'c'){
+      setUser(response.data)
+     } else {
+      // alert(response)
+     }
+    })
+    .catch((error)=>{
+      setUser(null)
+      setAdminUser(null)
+    })
+
+  },[])
 
   return (
     <>

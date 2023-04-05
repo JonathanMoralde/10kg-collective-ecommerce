@@ -10,6 +10,18 @@ const ProductForm = () => {
 
   const addProduct = (e) => {
     e.target.preventDefault();
+
+    let productData = new FormData()
+
+    productData.append("item_name", name) //insert
+    productData.append("item_price", price) //insert
+    productData.append("item_category", category) //check matching category name, set number
+    productData.append("size_name", size) //insert new row to table with item's item_id as foreign
+    productData.append("variation_name", variant) //insert new row to table with item's item_id as foreign
+
+    const url = "http://localhost/10kg-collective/admin/add_product.php"
+
+
   };
   return (
     <>
@@ -21,6 +33,11 @@ const ProductForm = () => {
               <form>
                 {/* ACTION */}
                 <h3 className="section-title mb-5">Add Item</h3>
+                
+                <div>
+                <label class="form-label" for="customFile">Default file input example</label>
+<input type="file" class="form-control" id="customFile" />
+                </div>
 
                 {/* Name */}
                 <div className="form-floating mb-3">
@@ -75,7 +92,7 @@ const ProductForm = () => {
                     id="floatingSize"
                     placeholder="Size"
                     required
-                    value={category}
+                    value={size}
                     onChange={(e) => setSize(e.target.value)}
                     name="sizes"
                   />
@@ -90,7 +107,7 @@ const ProductForm = () => {
                     id="floatingVariant"
                     placeholder="Size"
                     required
-                    value={category}
+                    value={variant}
                     onChange={(e) => setVariant(e.target.value)}
                     name="variants"
                   />
