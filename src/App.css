@@ -469,6 +469,40 @@ label {
 /* ADMIN PANEL */
 
 
+/* PRODUCTS SECTION */
+.item-thumbnail-form, .item-preview-form, .item-name-form, .item-price-form {
+  width: 45%;
+}
+.form-parent {
+  position: relative;
+}
+
+.item-info-form{
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transition: all 0.2s ease-out;
+}
+.variations-form {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transform: translate(100%);
+  transition: all 0.2s ease-out;
+}
+
+.next-toggle{
+  transform: translate(0);
+}
+.next-toggled{
+  transform: translate(-100%);
+}
+/* END OF PRODUCTS SECTION */
+
 
 
 /* END OF ADMIN PANEL */

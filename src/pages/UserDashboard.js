@@ -15,12 +15,12 @@ const UserDashboard = ({ user, setUser }) => {
         <h3 className="section-title">My Profile</h3>
 
         {/* acount details */}
-        <div className="user-details-section mt-5 bg-white shadow container-fluid">
+        <div className="user-details-section mt-5 bg-white container-fluid">
           <div className="row">
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
               image here
-            </div>
-            <div className="col-md-9">
+            </div> */}
+            <div className="col-md-6 shadow p-3 mx-auto">
               <div className="d-flex justify-content-between">
                 <h5 className="fullname text-capitalize">Name: {user.full_name}</h5>
                 <Link className="btn" onClick={()=>alert("USER EDIT FORM")}>

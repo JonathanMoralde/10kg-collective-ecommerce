@@ -2,8 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Products = ({adminUser}) => {
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   // this will get all Items
@@ -54,12 +56,22 @@ const Products = ({adminUser}) => {
                     </h5>
                     <p className="card-text">{product.item_price}</p>
                     <div className="d-flex justify-content-between align-items-center">
-                      <button type="button" className="btn btn-secondary">
+                      <button type="button" className="btn btn-secondary" onClick={()=>{
+                        navigate(`/admin/edit-product/${product.item_id}/${product.item_name}/${product.item_price}`);
+                      }}>
                         Edit
                       </button>
                       <button
                         type="button"
                         className="btn btn-outline-secondary"
+                        onClick={()=>{
+                          let delData = new FormData()
+                          delData.append("item_id", product.item_id) //will send item_id to backend for deleting
+
+                          axios.post("https:/localhost/10kg-collective/admin/delete.php", delData)
+                          .then((response)=>alert(response.data))
+                          .catch((error)=>alert(error.data, "Maintenance Mode"))
+                        }}
                       >
                         Remove
                       </button>

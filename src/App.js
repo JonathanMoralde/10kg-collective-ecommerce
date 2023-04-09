@@ -9,14 +9,16 @@ import User from "./pages/User";
 import "./App.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import SingleProduct from "./pages/SingleProduct";
+import Checkout from "./pages/Checkout";
+import UserDashboard from "./pages/UserDashboard";
+// Admin pages
 import AdminLayout from "./components/AdminLayout";
 import Admin from "./pages/admin pages/Admin";
 import Products from "./pages/admin pages/Products";
 import Orders from "./pages/admin pages/Orders";
 import AdminLogin from "./pages/admin pages/AdminLogin";
-import ProductForm from "./components/ProductForm";
-import Checkout from "./pages/Checkout";
-import UserDashboard from "./pages/UserDashboard";
+import ProductForm from "./pages/admin pages/ProductForm";
+import ProductEdit from "./pages/admin pages/ProductEdit";
 // footer pages
 import FooterPageLayout from "./components/FooterPageLayout";
 import Privacy from "./pages/footer pages/Privacy";
@@ -96,6 +98,7 @@ function App() {
             <Route index element={adminUser ? <Admin adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} /> } />
             <Route exact path="/admin/Products" element={adminUser ? <Products adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} />} />
             <Route exact path="/admin/product-form" element={adminUser ? <ProductForm adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
+            <Route path="/admin/edit-product/:id/:name/:price" element={adminUser ? <ProductEdit adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
             <Route path="/admin/Orders" element={adminUser ? <Orders adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
           </Route> 
           
