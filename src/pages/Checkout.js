@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 const Checkout = ({ user }) => {
   const { id, size, variant, qty, name, price } = useParams();
@@ -61,7 +61,7 @@ const Checkout = ({ user }) => {
 
   return (
     <>
-      <div className="container-fluid container-fix checkout-page my-5">
+      <div className="container-md shadow container-fix checkout-page mt-5 checkout-page-single">
         <h3 className="section-title mb-4">Checkout</h3>
         <div className="row mb-3">
           <div className="col-md-6">
@@ -88,20 +88,23 @@ const Checkout = ({ user }) => {
               />
             </div>
             <div className="">
-              <h5 className="checkout-product-title">{name}</h5>
+              <h5 className="checkout-text">{name}</h5>
             </div>
           </div>
           <div className="col-md-6">
-            <div className="d-flex justify-content-between align-items-center h-100">
-              <h3 className="col-title">{size}</h3>
-              <h3 className="col-title">{variant}</h3>
-              <h3 className="col-title">{qty}</h3>
-              <h3 className="col-title">{price}</h3>
+            <div className="d-flex justify-content-between h-100">
+              <h3 className="checkout-text">{size}</h3>
+              <h3 className="checkout-text">{variant}</h3>
+              <h3 className="checkout-text">{qty}</h3>
+              <h3 className="checkout-text">{price}</h3>
             </div>
           </div>
         </div>
+
+
+        <h5 className="checkout-text text-center my-3">Total Amount: ₱{price}</h5>
         <div className="checkout-btn-container d-flex justify-content-center align-items-center">
-          <button className="btn btn-outline-secondary me-3">Cancel</button>
+          <Link to='/Shop' className="btn btn-outline-secondary me-3">Cancel</Link>
           <button
             type="button"
             className="btn btn-secondary"

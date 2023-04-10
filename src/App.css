@@ -31,6 +31,25 @@ a {
   color: #373838;
 }
 
+/* input number fix */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.qty-btn {
+  cursor: pointer;
+}
+
+
+
 
 
 /* btn fix */
@@ -431,9 +450,47 @@ label {
 
 /* CHECKOUT PAGE */
 .checkout-page {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  height: 100vh;
+  padding-top: 4rem !important;
+  padding-bottom: 4rem !important;
+  /* height: 100vh; */
+}
+.checkout-page-single{
+  margin-bottom: 9.9rem;
+}
+.checkout-order-list{
+  overflow-y: scroll;
+  height: 20.75rem;
+}
+/* width */
+.checkout-order-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.checkout-order-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  visibility: hidden;
+}
+
+/* Handle */
+.checkout-order-list::-webkit-scrollbar-thumb {
+  background: #888;
+  visibility: hidden;
+  border-radius: 1rem;
+  transition: all 0.2s ease-out;
+
+}
+
+/* Handle on hover */
+.checkout-order-list:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+/* cart-checkout */
+.checkout-text{
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-transform: capitalize;
 }
 
 /* END OF CHECKOUT PAGE */
@@ -448,7 +505,7 @@ label {
 /* CART */
 .cart-container {
   position: fixed;
-  width: 25vw;
+  width: 35vw;
   top: 0;
   bottom: 0;
   right: 0;
@@ -462,6 +519,36 @@ label {
   translate: 0;
 }
 
+
+
+.border-btm {
+  border-bottom: solid var(--bs-border-width) var(--bs-border-color);
+}
+.cart-img-container {
+  width: 20%;
+  height: 5.625rem;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.cart-item-info {
+  width: 80%;
+  font-size: 1rem;
+}
+.cart-item-title, .cart-item-var, .cart-item-size, .cart-item-price {
+  margin: 0;
+  opacity: 0.75;
+}
+.cart-item-title {
+  opacity: 1;
+  letter-spacing: 1px;
+}
+.cart-item-price {
+  opacity: 1;
+}
+.cart-item-var {
+  font-style: italic;
+}
 
 /* END OF CART */
 

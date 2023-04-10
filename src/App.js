@@ -10,6 +10,7 @@ import "./App.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import SingleProduct from "./pages/SingleProduct";
 import Checkout from "./pages/Checkout";
+import CartCheckout from "./pages/CartCheckout";
 import UserDashboard from "./pages/UserDashboard";
 // Admin pages
 import AdminLayout from "./components/AdminLayout";
@@ -72,21 +73,13 @@ function App() {
               element={<Checkout user={user} />}
             />
             <Route path="/About" element={<About />} />
+          {/* Checkout for cart */}
+          <Route path="/Checkout" element={<CartCheckout user={user} />} />
           </Route>
 
-          {/* no footer in layout routes */}
+
+          {/* User */}
           <Route path="/User" element={<User setUser={setUser} />} />
-          {/* <Route
-            path="/User"
-            element={
-              user ? (
-                // <UserDashboard user={user} setUser={setUser} />
-                // <UserDropdown />
-              ) : (
-                <User setUser={setUser} />
-              )
-            }
-          /> */}
           
           <Route
             path="/UserDashboard"
