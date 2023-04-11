@@ -10,19 +10,13 @@ const Shop = ({ user }) => {
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
   const [clickedFilter, setClickedFilter] = useState("All Item");
-  // let clickedFilter = "All Items";
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
 
+  // get products from db
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-
-      //  const response = await fetch("https://fakestoreapi.com/products"); //change this URL to the PHP MYSQL backend API endpoint
-
-      //  if (componentMounted) {
-      //    setData(await response.clone().json());
-      //    setFilter(await response.json());
-      //    setLoading(false);
-      //  }
 
       const response = await axios.get(
         "https:/localhost/10kg-collective/displayModule/display.php" //php file
@@ -45,6 +39,7 @@ const Shop = ({ user }) => {
     getProducts();
   }, []);
 
+  // category btns
   const filterProduct = (cat) => {
     const filteredList = data.filter(
       (product) => product.item_category === cat
@@ -53,12 +48,28 @@ const Shop = ({ user }) => {
     setFilter(filteredList);
   };
 
+  // searchbar
+  useEffect(() => {
+    const filteredList = data.filter((product) =>
+      product.item_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // setFilter(filteredList); //automatically show results
+    setSearchResult(filteredList); //show results only if btn clicked
+  }, [searchQuery, data]);
+
   return (
     <>
       <main className="container-fluid container-fix shop-section">
         <div className="shop-search-bar row">
           <div className="col-md-3">
-            <Searchbar />
+            <Searchbar
+              setSearchQuery={setSearchQuery}
+              searchQuery={searchQuery}
+              setFilter={setFilter}
+              searchResult={searchResult}
+              setClickedFilter={setClickedFilter}
+            />
           </div>
         </div>
         <div className="categories row mt-3">
@@ -76,18 +87,11 @@ const Shop = ({ user }) => {
               >
                 All Item
               </button>
-              {/* <button
-                className="menu-btn"
-                // onClick={() => filterProduct("men's clothing")}
-                onClick={() => filterProduct("Newest Release")}
-              >
-                Newest Release
-              </button> */}
+
               <button
                 className={`menu-btn ${
                   clickedFilter === "Tees" ? "active-cat" : ""
                 }`}
-                // onClick={() => filterProduct("women's clothing")}
                 onClick={(e) => {
                   filterProduct(1);
                   setClickedFilter(e.currentTarget.textContent);
@@ -99,7 +103,6 @@ const Shop = ({ user }) => {
                 className={`menu-btn ${
                   clickedFilter === "Shorts" ? "active-cat" : ""
                 }`}
-                // onClick={() => filterProduct("jewelery")}
                 onClick={(e) => {
                   filterProduct(2);
                   setClickedFilter(e.currentTarget.textContent);
@@ -111,7 +114,7 @@ const Shop = ({ user }) => {
           </div>
           <div className="col-md-9 ps-5">
             <div className="d-flex justify-content-between">
-              <h3 className="section-title">{clickedFilter}</h3>
+              <h3 className="section-title text-capitalize">{clickedFilter}</h3>
               <div className="btn-group dropdown-fix">
                 <button
                   className="btn hover-fix dropdown-toggle"
@@ -142,6 +145,7 @@ const Shop = ({ user }) => {
                 ) : (
                   <ShowProducts filter={filter} user={user} />
                 )}
+                {searchResult < 1 && <p>Couldn't find a match</p>}
               </div>
             </div>
           </div>

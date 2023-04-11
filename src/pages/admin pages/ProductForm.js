@@ -60,14 +60,15 @@ const ProductForm = () => {
     const url = "http://localhost/10kg-collective/admin/add_product.php";
 
     if (name && price && category && size && inputFields) {
-      axios
-        .post(url, productData)
-        .then((response) => {
-          alert(response.data);
-        })
-        .catch((error) => {
-          alert(error.data);
-        });
+      // axios
+      //   .post(url, productData)
+      //   .then((response) => {
+      //     alert(response.data);
+      //   })
+      //   .catch((error) => {
+      //     alert(error.data);
+      //   });
+      console.log(name, price, category, size, inputFields);
     }
   };
 

@@ -63,13 +63,13 @@ const Cart = ({ user, active, setActive }) => {
 
   // checkout btn
   const handleCheckout = () => {
-    const cartJSON = JSON.stringify(orders);
+    // const cartJSON = JSON.stringify(orders);
 
     const cartData = new FormData();
     cartData.append("user_id", user.user_id); //$_POST['user_id']
-    cartData.append("cart", cartJSON); //$_POST['cart'] ==== contains array of objects or array of associative arrays???
+    cartData.append("cart", orders); //$_POST['cart'] ==== contains array of objects or array of associative arrays???
 
-    const url = "hhtps";
+    const url = "https://localhost/10kg-collective/orderModule/cart_update.php";
     // update user order first in db
     axios
       .post(url, cartData)
@@ -77,8 +77,9 @@ const Cart = ({ user, active, setActive }) => {
         alert(response.data);
         navigate("/Checkout");
       })
-      .catch((error) => alert("Maintenance mode"));
+      .catch((error) => alert(error.data));
     // then proceed to cart checkout page that displays updated order list
+    // console.log(user.user_id, orders);
   };
 
   return (
