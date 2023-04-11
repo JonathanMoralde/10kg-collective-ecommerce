@@ -166,21 +166,21 @@ const Home = () => {
       <section className="container quality-section container-fix">
         <div className="row">
           <div className="col-lg-4">
-            <FaShapes size="6.25rem" className="text-secondary" />
+            <FaShapes size="6.25rem" className="icon-color" />
             <h5 className="quality-title mt-4">Inclusive Sizing</h5>
             <p className="quality-text mt-2">
               Offering sizes that range from XS to XL
             </p>
           </div>
           <div className="col-lg-4">
-            <FaTshirt size="6.25rem" className="text-secondary" />
+            <FaTshirt size="6.25rem" className="icon-color" />
             <h5 className="quality-title mt-4">Quality Material</h5>
             <p className="quality-text mt-2">
               Each garment is made of 100% cotton
             </p>
           </div>
           <div className="col-lg-4">
-            <FaShippingFast size="6.25rem" className="text-secondary" />
+            <FaShippingFast size="6.25rem" className="icon-color" />
             <h5 className="quality-title mt-4">Free Shipping</h5>
             <p className="quality-text mt-2">
               We provide free shipping in Polangui Area

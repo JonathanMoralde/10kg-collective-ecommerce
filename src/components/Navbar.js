@@ -3,10 +3,10 @@ import { NavLink, Link } from "react-router-dom";
 import blackLogo from "../images/logo/10KG BLACK trimmed.png";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import UserDropdown from "./UserDropdown";
-import Cart from "./Cart"
+import Cart from "./Cart";
 import { useState } from "react";
 
-const Navbar = ({user, setUser}) => {
+const Navbar = ({ user, setUser }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -61,14 +61,20 @@ const Navbar = ({user, setUser}) => {
                   <FaUser size="1.5rem" />
                 </NavLink> */}
                 {/* If the user is logged in, the user icon will have different functionality */}
-                {user ? <UserDropdown user={user} setUser={setUser} /> : <NavLink to="/User" className="nav-link">
-                  <FaUser size="1.5rem" className="user-icon"/>
-                </NavLink>}
-                
+                {user ? (
+                  <UserDropdown user={user} setUser={setUser} />
+                ) : (
+                  <NavLink to="/User" className="nav-link">
+                    <FaUser size="1.5rem" className="user-icon" />
+                  </NavLink>
+                )}
               </li>
               <li className="nav-item ms-1 ">
-                <button className="btn padding-right-fix" onClick={()=> setActive(!active)}>
-                  <FaShoppingCart size="1.5rem" className="shopping-cart"/>
+                <button
+                  className="btn hover-fix padding-right-fix"
+                  onClick={() => setActive(!active)}
+                >
+                  <FaShoppingCart size="1.5rem" className="shopping-cart" />
                 </button>
               </li>
             </ul>

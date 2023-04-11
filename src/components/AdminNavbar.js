@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import blackLogo from "../images/logo/10KG BLACK trimmed.png";
 import AdminUserDropdown from "./AdminUserDropdown";
-import { FaUser } from "react-icons/fa";
 
-const AminNavbar = ({adminUser, setAdminUser}) => {
+const AminNavbar = ({ adminUser, setAdminUser }) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
@@ -28,7 +27,8 @@ const AminNavbar = ({adminUser, setAdminUser}) => {
               <li className="nav-item">
                 <NavLink
                   activeclassname="active"
-                  className="nav-link"
+                  className={`nav-link`}
+                  end
                   to="/admin"
                 >
                   Dashboard
@@ -38,6 +38,7 @@ const AminNavbar = ({adminUser, setAdminUser}) => {
                 <NavLink
                   activeclassname="active"
                   className="nav-link"
+                  end
                   to="/admin/Products"
                 >
                   Products
@@ -47,6 +48,7 @@ const AminNavbar = ({adminUser, setAdminUser}) => {
                 <NavLink
                   activeclassname="active"
                   className="nav-link"
+                  end
                   to="/admin/Orders"
                 >
                   Orders
@@ -58,9 +60,6 @@ const AminNavbar = ({adminUser, setAdminUser}) => {
             <ul className="navbar-nav flex-row">
               <li className="nav-item">
                 <AdminUserDropdown setAdminUser={setAdminUser} />
-                {/* <NavLink to="/User" className="nav-link">
-                  <FaUser size="1.5rem" />
-                </NavLink> */}
               </li>
             </ul>
           </div>

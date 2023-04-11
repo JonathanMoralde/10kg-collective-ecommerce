@@ -137,9 +137,7 @@ const LoginRegisterForm = ({ setUser }) => {
       <div className="container-fluid form-section-background">
         <div className="container-md form-section-container shadow">
           <div className="row">
-            {/* sign up form */}
-            <div className="col-md-6 sign-up-container">
-              {/* SLIDING TOGGLE */}
+            <div className="col-md-6 sign-in-container">
               <div
                 className={`sliding-container ${isToggle ? "form-toggle" : ""}`}
               >
@@ -195,9 +193,21 @@ const LoginRegisterForm = ({ setUser }) => {
                   SIGN IN
                 </button>
               </div>
+            </div>
+            {/* sign up form */}
+            <div
+              className={`col-md-6 sign-up-container bg-white ${
+                isToggle ? "slide-left" : ""
+              }`}
+            >
+              {/* SLIDING TOGGLE */}
 
               {/* SIGN UP FORM */}
-              <form className="d-flex flex-column align-items-center justify-content-center h-100 user-form py-5">
+              <form
+                className={`d-flex flex-column align-items-center justify-content-center h-100 user-form  ${
+                  isToggle ? "" : "user-form-signup"
+                }`}
+              >
                 <h3 className="section-title mb-3">Sign Up</h3>
                 {/* Sign up FNAME */}
                 <div className="form-floating mb-3">
@@ -279,12 +289,13 @@ const LoginRegisterForm = ({ setUser }) => {
                   SIGN UP
                 </button>
               </form>
-            </div>
 
-            {/* sign in form */}
-            <div className="col-md-6 sign-in-container">
-              {/* ETO YUNG FORM NG SIGN IN */}
-              <form className="d-flex flex-column align-items-center justify-content-center h-100 user-form">
+              {/* SIGN IN FORM */}
+              <form
+                className={`d-flex flex-column align-items-center justify-content-center h-100 user-form ${
+                  isToggle ? "sign-in-display" : ""
+                }`}
+              >
                 {/* ACTION */}
                 <h3 className="section-title mb-5">Sign In</h3>
 
@@ -329,6 +340,8 @@ const LoginRegisterForm = ({ setUser }) => {
                 </button>
               </form>
             </div>
+
+            {/* sign in form */}
           </div>
         </div>
       </div>

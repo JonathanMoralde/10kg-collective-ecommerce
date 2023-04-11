@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import logo from "../../images/logo/10KG BLACK trimmed.png";
 
 const AdminLogin = ({ setAdminUser }) => {
   const [adminEmail, setAdminEmail] = useState("");
@@ -11,7 +12,6 @@ const AdminLogin = ({ setAdminUser }) => {
   //   BTN HANDLER
   const signInSubmit = (e) => {
     e.preventDefault();
-
 
     // POST
     const url = "http://localhost/10kg-collective/admin/admin_login.php";
@@ -29,9 +29,9 @@ const AdminLogin = ({ setAdminUser }) => {
           // alert(response.data.response_status)
           if (response.data.response_status === 1) {
             // Check for the expected response
-            
-            alert("Login Successful")
-            setAdminUser(response.data)
+
+            alert("Login Successful");
+            setAdminUser(response.data);
             // get the session data and store in variable
             // navigate to admin panel
             navigate("/admin");
@@ -40,7 +40,8 @@ const AdminLogin = ({ setAdminUser }) => {
             alert("Wrong Email or Password.");
           }
         })
-        .catch((error) => { //error handling
+        .catch((error) => {
+          //error handling
           if (error.response && error.response.data === "maintenance mode") {
             // Check for the "maintenance mode" error message
             alert(
@@ -48,21 +49,24 @@ const AdminLogin = ({ setAdminUser }) => {
             );
           }
         });
-    } else { //if email & pass form has no value
+    } else {
+      //if email & pass form has no value
       alert("Please fill out the empty fields");
     }
   };
 
   return (
     <>
-      <div className="container-fluid form-section-background">
-        <div className="container-md form-section-container shadow w-50 py-5">
+      <div className="container-fluid form-section-background admin-login-page">
+        <div className="container-md form-section-container shadow w-50 py-5 bg-white">
           <div className="row">
             <div className="col-md-12 d-flex flex-column align-items-center">
               {/* ETO YUNG FORM NG SIGN IN */}
               <form>
                 {/* ACTION */}
-                <h3 className="section-title mb-5">Welcome Back Boss Sheesh!</h3>
+                <div className="logo-container mb-5">
+                  <img src={logo} className="w-100 h-100" alt="" />
+                </div>
 
                 {/* Sign in EMAIL */}
                 <div className="form-floating mb-3">
@@ -95,13 +99,15 @@ const AdminLogin = ({ setAdminUser }) => {
                 </div>
 
                 {/* Sign in BTN */}
-                <button
-                  type="submit"
-                  className="btn btn-secondary"
-                  onClick={(e) => signInSubmit(e)}
-                >
-                  Sign In
-                </button>
+                <div className="d-flex justify-content-center">
+                  <button
+                    type="submit"
+                    className="btn btn-secondary text-uppercase"
+                    onClick={(e) => signInSubmit(e)}
+                  >
+                    Sign In
+                  </button>
+                </div>
               </form>
             </div>
           </div>

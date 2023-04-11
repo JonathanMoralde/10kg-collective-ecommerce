@@ -66,7 +66,9 @@ const Shop = ({ user }) => {
             <h3 className="section-title">Categories</h3>
             <div className="category-btns d-flex flex-column align-items-start justify-content-between mt-3">
               <button
-                className="menu-btn"
+                className={`menu-btn ${
+                  clickedFilter === "All Item" ? "active-cat" : ""
+                }`}
                 onClick={(e) => {
                   setFilter(data);
                   setClickedFilter(e.currentTarget.textContent);
@@ -82,7 +84,9 @@ const Shop = ({ user }) => {
                 Newest Release
               </button> */}
               <button
-                className="menu-btn"
+                className={`menu-btn ${
+                  clickedFilter === "Tees" ? "active-cat" : ""
+                }`}
                 // onClick={() => filterProduct("women's clothing")}
                 onClick={(e) => {
                   filterProduct(1);
@@ -92,7 +96,9 @@ const Shop = ({ user }) => {
                 Tees
               </button>
               <button
-                className="menu-btn"
+                className={`menu-btn ${
+                  clickedFilter === "Shorts" ? "active-cat" : ""
+                }`}
                 // onClick={() => filterProduct("jewelery")}
                 onClick={(e) => {
                   filterProduct(2);
@@ -108,7 +114,7 @@ const Shop = ({ user }) => {
               <h3 className="section-title">{clickedFilter}</h3>
               <div className="btn-group dropdown-fix">
                 <button
-                  className="btn dropdown-toggle"
+                  className="btn hover-fix dropdown-toggle"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"

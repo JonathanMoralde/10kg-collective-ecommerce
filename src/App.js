@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -32,7 +32,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   // check session on initial render or when reloaded
-  useEffect(()=>{
+  useEffect(() => {
     // const response = axios.get("https:/localhost/10kg-collective/userModule/checksession.php")
 
     // // setUser(response.data)
@@ -45,20 +45,20 @@ function App() {
     //   setUser(null)
     //   setAdminUser(null)
     // }
-    axios.get("https:/localhost/10kg-collective/userModule/checksession.php")
-    .then((response)=>{
-     if(response.data.user_type === 'c'){
-      setUser(response.data)
-     } else {
-      // alert(response)
-     }
-    })
-    .catch((error)=>{
-      setUser(null)
-      setAdminUser(null)
-    })
-
-  },[])
+    axios
+      .get("https:/localhost/10kg-collective/userModule/checksession.php")
+      .then((response) => {
+        if (response.data.user_type === "c") {
+          setUser(response.data);
+        } else {
+          // alert(response)
+        }
+      })
+      .catch((error) => {
+        setUser(null);
+        setAdminUser(null);
+      });
+  }, []);
 
   return (
     <>
@@ -73,38 +73,100 @@ function App() {
               element={<Checkout user={user} />}
             />
             <Route path="/About" element={<About />} />
-          {/* Checkout for cart */}
-          <Route path="/Checkout" element={<CartCheckout user={user} />} />
+            {/* Checkout for cart */}
+            <Route path="/Checkout" element={<CartCheckout user={user} />} />
           </Route>
-
 
           {/* User */}
           <Route path="/User" element={<User setUser={setUser} />} />
-          
+
           <Route
             path="/UserDashboard"
             element={<UserDashboard user={user} setUser={setUser} />}
           />
 
           {/* admin routes */}
-          <Route path="/admin" element={adminUser ? <AdminLayout adminUser={adminUser} setAdminUser={setAdminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> }>
-            <Route index element={adminUser ? <Admin adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} /> } />
-            <Route exact path="/admin/Products" element={adminUser ? <Products adminUser={adminUser} />: <AdminLogin setAdminUser={setAdminUser} />} />
-            <Route exact path="/admin/product-form" element={adminUser ? <ProductForm adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
-            <Route path="/admin/edit-product/:id/:name/:price" element={adminUser ? <ProductEdit adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
-            <Route path="/admin/Orders" element={adminUser ? <Orders adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} /> } />
-          </Route> 
-          
           <Route
-              path="/admin/Login"
-              element={adminUser ? <Admin adminUser={adminUser} /> : <AdminLogin setAdminUser={setAdminUser} />}
+            exact
+            path="/admin"
+            element={
+              adminUser ? (
+                <AdminLayout
+                  adminUser={adminUser}
+                  setAdminUser={setAdminUser}
+                />
+              ) : (
+                <AdminLogin setAdminUser={setAdminUser} />
+              )
+            }
+          >
+            <Route
+              index
+              element={
+                adminUser ? (
+                  <Admin adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
             />
-          
-          
-          
+            <Route
+              exact
+              path="/admin/Products"
+              element={
+                adminUser ? (
+                  <Products adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/admin/product-form"
+              element={
+                adminUser ? (
+                  <ProductForm adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
+            />
+            <Route
+              path="/admin/edit-product/:id/:name/:price"
+              element={
+                adminUser ? (
+                  <ProductEdit adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
+            />
+            <Route
+              path="/admin/Orders"
+              element={
+                adminUser ? (
+                  <Orders adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
+            />
+          </Route>
+
+          <Route
+            path="/admin/Login"
+            element={
+              adminUser ? (
+                <Admin adminUser={adminUser} />
+              ) : (
+                <AdminLogin setAdminUser={setAdminUser} />
+              )
+            }
+          />
 
           {/* footer routes */}
-          <Route element={<FooterPageLayout user={user} setUser={setUser} />} >
+          <Route element={<FooterPageLayout user={user} setUser={setUser} />}>
             <Route path="/Privacy" element={<Privacy />} />
             <Route path="/SizeGuide" element={<SizeGuide />} />
             <Route path="/Faqs" element={<Faqs />} />

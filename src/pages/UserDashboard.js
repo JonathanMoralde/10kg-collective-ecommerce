@@ -5,8 +5,6 @@ import { FaCog } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const UserDashboard = ({ user, setUser }) => {
-
-  
   return (
     <>
       <Navbar user={user} setUser={setUser} />
@@ -22,19 +20,27 @@ const UserDashboard = ({ user, setUser }) => {
             </div> */}
             <div className="col-md-6 shadow p-3 mx-auto">
               <div className="d-flex justify-content-between">
-                <h5 className="fullname text-capitalize">Name: {user.full_name}</h5>
-                <Link className="btn" onClick={()=>alert("USER EDIT FORM")}>
-                  <FaCog size='1.5rem' />
+                <h5 className="fullname text-capitalize">
+                  Name: {user.full_name}
+                </h5>
+                <Link
+                  className="text-secondary"
+                  onClick={() => alert("USER EDIT FORM")}
+                >
+                  <FaCog size="1.5rem" />
                 </Link>
               </div>
-              <h5 className="address text-capitalize">Address: {user.address}</h5>
-              <h5 className="contact-number">Contact Number: {user.contact_no}</h5>
-              <h5 className="email-address">Email Address: {user.email_address}</h5>
+              <h5 className="address text-capitalize">
+                Address: {user.address}
+              </h5>
+              <h5 className="contact-number">
+                Contact Number: {user.contact_no}
+              </h5>
+              <h5 className="email-address">
+                Email Address: {user.email_address}
+              </h5>
             </div>
           </div>
-
-          
-          
         </div>
 
         {/* order list of the user */}
