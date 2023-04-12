@@ -23,52 +23,62 @@ const ProductForm = () => {
   };
 
   // DYNAMIC VARIATION FIELDS
-  const [inputFields, setInputFields] = useState([{ value: "" }]); //inputFields = Variants data, which is an array of objects containing the value [{value: ''},{value:''}]
+  const [inputFields, setInputFields] = useState([{  }]);
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    values[index].value = event.target.value;
+    values[index] = event.target.value;
     setInputFields(values);
   };
-
+  
   const handleAddFields = () => {
-    setInputFields([...inputFields, { value: "" }]);
+    setInputFields([...inputFields, { }]);
   };
-
+  
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
     setInputFields(values);
   };
+  
+  // Convert inputFields array of objects to a string before setting it in state
+  const inputFieldsString = JSON.stringify(inputFields);
+  
+  // ... rest of the code
+  
 
   // NEXT & BACK FORM HANDLE
   const [isNext, setIsNext] = useState(false);
 
   const addProduct = () => {
-    // e.preventDefault();
-
     console.log(name, price, category, size, inputFields);
-
+  
     let productData = new FormData();
-
-    productData.append("item_name", name); //insert
-    productData.append("item_price", price); //insert
-    productData.append("item_category", category); //check matching category name, set number
-    productData.append("size_name", size); //insert new row to table with item's item_id as foreign
-    productData.append("variation_name", inputFields); //insert new row to table with item's item_id as foreign
-
+  
+    productData.append("item_name", name);
+    productData.append("item_price", price);
+    productData.append("item_category", category);
+    productData.append("size_name", size);
+  
+    // Append inputFieldsString as a parameter
+    productData.append("variation_name", inputFieldsString);
+  
     const url = "http://localhost/10kg-collective/admin/add_product.php";
 
-    if (name && price && category && size && inputFields) {
-      // axios
-      //   .post(url, productData)
-      //   .then((response) => {
-      //     alert(response.data);
-      //   })
-      //   .catch((error) => {
-      //     alert(error.data);
-      //   });
-      console.log(name, price, category, size, inputFields);
+    if (name && price && category && size && inputFieldsString) {
+      axios
+        .post(url, productData)
+        .then((response) => {
+          if (alert(response.data === 1)){
+            alert("Product Updated")
+           // navigate('/Shop')
+          }
+
+        })
+        .catch((error) => {
+          alert(error.data);
+        });
+      console.log(name, price, category, size, inputFieldsString);
     }
   };
 
