@@ -51,10 +51,10 @@ const ProductForm = () => {
   const [isNext, setIsNext] = useState(false);
 
   const addProduct = () => {
-    console.log(name, price, category, size, inputFields);
+    console.log(name, price, category, size, inputFieldsString);
   
     let productData = new FormData();
-  
+  //uy gegi
     productData.append("item_name", name);
     productData.append("item_price", price);
     productData.append("item_category", category);
