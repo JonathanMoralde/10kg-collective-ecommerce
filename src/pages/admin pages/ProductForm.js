@@ -46,28 +46,36 @@ const ProductForm = () => {
 
   const addProduct = () => {
     // e.preventDefault();
-
+  
     console.log(name, price, category, size, inputFields);
-
+  
     let productData = new FormData();
-
-    productData.append("item_name", name); //insert
-    productData.append("item_price", price); //insert
-    productData.append("item_category", category); //check matching category name, set number
-    productData.append("size_name", size); //insert new row to table with item's item_id as foreign
-    productData.append("variation_name", inputFields); //insert new row to table with item's item_id as foreign
-
+  
+    productData.append("item_name", name);
+    productData.append("item_price", price);
+    productData.append("item_category", category);
+  
+    // Insert size names
+    size.forEach((sizeName) => {
+      productData.append("size_name[]", sizeName);
+    });
+  
+    // Insert variation names
+    inputFields.forEach((variation) => {
+      productData.append("variation_name[]", variation.value);
+    });
+  
     const url = "http://localhost/10kg-collective/admin/add_product.php";
-
+  
     if (name && price && category && size && inputFields) {
-      // axios
-      //   .post(url, productData)
-      //   .then((response) => {
-      //     alert(response.data);
-      //   })
-      //   .catch((error) => {
-      //     alert(error.data);
-      //   });
+      axios
+        .post(url, productData)
+        .then((response) => {
+          alert(response.data === 1);
+        })
+        .catch((error) => {
+          alert(error.data);
+        });
       console.log(name, price, category, size, inputFields);
     }
   };
