@@ -23,62 +23,60 @@ const ProductForm = () => {
   };
 
   // DYNAMIC VARIATION FIELDS
-  const [inputFields, setInputFields] = useState([{  }]);
+  const [inputFields, setInputFields] = useState([{ value: "" }]); //inputFields = Variants data, which is an array of objects containing the value [{value: ''},{value:''}]
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    values[index] = event.target.value;
+    values[index].value = event.target.value;
     setInputFields(values);
   };
-  
+
   const handleAddFields = () => {
-    setInputFields([...inputFields, { }]);
+    setInputFields([...inputFields, { value: "" }]);
   };
-  
+
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
     setInputFields(values);
   };
-  
-  // Convert inputFields array of objects to a string before setting it in state
-  const inputFieldsString = JSON.stringify(inputFields);
-  
-  // ... rest of the code
-  
 
   // NEXT & BACK FORM HANDLE
   const [isNext, setIsNext] = useState(false);
 
   const addProduct = () => {
-    console.log(name, price, category, size, inputFieldsString);
+    // e.preventDefault();
+  
+    console.log(name, price, category, size, inputFields);
   
     let productData = new FormData();
-  //uy gegi
+  
     productData.append("item_name", name);
     productData.append("item_price", price);
     productData.append("item_category", category);
-    productData.append("size_name", size);
   
-    // Append inputFieldsString as a parameter
-    productData.append("variation_name", inputFieldsString);
+    // Insert size names
+    size.forEach((sizeName) => {
+      productData.append("size_name[]", sizeName);
+    });
+  
+    // Insert variation names
+    inputFields.forEach((variation) => {
+      productData.append("variation_name[]", variation.value);
+    });
   
     const url = "http://localhost/10kg-collective/admin/add_product.php";
-
-    if (name && price && category && size && inputFieldsString) {
+  
+    if (name && price && category && size && inputFields) {
       axios
         .post(url, productData)
         .then((response) => {
-          if (alert(response.data === 1)){
-            alert("Product Updated")
-           // navigate('/Shop')
-          }
-
+          alert(response.data === 1);
         })
         .catch((error) => {
           alert(error.data);
         });
-      console.log(name, price, category, size, inputFieldsString);
+      console.log(name, price, category, size, inputFields);
     }
   };
 
