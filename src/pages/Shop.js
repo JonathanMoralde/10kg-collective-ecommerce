@@ -12,6 +12,7 @@ const Shop = ({ user }) => {
   const [clickedFilter, setClickedFilter] = useState("All Item");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [clickedSort, setClickedSort] = useState("Newest");
 
   // get products from db
   useEffect(() => {
@@ -57,6 +58,31 @@ const Shop = ({ user }) => {
     // setFilter(filteredList); //automatically show results
     setSearchResult(filteredList); //show results only if btn clicked
   }, [searchQuery, data]);
+
+  // Sort Drop down
+  const handleSort = (e) => {
+    if (e.target.textContent === "Newest") {
+      const sortedData = filter.sort(
+        (a, b) => new Date(b.date_added) - new Date(a.date_added)
+      );
+      setFilter(sortedData);
+    } else if (e.target.textContent === "Oldest") {
+      const sortedData = filter.sort(
+        (a, b) => new Date(a.date_added) - new Date(b.date_added)
+      );
+      setFilter(sortedData);
+    } else if (e.target.textContent === "Highest Price") {
+      const sortedData = filter.sort(
+        (a, b) => new Date(b.item_price) - new Date(a.item_price)
+      );
+      setFilter(sortedData);
+    } else {
+      const sortedData = filter.sort(
+        (a, b) => new Date(a.item_price) - new Date(b.item_price)
+      );
+      setFilter(sortedData);
+    }
+  };
 
   return (
     <>
@@ -122,17 +148,52 @@ const Shop = ({ user }) => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Newest
+                  {clickedSort}
                 </button>
                 <ul className="dropdown-menu">
                   <li>
-                    <button className="dropdown-item">Oldest</button>
+                    <button
+                      className={`dropdown-item`}
+                      onClick={(e) => {
+                        setClickedSort(e.target.textContent);
+                        handleSort(e);
+                      }}
+                    >
+                      Newest
+                    </button>
                   </li>
                   <li>
-                    <button className="dropdown-item">Highest Price</button>
+                    <button
+                      className={`dropdown-item`}
+                      onClick={(e) => {
+                        setClickedSort(e.target.textContent);
+                        handleSort(e);
+                      }}
+                    >
+                      Oldest
+                    </button>
                   </li>
                   <li>
-                    <button className="dropdown-item">Lowest Price</button>
+                    <button
+                      className={`dropdown-item`}
+                      onClick={(e) => {
+                        setClickedSort(e.target.textContent);
+                        handleSort(e);
+                      }}
+                    >
+                      Highest Price
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className={`dropdown-item`}
+                      onClick={(e) => {
+                        setClickedSort(e.target.textContent);
+                        handleSort(e);
+                      }}
+                    >
+                      Lowest Price
+                    </button>
                   </li>
                 </ul>
               </div>

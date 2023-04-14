@@ -46,32 +46,36 @@ const ProductForm = () => {
 
   const addProduct = () => {
     // e.preventDefault();
-  
+
     console.log(name, price, category, size, inputFields);
-  
+
     let productData = new FormData();
-  
+
     productData.append("item_name", name);
     productData.append("item_price", price);
     productData.append("item_category", category);
-  
+
     // Insert size names
     size.forEach((sizeName) => {
       productData.append("size_name[]", sizeName);
     });
-  
+
     // Insert variation names
     inputFields.forEach((variation) => {
       productData.append("variation_name[]", variation.value);
     });
-  
+
     const url = "http://localhost/10kg-collective/admin/add_product.php";
-  
+
     if (name && price && category && size && inputFields) {
       axios
         .post(url, productData)
         .then((response) => {
-          alert(response.data === 1);
+          if (response.data === 1) {
+            alert("Item Added");
+          } else {
+            alert("Item was not added");
+          }
         })
         .catch((error) => {
           alert(error.data);

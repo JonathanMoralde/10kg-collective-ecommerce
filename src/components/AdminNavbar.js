@@ -31,7 +31,7 @@ const AminNavbar = ({ adminUser, setAdminUser }) => {
                   end
                   to="/admin"
                 >
-                  Dashboard
+                  Sales
                 </NavLink>
               </li>
               <li className="nav-item">

@@ -26,10 +26,8 @@ const Checkout = ({ user }) => {
 
   // Filter to the Single product
   const product = data.find((product) => product.item_id == id);
- 
 
   const handleClick = () => {
-
     // POST
     const url = "https://localhost/10kg-collective/orderModule/checkout.php";
 
@@ -42,76 +40,79 @@ const Checkout = ({ user }) => {
     buyData.append("item_variant", variant);
     buyData.append("order_qty", qty);
 
-
-    if(buyData){
+    if (buyData) {
       axios
-      .post(url, buyData)
-      .then((response) => {
-        if(response.data === 1){
-          alert("Ordered Successfully")
-          navigate("/UserDashboard");
-        }else {
-          alert("Order Failed")
-        }
-      })
-      .catch((error) => alert(error));
+        .post(url, buyData)
+        .then((response) => {
+          if (response.data === 1) {
+            alert("Ordered Successfully");
+            navigate("/UserDashboard");
+          } else {
+            alert("Order Failed");
+          }
+        })
+        .catch((error) => alert(error));
     }
-    
   };
 
   return (
     <>
-      <div className="container-md shadow container-fix checkout-page mt-5 checkout-page-single">
-        <h3 className="section-title mb-4">Checkout</h3>
-        <div className="row mb-3">
-          <div className="col-md-6">
-            <h3 className="col-title">Your Order</h3>
-          </div>
-          <div className="col-md-6">
-            <div className="d-flex justify-content-between">
-              <h3 className="col-title">Size</h3>
-              <h3 className="col-title">Variation</h3>
-              <h3 className="col-title">Qty</h3>
-              <h3 className="col-title">Price</h3>
+      <div className="container-fluid checkout-background py-5">
+        <div className="container-md shadow container-fix checkout-page checkout-page-single bg-white">
+          <h3 className="section-title mb-4">Checkout</h3>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              <h3 className="col-title">Your Order</h3>
+            </div>
+            <div className="col-md-6">
+              <div className="d-flex justify-content-between">
+                <h3 className="col-title">Size</h3>
+                <h3 className="col-title">Variation</h3>
+                <h3 className="col-title">Qty</h3>
+                <h3 className="col-title">Price</h3>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-6 d-flex">
-            <div className="card mb-3 me-5">
-              <img
-                src=""
-                className="card-img-top"
-                alt="product-img"
-                height="150px"
-              />
+          <div className="row">
+            <div className="col-md-6 d-flex">
+              <div className="card mb-3 me-5">
+                <img
+                  src=""
+                  className="card-img-top"
+                  alt="product-img"
+                  height="150px"
+                />
+              </div>
+              <div className="">
+                <h5 className="checkout-text">{name}</h5>
+              </div>
             </div>
-            <div className="">
-              <h5 className="checkout-text">{name}</h5>
+            <div className="col-md-6">
+              <div className="d-flex justify-content-between h-100">
+                <h3 className="checkout-text">{size}</h3>
+                <h3 className="checkout-text">{variant}</h3>
+                <h3 className="checkout-text">{qty}</h3>
+                <h3 className="checkout-text">{price}</h3>
+              </div>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="d-flex justify-content-between h-100">
-              <h3 className="checkout-text">{size}</h3>
-              <h3 className="checkout-text">{variant}</h3>
-              <h3 className="checkout-text">{qty}</h3>
-              <h3 className="checkout-text">{price}</h3>
-            </div>
+
+          <h5 className="checkout-text text-center my-3">
+            Total Amount: ₱{price}
+          </h5>
+          <div className="checkout-btn-container d-flex justify-content-center align-items-center">
+            <Link to="/Shop" className="btn btn-outline-secondary me-3">
+              Cancel
+            </Link>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={() => handleClick()}
+            >
+              Checkout
+            </button>
           </div>
-        </div>
-
-
-        <h5 className="checkout-text text-center my-3">Total Amount: ₱{price}</h5>
-        <div className="checkout-btn-container d-flex justify-content-center align-items-center">
-          <Link to='/Shop' className="btn btn-outline-secondary me-3">Cancel</Link>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => handleClick()}
-          >
-            Checkout
-          </button>
         </div>
       </div>
     </>

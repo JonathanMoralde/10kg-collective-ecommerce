@@ -12,21 +12,6 @@ const LoginRegisterForm = ({ setUser }) => {
   // const { id } = useParams();
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get("redirect");
-  // console.log(id);
-  // // handle Log in
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost/10kg-collective/userModule/check_session.php")
-  //     .then((response) => {
-  //       const isLoggedIn = response.data.loggedIn;
-  //       setLoggedIn(isLoggedIn);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   // HANDLE SING UP
   const [fName, setFName] = useState("");
@@ -135,7 +120,7 @@ const LoginRegisterForm = ({ setUser }) => {
   return (
     <>
       <div className="container-fluid form-section-background">
-        <div className="container-md form-section-container shadow">
+        <div className="container-md form-section-container bg-white shadow">
           <div className="row">
             <div className="col-md-6 sign-in-container">
               <div

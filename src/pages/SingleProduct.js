@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FaPlus, FaMinus } from "react-icons";
 import { useNavigate } from "react-router-dom";
 
 const SingleProduct = ({ user }) => {
@@ -12,7 +11,7 @@ const SingleProduct = ({ user }) => {
   const [data, setData] = useState([]);
   const [selectedSize, setSelectedSize] = useState("S");
   const [selectedVariant, setSelectedVariant] = useState("Gray");
-  const [quantity, setQuantity] = useState("1");
+  const [quantity, setQuantity] = useState(1);
   const [itemSize, setItemSize] = useState([]);
   const [itemVariant, setItemVariant] = useState([]);
 
@@ -65,9 +64,9 @@ const SingleProduct = ({ user }) => {
 
   // Filter to the Single product
 
-  const productSize = itemSize.filter((product) => product.item_id == id);
-  const productVariant = itemVariant.filter((product) => product.item_id == id);
-  const product = data.find((product) => product.item_id == id);
+  const productSize = itemSize.filter((product) => product.item_id == id); //using === seems to not work
+  const productVariant = itemVariant.filter((product) => product.item_id == id); //using === seems to not work
+  const product = data.find((product) => product.item_id == id); //using === seems to not work
 
   if (!product) {
     return <div>Loading...</div>;
@@ -76,14 +75,13 @@ const SingleProduct = ({ user }) => {
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {
-
       if (selectedSize && selectedVariant && quantity) {
         // POST TO THIS FILE (cart.php can be changed)
         const url = "http://localhost/10kg-collective/orderModule/cart.php";
 
         let cartData = new FormData();
 
-        cartData.append("user_id", user.user_id)
+        cartData.append("user_id", user.user_id);
         cartData.append("item_id", product.item_id);
         cartData.append("item_size", selectedSize);
         cartData.append("item_variant", selectedVariant);
@@ -92,11 +90,11 @@ const SingleProduct = ({ user }) => {
         axios
           .post(url, cartData)
           .then((response) => {
-            if(response.data === 1){
-              alert("added to Cart")
-              navigate('/Shop')
+            if (response.data === 1) {
+              alert("added to Cart");
+              navigate("/Shop");
             } else {
-              alert("Failed to add in cart")
+              alert("Failed to add in cart");
             }
           })
           .catch((error) => alert(error));
@@ -109,6 +107,21 @@ const SingleProduct = ({ user }) => {
       );
     }
   };
+
+  // handle minus btn
+  const handleMinus = () => {
+    if (quantity > 1) {
+      let newQty = parseInt(quantity) - 1;
+      setQuantity(newQty);
+    }
+  };
+  // handle plus btn
+  const handlePlus = () => {
+    let newQty = parseInt(quantity) + 1;
+    setQuantity(newQty);
+  };
+
+  console.log(itemSize);
 
   return (
     <section className="container-fluid container-fix single-product-section">
@@ -181,7 +194,7 @@ const SingleProduct = ({ user }) => {
           <h3 className="product-title">{product.item_name}</h3>
           <p className="product-price">₱{product.item_price}</p>
           <p className="product-stock-status">
-            {product.item_status == "A" ? "In stock" : "Out of Stock"}
+            {product.item_status === "A" ? "In stock" : "Out of Stock"}
           </p>
           {/* form */}
           <form className="single-product-form mt-5">
@@ -190,7 +203,7 @@ const SingleProduct = ({ user }) => {
               <select
                 value={selectedSize}
                 onChange={(e) => setSelectedSize(e.target.value)}
-                className="form-select form-select-sm"
+                className="form-select form-select-sm w-25"
                 name="size"
               >
                 {productSize.map((product) => (
@@ -204,7 +217,7 @@ const SingleProduct = ({ user }) => {
               <select
                 value={selectedVariant}
                 onChange={(e) => setSelectedVariant(e.target.value)}
-                className="form-select form-select-sm"
+                className="form-select form-select-sm w-25"
                 name="variant"
               >
                 {productVariant.map((product) => (
@@ -218,17 +231,31 @@ const SingleProduct = ({ user }) => {
               </select>
 
               {/* quantity */}
-              <input
-                type="number"
-                className="form-control"
-                name="quantity"
-                min="1"
-                id="quantity"
-                value={quantity}
-                onChange={(e) => {
-                  setQuantity(e.target.value);
-                }}
-              />
+              <div className="d-flex align-items-center w-25">
+                <span
+                  className="qty-btn fw-medium"
+                  onClick={() => handleMinus()}
+                >
+                  -
+                </span>
+                <input
+                  type="number"
+                  className="form-control w-50 text-center mx-1"
+                  name="quantity"
+                  min="1"
+                  id="quantity"
+                  value={quantity}
+                  onChange={(e) => {
+                    setQuantity(e.target.value);
+                  }}
+                />
+                <span
+                  className="qty-btn fw-medium"
+                  onClick={() => handlePlus()}
+                >
+                  +
+                </span>
+              </div>
             </div>
 
             {/* btns */}

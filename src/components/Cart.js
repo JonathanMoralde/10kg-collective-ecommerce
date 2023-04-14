@@ -127,9 +127,9 @@ const Cart = ({ user, active, setActive }) => {
                     <p className="cart-item-var">{order.variant}</p>
                     <p className="cart-item-size">{order.size}</p>
                     <p className="cart-item-price">₱{order.price}</p>
-                    <div className="cart-qty-container">
+                    <div className="d-flex align-items-center">
                       <span
-                        className="qty-btn"
+                        className="qty-btn fw-medium"
                         onClick={() => handleMinus(index)}
                       >
                         -
@@ -138,13 +138,13 @@ const Cart = ({ user, active, setActive }) => {
                         type="number"
                         name="qty"
                         id="cartQty"
-                        className="cart-input w-25 text-center mx-1"
+                        className="form-control w-25 text-center mx-2"
                         min="1"
                         value={order.quantity}
                         onChange={(event) => handleQuantityChange(index, event)}
                       />
                       <span
-                        className="qty-btn"
+                        className="qty-btn fw-medium"
                         onClick={() => handlePlus(index)}
                       >
                         +

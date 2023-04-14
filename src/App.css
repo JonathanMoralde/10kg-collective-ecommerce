@@ -84,9 +84,18 @@ input[type="number"] {
   background-color: var(--bs-btn-hover-bg) !important;
   border-color: var(--bs-btn-hover-border-color) !important;
 }
+.btn-close {
+  height: 0.4rem;
+  width: 0.4rem;
+}
+/* nav link hover transition */
+.nav-link {
+  transition: all 0.2s ease-out;
+}
 
 /* form control fix */
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 0.15rem #29ada02f;
 }
@@ -111,17 +120,25 @@ input[type="number"] {
 
 .card-img-overlay {
   /* top: unset; */
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  background: linear-gradient(45deg, #000000f7, transparent);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
 }
 
+.card:hover .card-img {
+  scale: 1.1;
+}
+.card-img {
+  transition: all 0.2s ease-out;
+}
+
 .card {
   border: none;
   border-radius: unset;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+  overflow: hidden;
 }
 
 .card-text {
@@ -361,7 +378,6 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: unset !important;
   margin-top: -1rem !important;
 }
-
 .search-btn {
   border-radius: unset !important;
 }
@@ -532,6 +548,11 @@ label {
 /* END OF ABOUT PAGE */
 
 /* CHECKOUT PAGE */
+.checkout-background {
+  background: url("./images/about/circles.svg") no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
 .checkout-page {
   padding-top: 4rem !important;
   padding-bottom: 4rem !important;
