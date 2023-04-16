@@ -23,16 +23,18 @@ const ProductForm = () => {
   };
 
   // DYNAMIC VARIATION FIELDS
-  const [inputFields, setInputFields] = useState([{ value: "" }]); //inputFields = Variants data, which is an array of objects containing the value [{value: ''},{value:''}]
+  // const [inputFields, setInputFields] = useState([{ value: "" }]);
+  const [inputFields, setInputFields] = useState([""]);
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    values[index].value = event.target.value;
+    // values[index].value = event.target.value;
+    values[index] = event.target.value;
     setInputFields(values);
   };
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { value: "" }]);
+    setInputFields([...inputFields, ""]);
   };
 
   const handleRemoveFields = (index) => {
@@ -41,29 +43,32 @@ const ProductForm = () => {
     setInputFields(values);
   };
 
+  console.log(inputFields);
+  console.log(size);
+
   // NEXT & BACK FORM HANDLE
   const [isNext, setIsNext] = useState(false);
 
   const addProduct = () => {
     // e.preventDefault();
 
-    console.log(name, price, category, size, inputFields);
-
     let productData = new FormData();
 
     productData.append("item_name", name);
     productData.append("item_price", price);
     productData.append("item_category", category);
+    productData.append("size_name[]", size);
+    productData.append("variation_name[]", inputFields);
 
-    // Insert size names
-    size.forEach((sizeName) => {
-      productData.append("size_name[]", sizeName);
-    });
+    // // Insert size names
+    // size.forEach((sizeName) => {
+    //   productData.append("size_name[]", sizeName);
+    // });
 
-    // Insert variation names
-    inputFields.forEach((variation) => {
-      productData.append("variation_name[]", variation.value);
-    });
+    // // Insert variation names
+    // inputFields.forEach((variation) => {
+    //   productData.append("variation_name[]", variation.value);
+    // });
 
     const url = "http://localhost/10kg-collective/admin/add_product.php";
 
@@ -80,7 +85,6 @@ const ProductForm = () => {
         .catch((error) => {
           alert(error.data);
         });
-      console.log(name, price, category, size, inputFields);
     }
   };
 
@@ -287,7 +291,7 @@ const ProductForm = () => {
                         className="form-control var-input"
                         type="text"
                         placeholder="Enter text"
-                        value={inputField.value}
+                        value={inputField}
                         onChange={(event) => handleInputChange(index, event)}
                       />
                       <label htmlFor={`floatingVariation${index}`}>
