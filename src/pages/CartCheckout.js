@@ -62,7 +62,8 @@ const CartCheckout = ({ user }) => {
 
   // get total
   orders.forEach((order) => {
-    subtotal += parseInt(order.price);
+    let ordertotal = parseInt(order.price) * parseInt(order.quantity);
+    subtotal += ordertotal;
   });
 
   // handle checkout
@@ -81,6 +82,8 @@ const CartCheckout = ({ user }) => {
       .catch((error) => alert(error.data));
     navigate("/Shop");
   };
+
+  console.log(subtotal);
 
   return (
     <>

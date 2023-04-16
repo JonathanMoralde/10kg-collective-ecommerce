@@ -99,7 +99,7 @@ const Checkout = ({ user }) => {
           </div>
 
           <h5 className="checkout-text text-center my-3">
-            Total Amount: ₱{price}
+            Total Amount: ₱{parseInt(price) * parseInt(qty)}
           </h5>
           <div className="checkout-btn-container d-flex justify-content-center align-items-center">
             <Link to="/Shop" className="btn btn-outline-secondary me-3">

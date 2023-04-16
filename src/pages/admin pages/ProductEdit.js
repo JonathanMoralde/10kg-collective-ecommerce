@@ -24,16 +24,16 @@ const ProductEdit = () => {
   };
 
   // DYNAMIC VARIATION FIELDS
-  const [inputFields, setInputFields] = useState([{ value: "" }]); //inputFields = Variants data, which is an array of objects containing the value [{value: ''},{value:''}]
+  const [inputFields, setInputFields] = useState([""]);
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    values[index].value = event.target.value;
+    values[index] = event.target.value;
     setInputFields(values);
   };
 
   const handleAddFields = () => {
-    setInputFields([...inputFields, { value: "" }]);
+    setInputFields([...inputFields, ""]);
   };
 
   const handleRemoveFields = (index) => {
@@ -55,8 +55,8 @@ const ProductEdit = () => {
     productData.append("item_name", name); //update
     productData.append("item_price", price); //update
     productData.append("item_category", category); //update
-    productData.append("size_name", size); //update
-    productData.append("variation_name", inputFields); //update
+    productData.append("size_name[]", size); //update
+    productData.append("variation_name[]", inputFields); //update
 
     const url = "http://localhost/10kg-collective/admin/edit_product.php";
 
@@ -64,7 +64,11 @@ const ProductEdit = () => {
       axios
         .post(url, productData)
         .then((response) => {
-          alert(response.data);
+          if (response.data === 1) {
+            alert("Item Updated");
+          } else {
+            alert("Item was not updated");
+          }
         })
         .catch((error) => {
           alert(error.data);
