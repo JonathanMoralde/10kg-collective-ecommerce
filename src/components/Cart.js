@@ -4,40 +4,51 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 const Cart = ({ user, active, setActive }) => {
+  let id;
+  if(user){
+    id = user.user_id
+  }
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]); //orders
+  const [cartOrders, setCartOrders] = useState([])
   let subtotal = 0; //price subtotal
 
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
 
-  const fakeData = [
-    {
-      order_id: 1,
-      item_name: "plain series",
-      item_price: "250",
-      size_name: "Medium",
-      variation_name: "white",
-      order_qty: 2,
-    },
-    {
-      order_id: 2,
-      item_name: "Weightless",
-      item_price: "399",
-      size_name: "Small",
-      variation_name: "white",
-      order_qty: 1,
-    },
-  ];
+  // const fakeData = [
+  //   {
+  //     order_id: 1,
+  //     item_name: "plain series",
+  //     item_price: "250",
+  //     size_name: "Medium",
+  //     variation_name: "white",
+  //     order_qty: 2,
+  //   },
+  //   {
+  //     order_id: 2,
+  //     item_name: "Weightless",
+  //     item_price: "399",
+  //     size_name: "Small",
+  //     variation_name: "white",
+  //     order_qty: 1,
+  //   },
+  // ];
 
-  // get orders from php
+  // get all user orders from php
   useEffect(() => {
     const fetchOrder = async () => {
       setLoading(true);
 
-      const response = await axios.get(
-        "http://localhost/10kg-collective/displayModule/cart_display.php"
-      );
+      let response;
+      if(user){
+
+        response = await axios.get(
+          `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
+        );
+      } else {
+        response = {data: [],}
+      }
 
       if (componentMounted) {
         setOrders(response.data);
@@ -48,40 +59,50 @@ const Cart = ({ user, active, setActive }) => {
       };
     };
 
-    // fetchOrder()
-    setOrders(fakeData); //temporary data
+    fetchOrder()
+    // setOrders(fakeData); //temporary data
   }, []);
 
+  // get orders that have order status = "C"
+  useEffect(() => {
+    if (!loading && orders.length > 0) {
+      // pending orders
+      const cartList = orders.filter((o) => o.order_status == "C"); //using === seems
+      setCartOrders(cartList);
+
+    }
+  }, [orders]);
+
   // get price subtotal
-  orders.forEach(
+  cartOrders.forEach(
     (order) =>
       (subtotal += parseInt(order.item_price) * parseInt(order.order_qty))
   );
 
   // quantity input field
   const handleQuantityChange = (index, event) => {
-    const newOrders = [...orders];
+    const newOrders = [...cartOrders];
     newOrders[index].order_qty = parseInt(event.target.value);
-    setOrders(newOrders);
+    setCartOrders(newOrders);
   };
 
   const handleMinus = (index) => {
-    const newOrders = [...orders];
+    const newOrders = [...cartOrders];
     if (newOrders[index].order_qty > 1) {
       newOrders[index].order_qty -= 1;
-      setOrders(newOrders);
+      setCartOrders(newOrders);
     }
   };
   const handlePlus = (index) => {
-    const newOrders = [...orders];
+    const newOrders = [...cartOrders];
     newOrders[index].order_qty += 1;
-    setOrders(newOrders);
+    setCartOrders(newOrders);
   };
 
   // single order delete
   const handleDel = (index) => {
     // perma delete order from orders table
-    const removedOrder = orders[index];
+    const removedOrder = cartOrders[index];
     const { order_id } = removedOrder;
     console.log(removedOrder);
 
@@ -93,8 +114,9 @@ const Cart = ({ user, active, setActive }) => {
     axios.post(url, delData).then((response) => {
       // if order deleted, remove it from my orders list
       if (response.data === 1) {
-        const newOrders = orders.filter((order) => order != orders[index]);
-        setOrders(newOrders);
+        const newOrders = cartOrders.filter((order) => order != cartOrders[index]);
+        console.log(newOrders);
+        cartOrders(newOrders);
       } else {
         alert("Failed to remove from cart");
       }
@@ -144,10 +166,10 @@ const Cart = ({ user, active, setActive }) => {
             ></button>
           </div>
 
-          <div className="container">
+          <div className="container cart-order-list">
             {/* Order list */}
             <div className="row border-top mb-3">
-              {orders.length === 0 && (
+              {cartOrders.length === 0 && (
                 <div className="col-md-12 py-3">
                   <p>Your Cart is empty.</p>
                   <Link
@@ -160,7 +182,7 @@ const Cart = ({ user, active, setActive }) => {
                 </div>
               )}
 
-              {orders.map((order, index) => (
+              {cartOrders.map((order, index) => (
                 <div key={index} className="col-md-12 d-flex py-3 border-btm">
                   <div className="cart-img-container">
                     <img src="/" alt="-img" className="w-100 h-100" />
@@ -169,8 +191,8 @@ const Cart = ({ user, active, setActive }) => {
                   <div className="cart-item-info d-flex justify-content-between text-capitalize">
                     <div>
                       <h5 className="cart-item-title">{order.item_name}</h5>
-                      <p className="cart-item-var">{order.variation_name}</p>
-                      <p className="cart-item-size">{order.size_name}</p>
+                      <p className="cart-item-var">{order.item_variant}</p>
+                      <p className="cart-item-size">{order.item_size}</p>
                       <p className="cart-item-price">₱{order.item_price}</p>
                       <div className="d-flex align-items-center">
                         <span
@@ -213,9 +235,9 @@ const Cart = ({ user, active, setActive }) => {
           </div>
 
           {/* Order total amount */}
-          {orders.length > 0 ? (
+          {cartOrders.length > 0 ? (
             <>
-              <div>
+              <div className="mt-3">
                 <h5>Subtotal: ₱{subtotal}</h5>
               </div>
               <button

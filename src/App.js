@@ -64,9 +64,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout user={user} setUser={setUser} />}>
+          <Route path="/" element={<Layout user={user} setUser={setUser}  />}>
             <Route index element={<Home user={user} />} />
-            <Route path="/Shop" element={<Shop user={user} />} />
+            <Route path="/Shop" element={<Shop user={user}  />} />
             <Route path="/Shop/:id" element={<SingleProduct user={user} />} />
             <Route
               path="/Shop/Checkout/:id/:size/:variant/:qty/:name/:price"

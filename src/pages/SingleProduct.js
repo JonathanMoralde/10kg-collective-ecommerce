@@ -81,6 +81,7 @@ const SingleProduct = ({ user }) => {
     }
   }, [data, itemSize, id, loading]);
 
+
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {

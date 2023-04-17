@@ -670,7 +670,10 @@ label {
 .cart-active {
   translate: 0;
 }
-
+.cart-order-list {
+  max-height: 42rem;
+  overflow-y: scroll;
+}
 .border-btm {
   border-bottom: solid var(--bs-border-width) var(--bs-border-color);
 }
