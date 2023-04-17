@@ -43,9 +43,6 @@ const ProductForm = () => {
     setInputFields(values);
   };
 
-  console.log(inputFields);
-  console.log(size);
-
   // NEXT & BACK FORM HANDLE
   const [isNext, setIsNext] = useState(false);
 
