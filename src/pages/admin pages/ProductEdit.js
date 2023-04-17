@@ -55,8 +55,8 @@ const ProductEdit = () => {
     productData.append("item_name", name); //update
     productData.append("item_price", price); //update
     productData.append("item_category", category); //update
-    productData.append("size_name[]", size); //update
-    productData.append("variation_name[]", inputFields); //update
+    productData.append("size_name[]", JSON.stringify(size)); //update
+    productData.append("variation_name[]", JSON.stringify(inputFields)); //update
 
     const url = "http://localhost/10kg-collective/admin/edit_product.php";
 

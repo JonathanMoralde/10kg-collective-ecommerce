@@ -48,14 +48,18 @@ const ProductForm = () => {
 
   const addProduct = () => {
     // e.preventDefault();
+    // console.log(size);
+    // console.log(inputFields);
 
     let productData = new FormData();
 
     productData.append("item_name", name);
     productData.append("item_price", price);
     productData.append("item_category", category);
-    productData.append("size_name[]", size);
-    productData.append("variation_name[]", inputFields);
+    productData.append("size_name[]", JSON.stringify(size));
+    // productData.append("size_name[]", size);
+    productData.append("variation_name[]", JSON.stringify(inputFields));
+    // productData.append("variation_name[]", inputFields);
 
     // // Insert size names
     // size.forEach((sizeName) => {
@@ -75,6 +79,9 @@ const ProductForm = () => {
         .then((response) => {
           if (response.data === 1) {
             alert("Item Added");
+          // if(response.data){
+
+          // alert(response.data)
           } else {
             alert("Item was not added");
           }
