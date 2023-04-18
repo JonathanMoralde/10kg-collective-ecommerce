@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductForm = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState();
   const [price, setPrice] = useState();
   const [category, setCategory] = useState();
@@ -79,9 +80,10 @@ const ProductForm = () => {
         .then((response) => {
           if (response.data === 1) {
             alert("Item Added");
-          // if(response.data){
+            // if(response.data){
 
-          // alert(response.data)
+            // alert(response.data)
+            navigate("/admin/Products");
           } else {
             alert("Item was not added");
           }

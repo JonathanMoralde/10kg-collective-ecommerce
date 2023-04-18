@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProductEdit = () => {
   const { id, name, price } = useParams();
+  const navigate = useNavigate();
 
   const [e_name, setE_Name] = useState(name);
   const [e_price, setE_Price] = useState(price);
@@ -52,13 +53,15 @@ const ProductEdit = () => {
     let productData = new FormData();
 
     productData.append("item_id", id); //this will be used for SQL query
-    productData.append("item_name", name); //update
-    productData.append("item_price", price); //update
+    productData.append("item_name", e_name); //update
+    productData.append("item_price", e_price); //update
     productData.append("item_category", category); //update
     productData.append("size_name[]", JSON.stringify(size)); //update
     productData.append("variation_name[]", JSON.stringify(inputFields)); //update
 
     const url = "http://localhost/10kg-collective/admin/edit_product.php";
+
+    // console.log(name, price);
 
     if (name && price && category && size && inputFields) {
       axios
@@ -66,6 +69,7 @@ const ProductEdit = () => {
         .then((response) => {
           if (response.data === 1) {
             alert("Item Updated");
+            navigate("/admin/Products");
           } else {
             alert("Item was not updated");
           }
