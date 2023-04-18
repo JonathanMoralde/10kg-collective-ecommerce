@@ -5,12 +5,12 @@ import axios from "axios";
 
 const Cart = ({ user, active, setActive }) => {
   let id;
-  if(user){
-    id = user.user_id
+  if (user) {
+    id = user.user_id;
   }
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]); //orders
-  const [cartOrders, setCartOrders] = useState([])
+  const [cartOrders, setCartOrders] = useState([]);
   let subtotal = 0; //price subtotal
 
   let componentMounted = true;
@@ -41,13 +41,12 @@ const Cart = ({ user, active, setActive }) => {
       setLoading(true);
 
       let response;
-      if(user){
-
+      if (user) {
         response = await axios.get(
           `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
         );
       } else {
-        response = {data: [],}
+        response = { data: [] };
       }
 
       if (componentMounted) {
@@ -59,17 +58,16 @@ const Cart = ({ user, active, setActive }) => {
       };
     };
 
-    fetchOrder()
+    fetchOrder();
     // setOrders(fakeData); //temporary data
   }, []);
 
-  // get orders that have order status = "C"
+  // get orders that have order status = "Cart"
   useEffect(() => {
     if (!loading && orders.length > 0) {
       // pending orders
-      const cartList = orders.filter((o) => o.order_status == "C"); //using === seems
+      const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
       setCartOrders(cartList);
-
     }
   }, [orders]);
 
@@ -114,7 +112,9 @@ const Cart = ({ user, active, setActive }) => {
     axios.post(url, delData).then((response) => {
       // if order deleted, remove it from my orders list
       if (response.data === 1) {
-        const newOrders = cartOrders.filter((order) => order != cartOrders[index]);
+        const newOrders = cartOrders.filter(
+          (order) => order != cartOrders[index]
+        );
         console.log(newOrders);
         cartOrders(newOrders);
       } else {
