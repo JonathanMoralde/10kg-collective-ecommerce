@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "../../images/logo/10KG BLACK trimmed.png";
+import { toast } from "react-toastify";
 
 const AdminLogin = ({ setAdminUser }) => {
   const [adminEmail, setAdminEmail] = useState("");
@@ -30,28 +31,65 @@ const AdminLogin = ({ setAdminUser }) => {
           if (response.data.response_status === 1) {
             // Check for the expected response
 
-            alert("Login Successful");
+            toast.success("Welcome Admin!", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             setAdminUser(response.data);
             // get the session data and store in variable
             // navigate to admin panel
             navigate("/admin");
           } else {
             // wrong password or email
-            alert("Wrong Email or Password.");
+            toast.warn("Incorrect Email or Password", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
           //error handling
           if (error.response && error.response.data === "maintenance mode") {
             // Check for the "maintenance mode" error message
-            alert(
-              "The website is currently under maintenance. Please try again later."
+            toast.error(
+              "The website is currently under maintenance. Please try again later.",
+              {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              }
             );
           }
         });
     } else {
       //if email & pass form has no value
-      alert("Please fill out the empty fields");
+      toast.warn("Please fill out empty fields", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 

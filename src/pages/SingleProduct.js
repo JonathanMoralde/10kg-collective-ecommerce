@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../AppContext";
+import { toast } from "react-toastify";
 
 const SingleProduct = ({ user }) => {
   const { isNewOrder, setIsNewOrder } = useContext(AppContext);
@@ -102,14 +103,34 @@ const SingleProduct = ({ user }) => {
           .post(url, cartData)
           .then((response) => {
             if (response.data === 1) {
-              alert("added to Cart");
+              toast.success("Product added to Cart!", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
               navigate("/Shop");
               setIsNewOrder(true);
             } else {
-              alert("Failed to add in cart");
+              toast.error("Unable to add to Cart!", {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+              });
             }
           })
-          .catch((error) => alert(error));
+          .catch((error) => {
+            throw new Error(error);
+          });
       }
     }
 
@@ -119,7 +140,16 @@ const SingleProduct = ({ user }) => {
           `/Shop/Checkout/${id}/${selectedSize}/${selectedVariant}/${quantity}/${item_name}/${item_price}`
         );
       } else {
-        alert("Please select properly");
+        toast.warn("Please select proper details!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     }
   };

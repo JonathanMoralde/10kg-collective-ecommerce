@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ProductEdit = () => {
   const { id, name, price } = useParams();
@@ -68,14 +69,41 @@ const ProductEdit = () => {
         .post(url, productData)
         .then((response) => {
           if (response.data === 1) {
-            alert("Item Updated");
+            toast.success("Product updated successfully!", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             navigate("/admin/Products");
           } else {
-            alert("Item was not updated");
+            toast.error("Failed to update product", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
-          alert(error.data);
+          toast.success("Maintenance Mode", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
     }
   };
@@ -256,7 +284,16 @@ const ProductEdit = () => {
                       if (e_name && e_price && category && size) {
                         setIsNext(!isNext);
                       } else {
-                        alert("Please Fill up the form");
+                        toast.warn("Please fill out important details!", {
+                          position: "top-center",
+                          autoClose: 2000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
                       }
                     }}
                   >

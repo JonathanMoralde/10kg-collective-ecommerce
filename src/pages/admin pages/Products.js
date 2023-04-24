@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Products = ({ adminUser }) => {
   const navigate = useNavigate();
@@ -33,12 +34,41 @@ const Products = ({ adminUser }) => {
       .post("https:/localhost/10kg-collective/admin/delete.php", delData) //update item status
       .then((response) => {
         if (response.data === 1) {
-          alert("Product deleted successfully");
+          toast.success("Product deleted successfully!", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         } else {
-          alert("Product delete failed");
+          toast.error("Unable to delete product", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       })
-      .catch((error) => alert(error.data, "Maintenance Mode"));
+      .catch((error) =>
+        toast.error("Error occured while deleting the product", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      );
   };
 
   return (

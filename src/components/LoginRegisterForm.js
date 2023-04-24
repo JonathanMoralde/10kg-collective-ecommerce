@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginRegisterForm = ({ setUser }) => {
   // TOGGLE SLIDER
@@ -47,7 +48,17 @@ const LoginRegisterForm = ({ setUser }) => {
 
           // alert(response);
           if (response.data.response_status) {
-            alert(`Welcome ${response.data.full_name}`);
+            // alert(`Welcome ${response.data.full_name}`);
+            toast.success(`Welcome ${response.data.full_name}`, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             setUser(response.data);
             if (redirectUrl) {
               navigate(redirectUrl);
@@ -55,7 +66,16 @@ const LoginRegisterForm = ({ setUser }) => {
               navigate("/");
             }
           } else {
-            alert("Error");
+            toast.error("error", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
 
           // if (response.) {
@@ -65,9 +85,21 @@ const LoginRegisterForm = ({ setUser }) => {
           //   alert("Eror");
           // }
         })
-        .catch((error) => alert(error));
+        .catch((error) => {
+          throw new Error(error);
+        });
     } else {
-      alert("Please fill out the empty fields");
+      // alert("Please fill out the empty fields");
+      toast.success("Please fill out the empty fields!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -91,7 +123,17 @@ const LoginRegisterForm = ({ setUser }) => {
         .post(url, logData)
         .then((response) => {
           if (response.data.response_status) {
-            alert(`Welcome ${response.data.full_name}`);
+            // alert(`Welcome ${response.data.full_name}`);
+            toast.success(`Welcome ${response.data.full_name}`, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             setUser(response.data);
             if (redirectUrl) {
               navigate(redirectUrl);
@@ -99,21 +141,46 @@ const LoginRegisterForm = ({ setUser }) => {
               navigate("/");
             }
           } else if (response.data == 3) {
-            alert("Password incorrect");
+            toast.warn("Incorrect Password", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           } else {
-            alert("Incorrect Email or Password");
+            toast.warn("Incorrect Email or Password", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
           if (error.response && error.response.data === "maintenance mode") {
             // Check for the "maintenance mode" error message
-            alert(
-              "The website is currently under maintenance. Please try again later."
-            );
+            throw new Error(error.response.data);
           }
         });
     } else {
-      alert("Please fill out the empty fields");
+      toast.warn("Please fill out empty fields", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 

@@ -27,6 +27,9 @@ import Privacy from "./pages/footer pages/Privacy";
 import SizeGuide from "./pages/footer pages/SizeGuide";
 import Faqs from "./pages/footer pages/Faqs";
 import Returns from "./pages/footer pages/Returns";
+// Toastify notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
@@ -175,6 +178,19 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        style={{ fontSize: "1rem" }}
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

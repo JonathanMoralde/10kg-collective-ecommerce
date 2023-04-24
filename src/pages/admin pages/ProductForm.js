@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ProductForm = () => {
   const navigate = useNavigate();
@@ -79,17 +80,44 @@ const ProductForm = () => {
         .post(url, productData)
         .then((response) => {
           if (response.data === 1) {
-            alert("Item Added");
+            toast.success("Product was added successfully", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             // if(response.data){
 
             // alert(response.data)
             navigate("/admin/Products");
           } else {
-            alert("Item was not added");
+            toast.error("Product was not added", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
-          alert(error.data);
+          toast.error("Maintenance Mode", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
     }
   };
@@ -270,7 +298,16 @@ const ProductForm = () => {
                       if (name && price && category && size) {
                         setIsNext(!isNext);
                       } else {
-                        alert("Please Fill up the form");
+                        toast.warn("Please fill out important details!", {
+                          position: "top-center",
+                          autoClose: 2000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
                       }
                     }}
                   >
