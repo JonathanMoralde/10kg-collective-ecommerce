@@ -1,10 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AppContext from "../AppContext";
 
 const SingleProduct = ({ user }) => {
+  const { isNewOrder, setIsNewOrder } = useContext(AppContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -81,7 +83,6 @@ const SingleProduct = ({ user }) => {
     }
   }, [data, itemSize, id, loading]);
 
-
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
     if (e.target.name === "cart") {
@@ -103,6 +104,7 @@ const SingleProduct = ({ user }) => {
             if (response.data === 1) {
               alert("added to Cart");
               navigate("/Shop");
+              setIsNewOrder(true);
             } else {
               alert("Failed to add in cart");
             }
