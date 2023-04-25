@@ -112,13 +112,14 @@ const Cart = ({ user, active, setActive }) => {
     axios.post(url, delData).then((response) => {
       // if order deleted, remove it from my orders list
       if (response.data === 1) {
+        alert("Order removed from the cart");
         const newOrders = cartOrders.filter(
           (order) => order != cartOrders[index]
         );
         console.log(newOrders);
         cartOrders(newOrders);
       } else {
-        alert("Failed to remove from cart");
+        alert("Failed to remove from the cart");
       }
     });
   };
