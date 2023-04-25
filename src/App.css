@@ -678,8 +678,8 @@ label {
   border-bottom: solid var(--bs-border-width) var(--bs-border-color);
 }
 .cart-img-container {
-  width: 20%;
-  height: 5.625rem;
+  width: 35%;
+  /* height: 5.625rem; */
   object-fit: cover;
   overflow: hidden;
 }
