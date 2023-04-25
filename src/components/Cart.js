@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import AppContext from "../AppContext";
 
 const Cart = ({ user, active, setActive }) => {
   let id;
@@ -15,6 +16,7 @@ const Cart = ({ user, active, setActive }) => {
 
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
+  const { isNewOrder, setIsNewOrder } = useContext(AppContext);
 
   // const fakeData = [
   //   {
@@ -59,12 +61,21 @@ const Cart = ({ user, active, setActive }) => {
     };
 
     fetchOrder();
+    // console.log("Hello");
     // setOrders(fakeData); //temporary data
-  }, []);
+  }, [isNewOrder]);
+  // console.log(orders);
+
+  // reset isNewOrder to false
+  useEffect(() => {
+    if (isNewOrder) {
+      setIsNewOrder(false);
+    }
+  }, [isNewOrder]);
 
   // get orders that have order status = "Cart"
   useEffect(() => {
-    if (!loading && orders.length > 0) {
+    if (orders.length > 0) {
       // pending orders
       const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
       setCartOrders(cartList);
@@ -117,7 +128,7 @@ const Cart = ({ user, active, setActive }) => {
           (order) => order != cartOrders[index]
         );
         console.log(newOrders);
-        cartOrders(newOrders);
+        setCartOrders(newOrders);
       } else {
         alert("Failed to remove from the cart");
       }
@@ -144,9 +155,12 @@ const Cart = ({ user, active, setActive }) => {
           alert("Error occured while proceeding to checkout");
         }
       })
-      .catch((error) => alert(error.data));
+      .catch((error) => {
+        throw new Error("Maintenance Mode");
+      });
   };
 
+  // console.log(cartOrders);
   return (
     <>
       {loading ? (

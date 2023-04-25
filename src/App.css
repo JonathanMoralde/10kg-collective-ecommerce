@@ -671,7 +671,7 @@ label {
   translate: 0;
 }
 .cart-order-list {
-  max-height: 42rem;
+  max-height: 38rem;
   overflow-y: scroll;
 }
 .border-btm {
@@ -704,6 +704,30 @@ label {
 }
 .cart-item-var {
   font-style: italic;
+}
+
+/* width */
+.cart-order-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.cart-order-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  visibility: hidden;
+}
+
+/* Handle */
+.cart-order-list::-webkit-scrollbar-thumb {
+  background: #888;
+  visibility: hidden;
+  border-radius: 1rem;
+  transition: all 0.2s ease-out;
+}
+
+/* Handle on hover */
+.cart-order-list:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
 }
 
 /* END OF CART */
@@ -764,6 +788,82 @@ label {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+.dynamic-var {
+  max-height: 12.625rem;
+  overflow-y: scroll;
+}
+/* width */
+.dynamic-var::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.dynamic-var::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  visibility: hidden;
+}
+
+/* Handle */
+.dynamic-var::-webkit-scrollbar-thumb {
+  background: #888;
+  visibility: hidden;
+  border-radius: 1rem;
+  transition: all 0.2s ease-out;
+}
+
+/* Handle on hover */
+.dynamic-var:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
 /* END OF PRODUCTS SECTION */
+
+/* ORDERS SECTION */
+.admin-single-order {
+  position: relative;
+}
+
+.admin-single-order::after {
+  content: "\f303";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: white;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  transition: opacity 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #6c757da7;
+}
+
+/* .admin-single-order::after {
+  content: "";
+  background-color: #6c757da7;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  transition: opacity 0.2s ease-out;
+} */
+
+.admin-single-order:hover::after {
+  opacity: 1;
+}
+
+.admin-single-order:hover {
+  cursor: pointer;
+}
+
+/* END OF ORDERS SECTION */
 
 /* END OF ADMIN PANEL */

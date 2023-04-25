@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ProductForm = () => {
   const navigate = useNavigate();
@@ -79,17 +80,44 @@ const ProductForm = () => {
         .post(url, productData)
         .then((response) => {
           if (response.data === 1) {
-            alert("Item Added");
+            toast.success("Product was added successfully", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
             // if(response.data){
 
             // alert(response.data)
             navigate("/admin/Products");
           } else {
-            alert("Item was not added");
+            toast.error("Product was not added", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
           }
         })
         .catch((error) => {
-          alert(error.data);
+          toast.error("Maintenance Mode", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         });
     }
   };
@@ -270,7 +298,16 @@ const ProductForm = () => {
                       if (name && price && category && size) {
                         setIsNext(!isNext);
                       } else {
-                        alert("Please Fill up the form");
+                        toast.warn("Please fill out important details!", {
+                          position: "top-center",
+                          autoClose: 2000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                        });
                       }
                     }}
                   >
@@ -288,33 +325,35 @@ const ProductForm = () => {
             >
               <h3 className="section-title mb-4">Item Variations</h3>
 
-              <div>
-                {inputFields.map((inputField, index) => (
-                  <div className="mb-4 d-flex" key={index}>
-                    <div className="form-floating">
-                      <input
-                        id={`floatingVariation${index}`}
-                        className="form-control var-input"
-                        type="text"
-                        placeholder="Enter text"
-                        value={inputField}
-                        onChange={(event) => handleInputChange(index, event)}
-                      />
-                      <label htmlFor={`floatingVariation${index}`}>
-                        Enter a variation
-                      </label>
-                    </div>
+              <div className="dynamic-var w-75">
+                <div className="d-flex justify-content-center w-100 flex-wrap">
+                  {inputFields.map((inputField, index) => (
+                    <div className="mb-4 d-flex w-50" key={index}>
+                      <div className="form-floating">
+                        <input
+                          id={`floatingVariation${index}`}
+                          className="form-control var-input"
+                          type="text"
+                          placeholder="Enter text"
+                          value={inputField}
+                          onChange={(event) => handleInputChange(index, event)}
+                        />
+                        <label htmlFor={`floatingVariation${index}`}>
+                          Enter a variation
+                        </label>
+                      </div>
 
-                    <button
-                      className="btn btn-secondary var-input-del"
-                      type="button"
-                      onClick={() => handleRemoveFields(index)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </div>
-                ))}
-                <div className="d-flex justify-content-center align-items-center mb-5z">
+                      <button
+                        className="btn btn-secondary var-input-del"
+                        type="button"
+                        onClick={() => handleRemoveFields(index)}
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-flex justify-content-center align-items-center">
                   <button
                     className="btn btn-outline-secondary"
                     type="button"

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+// User Pages
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
@@ -26,6 +27,9 @@ import Privacy from "./pages/footer pages/Privacy";
 import SizeGuide from "./pages/footer pages/SizeGuide";
 import Faqs from "./pages/footer pages/Faqs";
 import Returns from "./pages/footer pages/Returns";
+// Toastify notification
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
@@ -64,9 +68,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout user={user} setUser={setUser}  />}>
+          <Route path="/" element={<Layout user={user} setUser={setUser} />}>
             <Route index element={<Home user={user} />} />
-            <Route path="/Shop" element={<Shop user={user}  />} />
+            <Route path="/Shop" element={<Shop user={user} />} />
             <Route path="/Shop/:id" element={<SingleProduct user={user} />} />
             <Route
               path="/Shop/Checkout/:id/:size/:variant/:qty/:name/:price"
@@ -174,6 +178,19 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ToastContainer
+        style={{ fontSize: "1rem" }}
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 }

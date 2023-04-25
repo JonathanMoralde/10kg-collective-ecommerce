@@ -38,8 +38,13 @@ const UserDashboard = ({ user, setUser }) => {
   const [allOrders, setAllOrders] = useState([]);
   const [completedOrders, setCompletedOrders] = useState([]);
 
+  // console.log(pendingOrders);
+  // console.log(confirmedOrders);
+  // console.log(allOrders);
+  // console.log(completedOrders);
+
   useEffect(() => {
-    if (!loading && order.length > 0) {
+    if (order.length > 0) {
       // pending orders
       const pendingList = order.filter((o) => o.order_status == "P"); //using === seems
       setPendingOrders(pendingList);
@@ -63,6 +68,9 @@ const UserDashboard = ({ user, setUser }) => {
   const [orderDisplay, setOrderDisplay] = useState(allOrders);
   const [clickedOrderDisplay, setClickedOrderDisplay] = useState("All Orders");
 
+  // console.log(order);
+  // console.log(orderDisplay);
+
   return (
     <>
       <Navbar user={user} setUser={setUser} />
@@ -72,14 +80,14 @@ const UserDashboard = ({ user, setUser }) => {
           <div className="col-md-3">
             <div className="user-title-wrapper py-3">
               <h3 className="text-capitalize user-title">{user.full_name}</h3>
-              <h5
+              {/* <h5
                 className="dashboard-sublinks"
                 onClick={() => {
                   setActive("profile");
                 }}
               >
                 Edit Profile
-              </h5>
+              </h5> */}
               {/* link to filter 1 - profile */}
             </div>
             <div>
