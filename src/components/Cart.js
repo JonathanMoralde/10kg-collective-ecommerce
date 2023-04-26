@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -14,6 +14,7 @@ const Cart = ({ user, active, setActive }) => {
   const [orders, setOrders] = useState([]); //orders
   const [cartOrders, setCartOrders] = useState([]); //cart
   const [cartSelected, setCartSelected] = useState([]); //checked orders
+  const [selectAll, setSelectAll] = useState(false);
   let subtotal = 0; //price subtotal
 
   let componentMounted = true;
@@ -206,15 +207,26 @@ const Cart = ({ user, active, setActive }) => {
 
   // checkbox
   const handleCheck = (e, index) => {
-    if (e.target.checked) {
-      let newSelect = [...cartSelected, cartOrders[index]];
-      setCartSelected(newSelect);
-    } else {
-      let newSelect = [...cartSelected];
-      if (index !== -1) {
-        newSelect.splice(index, 1);
-        setCartSelected(newSelect);
+    if (index === -1) {
+      // "Select All" checkbox is clicked
+      setSelectAll(e.target.checked);
+      if (e.target.checked) {
+        setCartSelected([...cartOrders]);
+      } else {
+        setCartSelected([]);
       }
+    } else {
+      // other checkboxes are clicked
+      if (e.target.checked) {
+        setCartSelected([...cartSelected, cartOrders[index]]);
+      } else {
+        setCartSelected(
+          cartSelected.filter(
+            (order) => order.order_id !== cartOrders[index].order_id
+          )
+        );
+      }
+      setSelectAll(false); // Uncheck "Select All" checkbox
     }
   };
 
@@ -223,6 +235,7 @@ const Cart = ({ user, active, setActive }) => {
     if (cartSelected.length > 0) {
       setCartCheckout(cartSelected);
       navigate("/Checkout");
+      setActive(!active);
     } else {
       toast.error("Please select an order before proceeding to checkout", {
         position: "top-center",
@@ -237,6 +250,22 @@ const Cart = ({ user, active, setActive }) => {
     }
   };
 
+  const cartRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setActive(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   // console.log(subtotal);
   // console.log(cartSelected);
   return (
@@ -245,9 +274,10 @@ const Cart = ({ user, active, setActive }) => {
         <div>Loading...</div>
       ) : (
         <div
-          className={`container-md cart-container bg-white shadow ${
+          className={`container-md cart-container bg-white shadow  ${
             active ? "cart-active" : ""
           }`}
+          ref={cartRef}
         >
           <div className="cart-title-container d-flex justify-content-between align-items-center mb-3">
             <h5 className="section-title">Cart</h5>
@@ -275,6 +305,26 @@ const Cart = ({ user, active, setActive }) => {
                 </div>
               )}
 
+              {cartOrders.length > 0 && (
+                <div className="cold-md-12 d-flex py-3 border-btm">
+                  <div className="form-check w-25">
+                    <input
+                      className="form-check-input me-2"
+                      type="checkbox"
+                      checked={selectAll}
+                      onChange={(e) => handleCheck(e, -1)}
+                      id="select-all"
+                    />
+                    <label
+                      className="form-check-label fs-5"
+                      htmlFor="select-all"
+                    >
+                      Select All
+                    </label>
+                  </div>
+                </div>
+              )}
+
               {cartOrders.map((order, index) => (
                 <div key={index} className="col-md-12 d-flex py-3 border-btm">
                   <div className="align-self-center me-1">
@@ -282,6 +332,9 @@ const Cart = ({ user, active, setActive }) => {
                       className="form-check-input"
                       type="checkbox"
                       id={`checkbox${index}`}
+                      checked={cartSelected.some(
+                        (selected) => selected.order_id === order.order_id
+                      )}
                       value=""
                       aria-label="..."
                       onChange={(e) => handleCheck(e, index)}

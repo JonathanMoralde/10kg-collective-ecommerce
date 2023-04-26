@@ -73,6 +73,7 @@ const Navbar = ({ user, setUser }) => {
                 <button
                   className="btn hover-fix padding-right-fix"
                   onClick={() => setActive(!active)}
+                  type="button"
                 >
                   <FaShoppingCart size="1.5rem" className="shopping-cart" />
                 </button>
