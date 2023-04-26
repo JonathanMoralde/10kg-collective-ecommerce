@@ -3,20 +3,22 @@ import { FaTrash } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../AppContext";
+import { toast } from "react-toastify";
 
 const Cart = ({ user, active, setActive }) => {
-  let id;
+  let id; //user id
   if (user) {
     id = user.user_id;
   }
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]); //orders
-  const [cartOrders, setCartOrders] = useState([]);
+  const [cartOrders, setCartOrders] = useState([]); //cart
+  const [cartSelected, setCartSelected] = useState([]); //checked orders
   let subtotal = 0; //price subtotal
 
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
-  const { isNewOrder, setIsNewOrder } = useContext(AppContext);
+  const { isNewOrder, setIsNewOrder, setCartCheckout } = useContext(AppContext);
 
   // const fakeData = [
   //   {
@@ -82,8 +84,11 @@ const Cart = ({ user, active, setActive }) => {
     }
   }, [orders]);
 
+  // console.log(subtotal);
+  // console.log(cartSelected);
+
   // get price subtotal
-  cartOrders.forEach(
+  cartSelected.forEach(
     (order) =>
       (subtotal += parseInt(order.item_price) * parseInt(order.order_qty))
   );
@@ -98,14 +103,79 @@ const Cart = ({ user, active, setActive }) => {
   const handleMinus = (index) => {
     const newOrders = [...cartOrders];
     if (newOrders[index].order_qty > 1) {
+      // get the order id
+      const updateOrder = newOrders[index];
+      const { order_id } = updateOrder;
+
+      // new qty
       newOrders[index].order_qty -= 1;
-      setCartOrders(newOrders);
+
+      // prepare POST data
+      let updateData = new FormData();
+      updateData.append("action", "decrease");
+      updateData.append("order_id", order_id);
+      updateData.append("order_qty", newOrders[index].order_qty);
+
+      const url = "http://localhost/10kg-collective/orderModule/cart_qty.php";
+
+      // SEND TO BACKEND
+      axios.post(url, updateData).then((response) => {
+        // if success
+        if (response.data === 1) {
+          // update UI
+          setCartOrders(newOrders);
+        } else {
+          toast.error("Error occured while decreasing qty", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      });
     }
   };
+
   const handlePlus = (index) => {
     const newOrders = [...cartOrders];
+
+    // get the order id
+    const updateOrder = newOrders[index];
+    const { order_id } = updateOrder;
+
+    // new qty
     newOrders[index].order_qty += 1;
-    setCartOrders(newOrders);
+
+    // prepare POST data
+    let updateData = new FormData();
+    updateData.append("order_id", order_id);
+    updateData.append("order_qty", newOrders[index].order_qty);
+
+    const url = "http://localhost/10kg-collective/orderModule/cart_qty.php";
+
+    // SEND TO BACKEND
+    axios.post(url, updateData).then((response) => {
+      // if success
+      if (response.data === 1) {
+        // update UI
+        setCartOrders(newOrders);
+      } else {
+        toast.error("Error occured while increasing qty", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    });
   };
 
   // single order delete
@@ -113,7 +183,7 @@ const Cart = ({ user, active, setActive }) => {
     // perma delete order from orders table
     const removedOrder = cartOrders[index];
     const { order_id } = removedOrder;
-    console.log(removedOrder);
+    // console.log(removedOrder);
 
     let delData = new FormData();
     delData.append("order_id", order_id);
@@ -127,7 +197,7 @@ const Cart = ({ user, active, setActive }) => {
         const newOrders = cartOrders.filter(
           (order) => order != cartOrders[index]
         );
-        console.log(newOrders);
+        // console.log(newOrders);
         setCartOrders(newOrders);
       } else {
         alert("Failed to remove from the cart");
@@ -135,32 +205,41 @@ const Cart = ({ user, active, setActive }) => {
     });
   };
 
-  // checkout btn
-  const handleCheckout = () => {
-    const cartJSON = JSON.stringify(orders); //json format
-
-    const cartData = new FormData();
-    cartData.append("user_id", user.user_id); //$_POST['user_id']
-    cartData.append("cart", cartJSON); //$_POST['cart'] contains array of objects converted to json format
-    const url = "https://localhost/10kg-collective/orderModule/cart_update.php";
-    // update user order first in db by sending updated order data to POST
-    axios
-      .post(url, cartData)
-      .then((response) => {
-        // if the order was updated successfully, will then proceed to cart checkout page
-        if (response.data === 1) {
-          navigate("/Checkout");
-        } else {
-          // if unsuccessful
-          alert("Error occured while proceeding to checkout");
-        }
-      })
-      .catch((error) => {
-        throw new Error("Maintenance Mode");
-      });
+  // checkbox
+  const handleCheck = (e, index) => {
+    if (e.target.checked) {
+      let newSelect = [...cartSelected, cartOrders[index]];
+      setCartSelected(newSelect);
+    } else {
+      let newSelect = [...cartSelected];
+      if (index !== -1) {
+        newSelect.splice(index, 1);
+        setCartSelected(newSelect);
+      }
+    }
   };
 
-  // console.log(cartOrders);
+  // checkout btn
+  const handleCheckout = () => {
+    if (cartSelected.length > 0) {
+      setCartCheckout(cartSelected);
+      navigate("/Checkout");
+    } else {
+      toast.error("Please select an order before proceeding to checkout", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+
+  // console.log(subtotal);
+  // console.log(cartSelected);
   return (
     <>
       {loading ? (
@@ -199,7 +278,18 @@ const Cart = ({ user, active, setActive }) => {
 
               {cartOrders.map((order, index) => (
                 <div key={index} className="col-md-12 d-flex py-3 border-btm">
-                  <div className="cart-img-container">
+                  <div className="align-self-center me-1">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id={`checkbox${index}`}
+                      value=""
+                      aria-label="..."
+                      onChange={(e) => handleCheck(e, index)}
+                    />
+                  </div>
+
+                  <div className="cart-img-container ">
                     <img src="/" alt="-img" className="w-100 h-100" />
                   </div>
 

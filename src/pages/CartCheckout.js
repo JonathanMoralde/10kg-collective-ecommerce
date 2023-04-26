@@ -1,94 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import AppContext from "../AppContext";
+import { toast } from "react-toastify";
 
 const CartCheckout = ({ user }) => {
   const id = user.user_id;
+  const { cartCheckout } = useContext(AppContext);
+
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]); //array of objects
-  const [cartOrders, setCartOrders] = useState([]);
+
   let subtotal = 0;
 
-  const [loading, setLoading] = useState(false);
-  let componentMounted = true;
-
-  // const fakeData = [
-  //   {
-  //     order_id: 1,
-  //     name: "plain series",
-  //     price: "250",
-  //     size: "Medium",
-  //     variant: "white",
-  //     quantity: 2,
-  //   },
-  //   {
-  //     order_id: 2,
-  //     name: "Weightless",
-  //     price: "399",
-  //     size: "Small",
-  //     variant: "white",
-  //     quantity: 1,
-  //   },
-  //   {
-  //     order_id: 3,
-  //     name: "TTP",
-  //     price: "450",
-  //     size: "Large",
-  //     variant: "Black",
-  //     quantity: 3,
-  //   },
-  //   {
-  //     order_id: 4,
-  //     name: "TTP",
-  //     price: "450",
-  //     size: "Large",
-  //     variant: "Black",
-  //     quantity: 1,
-  //   },
-  // ];
+  // const [loading, setLoading] = useState(false);
+  // let componentMounted = true;
 
   // get all order of user
-  useEffect(() => {
-    // const url = "https://localhost/10kg-collective/orderModule/user_order.php"; //php file that retrieves user's pending order
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     const response = await axios.get(
+  //       `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
+  //     );
 
-    // axios
-    //   .get(url)
-    //   .then((response) => {
-    //     alert(response.data);
-    //     //order list will be set here
-    //     // setOrders(response.data)
-    //   })
-    //   .catch(() => {
-    //     alert("Maintenance Mode");
-    //   });
+  //     if (componentMounted) {
+  //       setOrders(response.data);
+  //       setLoading(false);
+  //     }
 
-    // setOrders(fakeData); //hard code
-    const fetchData = async () => {
-      setLoading(true);
-      const response = await axios.get(
-        `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
-      );
-
-      if (componentMounted) {
-        setOrders(response.data);
-        setLoading(false);
-      }
-
-      return (componentMounted = false);
-    };
-  }, []);
+  //     return (componentMounted = false);
+  //   };
+  // }, []);
 
   // get orders that have order status = "Cart"
-  useEffect(() => {
-    if (!loading && orders.length > 0) {
-      // pending orders
-      const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
-      setCartOrders(cartList);
-    }
-  }, [orders]);
+  // useEffect(() => {
+  //   if (!loading && orders.length > 0) {
+  //     // pending orders
+  //     const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
+  //     setCartOrders(cartList);
+  //   }
+  // }, [orders]);
 
-  // get total
-  cartOrders.forEach((order) => {
+  // // get total
+  cartCheckout.forEach((order) => {
     let ordertotal = parseInt(order.item_price) * parseInt(order.order_qty);
     subtotal += ordertotal;
   });
@@ -100,13 +54,49 @@ const CartCheckout = ({ user }) => {
 
     let checkoutData = new FormData();
     checkoutData.append("user_id", id); //user_id
-    checkoutData.append("orders", JSON.stringify(cartOrders)); //all cart orders JSON format
-    // checkoutData.append("orders", cartOrders); //all cart orders (not sent as JSON)
+    checkoutData.append("orders", JSON.stringify(cartCheckout)); //selected cart orders JSON format
+    // checkoutData.append("orders", cartOrders); //selected cart orders (not sent as JSON)
 
     axios
       .post(url, checkoutData) //POST, update order status to pending
-      .then((response) => alert(response.data)) //prints echo
-      .catch((error) => alert(error.data));
+      .then((response) => {
+        if (response.data === 1) {
+          toast.success("Order placed successfully", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/Shop");
+        } else {
+          toast.error("Error occured during order checkout", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        }
+      })
+      .catch((error) => {
+        toast.error(error.data, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
     // navigate("/Shop");
   };
 
@@ -130,9 +120,9 @@ const CartCheckout = ({ user }) => {
           </div>
         </div>
         <div className="container checkout-order-list">
-          {cartOrders.map((order) => {
+          {cartCheckout.map((order) => {
             return (
-              <div className="row mb-3">
+              <div className="row mb-3" key={order.order_id}>
                 <div className="col-md-6 d-flex">
                   <div className="card me-5">
                     <img

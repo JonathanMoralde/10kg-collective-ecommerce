@@ -5,9 +5,12 @@ import AppContext from "./AppContext";
 
 function Index() {
   const [isNewOrder, setIsNewOrder] = useState(false);
+  const [cartCheckout, setCartCheckout] = useState([]);
 
   return (
-    <AppContext.Provider value={{ isNewOrder, setIsNewOrder }}>
+    <AppContext.Provider
+      value={{ isNewOrder, setIsNewOrder, cartCheckout, setCartCheckout }}
+    >
       <App />
     </AppContext.Provider>
   );
