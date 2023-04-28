@@ -36,33 +36,36 @@ function App() {
   const [user, setUser] = useState(null);
 
   // check session on initial render or when reloaded
-  useEffect(() => {
-    // const response = axios.get("https:/localhost/10kg-collective/userModule/checksession.php")
+  // useEffect(() => {
+  //   const response = axios.get(
+  //     "https:/localhost/10kg-collective/userModule/checksession.php",
+  //     { withCredentials: true }
+  //   );
 
-    // // setUser(response.data)
-    // // user or admin
-    // if(response.data.user_type === "c"){
-    //   setUser(response.data)
-    // } else if(response.data.user_type === "a"){
-    //   setAdminUser(response.data)
-    // } else {
-    //   setUser(null)
-    //   setAdminUser(null)
-    // }
-    axios
-      .get("https:/localhost/10kg-collective/userModule/checksession.php")
-      .then((response) => {
-        if (response.data.user_type === "c") {
-          setUser(response.data);
-        } else {
-          // alert(response)
-        }
-      })
-      .catch((error) => {
-        setUser(null);
-        setAdminUser(null);
-      });
-  }, []);
+  //   // setUser(response.data)
+  //   // user or admin
+  //   if (response.data.user_type === "c") {
+  //     setUser(response.data);
+  //   } else if (response.data.user_type === "a") {
+  //     setAdminUser(response.data);
+  //   } else {
+  //     setUser(null);
+  //     setAdminUser(null);
+  //   }
+  //   axios
+  //     .get("https:/localhost/10kg-collective/userModule/checksession.php")
+  //     .then((response) => {
+  //       if (response.data.user_type === "c") {
+  //         setUser(response.data);
+  //       } else {
+  //         // alert(response)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setUser(null);
+  //       setAdminUser(null);
+  //     });
+  // }, []);
 
   return (
     <>

@@ -820,14 +820,11 @@ label {
 /* ORDERS SECTION */
 .admin-single-order {
   position: relative;
+  transition: all 0.2s ease-out;
 }
 
-.admin-single-order::after {
-  content: "\f303";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  font-size: 1.5rem;
-  color: white;
+/* .admin-single-order::after {
+  content: "";
   opacity: 0;
   position: absolute;
   top: 50%;
@@ -840,8 +837,8 @@ label {
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #6c757da7;
-}
+  background-color: #6c757da9;
+} */
 
 /* .admin-single-order::after {
   content: "";
@@ -856,12 +853,34 @@ label {
   transition: opacity 0.2s ease-out;
 } */
 
-.admin-single-order:hover::after {
+/* .admin-single-order:hover::after {
   opacity: 1;
+} */
+
+.admin-single-order-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: all 0.2s ease-out;
+  background: #6c757d33;
 }
 
-.admin-single-order:hover {
-  cursor: pointer;
+.admin-single-order-overlay:hover {
+  opacity: 1;
+}
+.admin-single-order:hover .so-img,
+.admin-single-order:hover .so-info {
+  filter: blur(2px);
+}
+
+/* paid */
+.no-blur:hover .so-img,
+.no-blur:hover .so-info {
+  /* filter: blur(0px) !important; */
+  filter: unset !important;
 }
 
 /* END OF ORDERS SECTION */

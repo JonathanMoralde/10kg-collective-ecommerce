@@ -250,6 +250,7 @@ const Cart = ({ user, active, setActive }) => {
     }
   };
 
+  // close cart if user clicked outside the component
   const cartRef = useRef(null);
 
   useEffect(() => {

@@ -9,7 +9,12 @@ function Index() {
 
   return (
     <AppContext.Provider
-      value={{ isNewOrder, setIsNewOrder, cartCheckout, setCartCheckout }}
+      value={{
+        isNewOrder,
+        setIsNewOrder,
+        cartCheckout,
+        setCartCheckout,
+      }}
     >
       <App />
     </AppContext.Provider>

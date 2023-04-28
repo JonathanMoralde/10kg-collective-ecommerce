@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Searchbar from "../components/Searchbar";
 import ShowProducts from "../components/ShowProducts";
 import ProductSkeleton from "../components/ProductSkeleton";
 import axios from "axios";
+// import AppContext from "../AppContext";
 
 const Shop = ({ user }) => {
   const [data, setData] = useState([]);

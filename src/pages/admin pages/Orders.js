@@ -41,7 +41,9 @@ const Orders = ({ adminUser }) => {
       setPendingOrders(pendingList);
 
       // confirmed orders
-      const confirmedList = order.filter((o) => o.order_status == "C");
+      const confirmedList = order.filter(
+        (o) => o.order_status == "C" && o.payment_status === "Unpaid"
+      );
       setConfirmedOrders(confirmedList);
 
       // All orders except cart
@@ -208,17 +210,22 @@ const Orders = ({ adminUser }) => {
               {orderDisplay.map((o) => {
                 return (
                   <div
-                    className="row my-3 p-3 single-order admin-single-order"
+                    className={`row my-3 p-3 single-order admin-single-order ${
+                      o.payment_status === "Paid" ||
+                      o.order_status === "Canceled"
+                        ? "no-blur"
+                        : ""
+                    }`}
                     key={o.order_id}
                   >
-                    <div className="col-md-2 ">
+                    <div className="col-md-2 so-img">
                       {/* image */}
                       <div className="order-track-img-wrapper w-100">
                         <img src="#" alt="img" className="img-fluid" />
                       </div>
                     </div>
 
-                    <div className="col-md-10  pe-3">
+                    <div className="col-md-10 so-info  pe-3">
                       {/* info */}
                       <div className="container-fluid">
                         <div className="row">
@@ -263,19 +270,100 @@ const Orders = ({ adminUser }) => {
                               </h5>
                             </div>
                             <div className="w-50 d-flex justify-content-end text-end align-items-center">
+                              {/* all orders w/ pending status */}
                               {clickedOrderDisplay === "All Orders" &&
                                 o.order_status == "P" && (
                                   <h5 className="ms-4 fst-italic text-info-emphasis">
                                     Pending
                                   </h5>
                                 )}
-                              {o.payment_status === "Unpaid" ? (
-                                <h5 className="ms-4 fst-italic text-danger-emphasis">
-                                  Unpaid
-                                </h5>
-                              ) : (
-                                <h5 className="ms-4 fst-italic">Paid</h5>
-                              )}
+                              {clickedOrderDisplay === "All Orders" &&
+                                o.order_status == "Canceled" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Canceled
+                                  </h5>
+                                )}
+                              {clickedOrderDisplay === "All Orders" &&
+                                o.delivery_status === "NS" &&
+                                o.order_status === "C" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    To be shipped
+                                  </h5>
+                                )}
+                              {clickedOrderDisplay === "All Orders" &&
+                                o.delivery_status === "S" &&
+                                o.order_status === "C" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Shipped
+                                  </h5>
+                                )}
+                              {clickedOrderDisplay === "All Orders" &&
+                                o.delivery_status === "D" &&
+                                o.order_status === "C" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Delivered
+                                  </h5>
+                                )}
+                              {clickedOrderDisplay === "All Orders" &&
+                                o.delivery_status === "R" &&
+                                o.order_status === "C" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Rejected
+                                  </h5>
+                                )}
+                              {/* pending orders status */}
+                              {clickedOrderDisplay === "Pending Orders" &&
+                                o.order_status == "P" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Pending
+                                  </h5>
+                                )}
+                              {/* delivered status - not yet shipped */}
+                              {clickedOrderDisplay === "Confirmed Orders" &&
+                                o.delivery_status === "NS" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    To be shipped
+                                  </h5>
+                                )}
+                              {/* delivered status - shipped */}
+                              {clickedOrderDisplay === "Confirmed Orders" &&
+                                o.delivery_status === "S" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Shipped
+                                  </h5>
+                                )}
+                              {/* delivered status - shipped */}
+                              {clickedOrderDisplay === "Confirmed Orders" &&
+                                o.delivery_status === "D" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Delivered
+                                  </h5>
+                                )}
+                              {/* delivered status - shipped */}
+                              {clickedOrderDisplay === "Confirmed Orders" &&
+                                o.delivery_status === "R" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Rejected by Customer
+                                  </h5>
+                                )}
+                              {/* delivered status - shipped */}
+                              {clickedOrderDisplay === "Completed Orders" &&
+                                o.delivery_status === "D" && (
+                                  <h5 className="ms-4 fst-italic text-info-emphasis">
+                                    Delivered
+                                  </h5>
+                                )}
+
+                              {o.order_status !== "Canceled" &&
+                                (o.payment_status === "Unpaid" ? (
+                                  <h5 className="ms-4 fst-italic text-danger-emphasis">
+                                    Unpaid
+                                  </h5>
+                                ) : (
+                                  <h5 className="ms-4 fst-italic text-success-emphasis">
+                                    Paid
+                                  </h5>
+                                ))}
                               <h5 className="ms-4">
                                 <span className="fw-normal">
                                   Order Total: ₱
@@ -287,6 +375,24 @@ const Orders = ({ adminUser }) => {
                         </div>
                       </div>
                     </div>
+
+                    {o.payment_status === "Paid" ? (
+                      <div className="admin-single-order-overlay d-flex align-items-center justify-content-center"></div>
+                    ) : (
+                      <div className="admin-single-order-overlay d-flex align-items-center justify-content-center">
+                        {o.order_status === "P" && (
+                          <button className="btn btn-secondary me-3">
+                            Confirm Order
+                          </button>
+                        )}
+                        {o.order_status === "C" &&
+                          o.payment_status === "Unpaid" && (
+                            <button className="btn btn-secondary">
+                              Order Paid
+                            </button>
+                          )}
+                      </div>
+                    )}
                   </div>
                 );
               })}

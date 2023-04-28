@@ -6,42 +6,12 @@ import { toast } from "react-toastify";
 
 const CartCheckout = ({ user }) => {
   const id = user.user_id;
-  const { cartCheckout } = useContext(AppContext);
+  const { isNewOrder, setIsNewOrder, cartCheckout } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   let subtotal = 0;
 
-  // const [loading, setLoading] = useState(false);
-  // let componentMounted = true;
-
-  // get all order of user
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setLoading(true);
-  //     const response = await axios.get(
-  //       `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
-  //     );
-
-  //     if (componentMounted) {
-  //       setOrders(response.data);
-  //       setLoading(false);
-  //     }
-
-  //     return (componentMounted = false);
-  //   };
-  // }, []);
-
-  // get orders that have order status = "Cart"
-  // useEffect(() => {
-  //   if (!loading && orders.length > 0) {
-  //     // pending orders
-  //     const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
-  //     setCartOrders(cartList);
-  //   }
-  // }, [orders]);
-
-  // // get total
   cartCheckout.forEach((order) => {
     let ordertotal = parseInt(order.item_price) * parseInt(order.order_qty);
     subtotal += ordertotal;
@@ -55,12 +25,11 @@ const CartCheckout = ({ user }) => {
     let checkoutData = new FormData();
     checkoutData.append("user_id", id); //user_id
     checkoutData.append("orders", JSON.stringify(cartCheckout)); //selected cart orders JSON format
-    // checkoutData.append("orders", cartOrders); //selected cart orders (not sent as JSON)
 
     axios
       .post(url, checkoutData) //POST, update order status to pending
       .then((response) => {
-        if (response.data === 1) {
+        if (response.data == 1) {
           toast.success("Order placed successfully", {
             position: "top-center",
             autoClose: 2000,
@@ -71,6 +40,7 @@ const CartCheckout = ({ user }) => {
             progress: undefined,
             theme: "light",
           });
+          setIsNewOrder(true);
           navigate("/Shop");
         } else {
           toast.error("Error occured during order checkout", {
