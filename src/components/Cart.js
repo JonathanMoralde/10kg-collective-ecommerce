@@ -21,25 +21,6 @@ const Cart = ({ user, active, setActive }) => {
   const [loading, setLoading] = useState(false);
   const { isNewOrder, setIsNewOrder, setCartCheckout } = useContext(AppContext);
 
-  // const fakeData = [
-  //   {
-  //     order_id: 1,
-  //     item_name: "plain series",
-  //     item_price: "250",
-  //     size_name: "Medium",
-  //     variation_name: "white",
-  //     order_qty: 2,
-  //   },
-  //   {
-  //     order_id: 2,
-  //     item_name: "Weightless",
-  //     item_price: "399",
-  //     size_name: "Small",
-  //     variation_name: "white",
-  //     order_qty: 1,
-  //   },
-  // ];
-
   // get all user orders from php
   useEffect(() => {
     const fetchOrder = async () => {
@@ -64,10 +45,7 @@ const Cart = ({ user, active, setActive }) => {
     };
 
     fetchOrder();
-    // console.log("Hello");
-    // setOrders(fakeData); //temporary data
   }, [isNewOrder]);
-  // console.log(orders);
 
   // reset isNewOrder to false
   useEffect(() => {
@@ -194,14 +172,32 @@ const Cart = ({ user, active, setActive }) => {
     axios.post(url, delData).then((response) => {
       // if order deleted, remove it from my orders list
       if (response.data === 1) {
-        alert("Order removed from the cart");
         const newOrders = cartOrders.filter(
           (order) => order != cartOrders[index]
         );
         // console.log(newOrders);
         setCartOrders(newOrders);
+        toast.success("Order removed from cart!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       } else {
-        alert("Failed to remove from the cart");
+        toast.error("Failed to remove from cart!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     });
   };
