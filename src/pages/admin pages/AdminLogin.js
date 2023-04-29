@@ -21,6 +21,7 @@ const AdminLogin = ({ setAdminUser }) => {
     let adminData = new FormData();
     adminData.append("admin_email", adminEmail);
     adminData.append("admin_password", adminPassword);
+    adminData.append("user_type", "A");
 
     // if email & pass form has value
     if (adminEmail && adminPassword) {

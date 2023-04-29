@@ -14,7 +14,7 @@ const LoginRegisterForm = ({ setUser }) => {
   const { search } = useLocation();
   const redirectUrl = new URLSearchParams(search).get("redirect");
 
-  // HANDLE SING UP
+  // HANDLE SIGN UP
   const [fName, setFName] = useState("");
   const [address, setAddress] = useState("");
   const [cNumber, setCNumber] = useState("");
@@ -117,13 +117,13 @@ const LoginRegisterForm = ({ setUser }) => {
     let logData = new FormData();
     logData.append("log_email", log_Email);
     logData.append("log_password", log_Password);
+    logData.append("user_type", "U");
 
     if (log_Email && log_Password) {
       axios
         .post(url, logData)
         .then((response) => {
           if (response.data.response_status) {
-            // alert(`Welcome ${response.data.full_name}`);
             toast.success(`Welcome ${response.data.full_name}`, {
               position: "top-center",
               autoClose: 2000,
