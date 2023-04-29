@@ -1,12 +1,14 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
+import AppContext from "../../AppContext";
 
 const Orders = ({ adminUser }) => {
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
+
+  const { isNewOrder, setIsNewOrder } = useContext(AppContext);
 
   // get all the orders from backend
   useEffect(() => {
@@ -24,7 +26,14 @@ const Orders = ({ adminUser }) => {
     };
 
     fetchData();
-  }, []);
+  }, [isNewOrder]);
+
+  // reset isNewOrder to false
+  useEffect(() => {
+    if (isNewOrder) {
+      setIsNewOrder(false);
+    }
+  }, [isNewOrder]);
 
   // extracted data from orderList
   const [pendingOrders, setPendingOrders] = useState([]);
@@ -33,6 +42,7 @@ const Orders = ({ adminUser }) => {
   const [completedOrders, setCompletedOrders] = useState([]);
 
   const [orderDisplay, setOrderDisplay] = useState([]);
+  const [clickedOrderDisplay, setClickedOrderDisplay] = useState("All Orders");
 
   useEffect(() => {
     if ((!loading, order.length > 0)) {
@@ -59,7 +69,26 @@ const Orders = ({ adminUser }) => {
   }, [order]);
 
   // console.log(orderDisplay);
-  const [clickedOrderDisplay, setClickedOrderDisplay] = useState("All Orders");
+
+  const handleBtn = (e, order_id) => {
+    const btnClicked = e.target.innerHTML;
+
+    const url = "https://localhost/10kg-collective/admin/order_page_btn.php";
+
+    let btnData = new FormData();
+    btnData.append("action", btnClicked);
+    btnData.append("order_id", order_id);
+
+    axios
+      .post(url, btnData)
+      .then((response) => {
+        setIsNewOrder(true);
+        alert("Success");
+      })
+      .catch((error) => {
+        alert(error.data);
+      });
+  };
 
   return (
     <>
@@ -381,13 +410,19 @@ const Orders = ({ adminUser }) => {
                     ) : (
                       <div className="admin-single-order-overlay d-flex align-items-center justify-content-center">
                         {o.order_status === "P" && (
-                          <button className="btn btn-secondary me-3">
+                          <button
+                            className="btn btn-secondary me-3"
+                            onClick={(e) => handleBtn(e, o.order_id)}
+                          >
                             Confirm Order
                           </button>
                         )}
                         {o.order_status === "C" &&
                           o.payment_status === "Unpaid" && (
-                            <button className="btn btn-secondary">
+                            <button
+                              className="btn btn-secondary"
+                              onClick={(e) => handleBtn(e, o.order_id)}
+                            >
                               Order Paid
                             </button>
                           )}
