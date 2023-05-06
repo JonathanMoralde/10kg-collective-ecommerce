@@ -31,7 +31,7 @@ const AminNavbar = ({ adminUser, setAdminUser }) => {
                   end
                   to="/admin"
                 >
-                  Sales
+                  Reports
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -52,6 +52,16 @@ const AminNavbar = ({ adminUser, setAdminUser }) => {
                   to="/admin/Orders"
                 >
                   Orders
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  activeclassname="active"
+                  className="nav-link"
+                  end
+                  to="/admin/Orders"
+                >
+                  Users
                 </NavLink>
               </li>
             </ul>

@@ -742,7 +742,13 @@ label {
   height: 4rem;
 }
 
-/* DASHBOARD/SALES REPORT SECTION */
+/* REPORT SECTION */
+@media screen and (min-width: 576px) {
+  .modal-dialog {
+    max-width: 700px !important;
+  }
+}
+/* END OF REPORTS SECTION */
 
 /* PRODUCTS SECTION */
 .item-thumbnail-form,
@@ -886,3 +892,11 @@ label {
 /* END OF ORDERS SECTION */
 
 /* END OF ADMIN PANEL */
+
+/* COURIER PAGE */
+
+.courier-page {
+  height: 100vh !important;
+}
+
+/* END OF COURIER PAGE */

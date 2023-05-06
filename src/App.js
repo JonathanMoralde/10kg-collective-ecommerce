@@ -30,10 +30,14 @@ import Returns from "./pages/footer pages/Returns";
 // Toastify notification
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// Courier Pages
+import CourierLogin from "./pages/courier page/CourierLogin";
+import CourierPage from "./pages/courier page/CourierPage";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
   const [user, setUser] = useState(null);
+  const [courier, setCourier] = useState(null);
 
   // check session on initial render or when reloaded
   // useEffect(() => {
@@ -168,6 +172,18 @@ function App() {
                 <Admin adminUser={adminUser} />
               ) : (
                 <AdminLogin setAdminUser={setAdminUser} />
+              )
+            }
+          />
+
+          {/* Courier Route */}
+          <Route
+            path="/Courier"
+            element={
+              courier ? (
+                <CourierPage courier={courier} setCourier={setCourier} />
+              ) : (
+                <CourierLogin setCourier={setCourier} />
               )
             }
           />
