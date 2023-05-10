@@ -16,6 +16,8 @@ const SingleProduct = ({ user }) => {
   const [quantity, setQuantity] = useState(1);
   const [itemSize, setItemSize] = useState([]);
   const [itemVariant, setItemVariant] = useState([]);
+  const [images, setImages] = useState([]);
+
   const [loading, setLoading] = useState(false);
   let componentMounted = true;
   useEffect(() => {
@@ -83,6 +85,18 @@ const SingleProduct = ({ user }) => {
       setVariation_name(JSON.parse(variation_name));
     }
   }, [data, itemSize, id, loading]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const response = await axios.get(
+        `https://localhost/10kg-collective/displayModule/images.php?item_id=${id}`
+      );
+
+      setImages(response.data);
+    };
+    fetchImages();
+  }, [id]);
+  console.log(images);
 
   // CART & BUY BTN HANDLER
   const handleClick = (e) => {
@@ -178,15 +192,19 @@ const SingleProduct = ({ user }) => {
             <div className="col-md-6">
               <div id="carouselExampleIndicators" className="carousel slide">
                 <div className="carousel-indicators">
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
-                    className="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
+                  {images.map((image, index) => {
+                    return (
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to={index}
+                        className={index === 0 ? "active" : ""}
+                        aria-current="true"
+                        aria-label={`Slide ${index + 1}`}
+                      ></button>
+                    );
+                  })}
+                  {/* <button
                     type="button"
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="1"
@@ -197,18 +215,26 @@ const SingleProduct = ({ user }) => {
                     data-bs-target="#carouselExampleIndicators"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
-                  ></button>
+                  ></button> */}
                 </div>
                 <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <img src="/" className="d-block w-100" alt="..." />
-                  </div>
-                  <div className="carousel-item">
-                    <img src="/" className="d-block w-100" alt="..." />
-                  </div>
-                  <div className="carousel-item">
-                    <img src="/" className="d-block w-100" alt="..." />
-                  </div>
+                  {images.map((image, index) => {
+                    const { image_location } = image;
+                    return (
+                      <div
+                        className={`carousel-item ${
+                          index === 0 ? "active" : ""
+                        }`}
+                        key={image.image_id}
+                      >
+                        <img
+                          src={image_location}
+                          className="d-block w-100"
+                          alt={image.image_name}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
                 <button
                   className="carousel-control-prev"

@@ -16,7 +16,7 @@ const ShowProducts = ({ filter, user }) => {
               className="card mb-3"
             >
               <img
-                src={product.item_image}
+                src={product.image_src}
                 className="card-img-top"
                 alt="product-img"
                 height="234px"

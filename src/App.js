@@ -33,6 +33,7 @@ import "react-toastify/dist/ReactToastify.css";
 // Courier Pages
 import CourierLogin from "./pages/courier page/CourierLogin";
 import CourierPage from "./pages/courier page/CourierPage";
+import Users from "./pages/admin pages/Users";
 
 function App() {
   const [adminUser, setAdminUser] = useState(null);
@@ -154,10 +155,21 @@ function App() {
               }
             />
             <Route
+              exact
               path="/admin/Orders"
               element={
                 adminUser ? (
                   <Orders adminUser={adminUser} />
+                ) : (
+                  <AdminLogin setAdminUser={setAdminUser} />
+                )
+              }
+            />
+            <Route
+              path="/admin/Users"
+              element={
+                adminUser ? (
+                  <Users adminUser={adminUser} />
                 ) : (
                   <AdminLogin setAdminUser={setAdminUser} />
                 )

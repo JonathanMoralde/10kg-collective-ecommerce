@@ -11,17 +11,30 @@ const ProductForm = () => {
   const [price, setPrice] = useState();
   const [category, setCategory] = useState();
   const [size, setSize] = useState([]);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [showcaseFiles, setShowcaseFiles] = useState([]);
 
+  // CATEGORY  HANDLE VALUE
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
   };
 
+  // SIZE HANDLE VALUE
   const handleSizeChange = (e) => {
     if (e.target.checked) {
       setSize([...size, e.target.value]);
     } else {
       setSize(size.filter((s) => s !== e.target.value));
     }
+  };
+
+  // IMAGE HANDLE VALUE
+  const handleThumbnailFileChange = (e) => {
+    setThumbnailFile(e.target.files[0]);
+  };
+
+  const handleShowcaseFilesChange = (e) => {
+    setShowcaseFiles(Array.from(e.target.files));
   };
 
   // DYNAMIC VARIATION FIELDS
@@ -48,6 +61,7 @@ const ProductForm = () => {
   // NEXT & BACK FORM HANDLE
   const [isNext, setIsNext] = useState(false);
 
+  // SUBMIT HANDLE
   const addProduct = () => {
     // e.preventDefault();
     // console.log(size);
@@ -62,6 +76,10 @@ const ProductForm = () => {
     // productData.append("size_name[]", size);
     productData.append("variation_name[]", JSON.stringify(inputFields));
     // productData.append("variation_name[]", inputFields);
+    productData.append("thumbnail", thumbnailFile);
+    showcaseFiles.forEach((file) => {
+      productData.append("showcase[]", file);
+    });
 
     // // Insert size names
     // size.forEach((sizeName) => {
@@ -75,7 +93,15 @@ const ProductForm = () => {
 
     const url = "http://localhost/10kg-collective/admin/add_product.php";
 
-    if (name && price && category && size && inputFields) {
+    if (
+      name &&
+      price &&
+      category &&
+      size &&
+      inputFields &&
+      thumbnailFile &&
+      showcaseFiles
+    ) {
       axios
         .post(url, productData)
         .then((response) => {
@@ -105,6 +131,7 @@ const ProductForm = () => {
               progress: undefined,
               theme: "light",
             });
+            console.log(response.data);
           }
         })
         .catch((error) => {
@@ -122,6 +149,8 @@ const ProductForm = () => {
     }
   };
 
+  console.log(thumbnailFile);
+  console.log(showcaseFiles);
   return (
     <>
       <div className="container-fluid form-section-background">
@@ -272,20 +301,35 @@ const ProductForm = () => {
                   </div>
                 </div>
 
-                {/* <div className="item-images-form-container d-flex justify-content-between">
-                
-                <div className="mb-4 item-thumbnail-form">
-                  <label className="form-label" for="customFile">Upload Product Thumbnail</label>
-                  <input type="file" className="form-control" id="customFile" />
+                {/* IMAGES */}
+                <div className="item-images-form-container d-flex justify-content-between">
+                  <div className="mb-4 item-thumbnail-form">
+                    <label className="form-label" for="customFile">
+                      Upload Product Thumbnail
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="customFile"
+                      onChange={(e) => handleThumbnailFileChange(e)}
+                    />
+                  </div>
+
+                  <div className="mb-4 item-preview-form">
+                    <label for="formFileMultiple" className="form-label">
+                      Upload Product showcase images
+                    </label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      id="formFileMultiple"
+                      multiple
+                      onChange={(e) => handleShowcaseFilesChange(e)}
+                    />
+                  </div>
                 </div>
 
-                
-                <div className="mb-4 item-preview-form">
-                  <label for="formFileMultiple" className="form-label">Upload Product showcase images</label>
-                  <input className="form-control" type="file" id="formFileMultiple" multiple />
-                </div>
-                </div> */}
-
+                {/* BTNS */}
                 <div className="d-flex justify-content-center">
                   <Link to="/admin/products" className="btn btn-secondary me-3">
                     Cancel
@@ -295,7 +339,14 @@ const ProductForm = () => {
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => {
-                      if (name && price && category && size) {
+                      if (
+                        name &&
+                        price &&
+                        category &&
+                        size &&
+                        thumbnailFile &&
+                        showcaseFiles
+                      ) {
                         setIsNext(!isNext);
                       } else {
                         toast.warn("Please fill out important details!", {

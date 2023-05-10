@@ -15,7 +15,7 @@ const CourierLogin = ({ setCourier }) => {
     e.preventDefault();
 
     // POST
-    const url = "http://localhost/10kg-collective/courier/courier_login.php";
+    const url = "http://localhost/10kg-collective/userModule/login_user.php";
 
     // create POST data
     let courData = new FormData();

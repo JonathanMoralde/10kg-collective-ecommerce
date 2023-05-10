@@ -15,7 +15,7 @@ const AdminLogin = ({ setAdminUser }) => {
     e.preventDefault();
 
     // POST
-    const url = "http://localhost/10kg-collective/admin/admin_login.php";
+    const url = "https://localhost/10kg-collective/userModule/login_user.php";
 
     // create POST data
     let adminData = new FormData();
@@ -48,7 +48,7 @@ const AdminLogin = ({ setAdminUser }) => {
             navigate("/admin");
           } else {
             // wrong password or email
-            toast.warn("Incorrect Email or Password", {
+            toast.warn(response.data, {
               position: "top-center",
               autoClose: 2000,
               hideProgressBar: true,

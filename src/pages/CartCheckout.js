@@ -43,7 +43,7 @@ const CartCheckout = ({ user }) => {
           setIsNewOrder(true);
           navigate("/Shop");
         } else {
-          toast.error("Error occured during order checkout", {
+          toast.error(response.data, {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: true,

@@ -59,7 +59,7 @@ const AminNavbar = ({ adminUser, setAdminUser }) => {
                   activeclassname="active"
                   className="nav-link"
                   end
-                  to="/admin/Orders"
+                  to="/admin/Users"
                 >
                   Users
                 </NavLink>
