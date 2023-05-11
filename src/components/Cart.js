@@ -56,7 +56,7 @@ const Cart = ({ user, active, setActive }) => {
 
   // get orders that have order status = "Cart"
   useEffect(() => {
-    if (orders.length > 0) {
+    if (Array.isArray(orders) && orders.length > 0) {
       // pending orders
       const cartList = orders.filter((o) => o.order_status == "Cart"); //using === seems
       setCartOrders(cartList);

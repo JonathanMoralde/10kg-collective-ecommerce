@@ -317,7 +317,7 @@ const ProductForm = () => {
 
                   <div className="mb-4 item-preview-form">
                     <label for="formFileMultiple" className="form-label">
-                      Upload Product showcase images
+                      Upload showcase images
                     </label>
                     <input
                       className="form-control"

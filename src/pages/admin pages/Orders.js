@@ -90,6 +90,7 @@ const Orders = ({ adminUser }) => {
       });
   };
 
+  console.log(orderDisplay);
   return (
     <>
       <div className="container-fluid container-fix my-5">
@@ -152,13 +153,11 @@ const Orders = ({ adminUser }) => {
             </ul>
           </div>
         </div>
-        
+
         {/* orders */}
         {loading ? (
           <div>Loading...</div>
         ) : (
-          
-
           <div className={`order-list-section`}>
             <div className="container-fluid">
               {orderDisplay.map((o) => {
@@ -175,7 +174,11 @@ const Orders = ({ adminUser }) => {
                     <div className="col-md-2 so-img">
                       {/* image */}
                       <div className="order-track-img-wrapper w-100">
-                        <img src="#" alt="img" className="img-fluid" />
+                        <img
+                          src={o.image_src}
+                          alt={o.image_name}
+                          className="img-fluid"
+                        />
                       </div>
                     </div>
 

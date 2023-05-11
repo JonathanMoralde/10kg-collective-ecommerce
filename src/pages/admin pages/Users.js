@@ -73,7 +73,7 @@ const Users = ({ adminUser }) => {
         adminData.append("email_address", aEmail);
         adminData.append("password", aPassword);
 
-        axios.get(url, adminData).then((response) => {
+        axios.post(url, adminData).then((response) => {
           console.log(response.data);
         });
       } else {
@@ -89,7 +89,7 @@ const Users = ({ adminUser }) => {
         courierData.append("email_address", cEmail);
         courierData.append("password", cPassword);
 
-        axios.get(url, courierData).then((response) => {
+        axios.post(url, courierData).then((response) => {
           console.log(response.data);
         });
       } else {

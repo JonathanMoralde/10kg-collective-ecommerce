@@ -4,11 +4,13 @@ import { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
 import AppContext from "../AppContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UserDashboard = ({ user, setUser }) => {
   const id = user.user_id;
   const [order, setOrder] = useState([]);
 
+  const navigate = useNavigate();
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
   const { isNewOrder, setIsNewOrder } = useContext(AppContext);
@@ -52,8 +54,10 @@ const UserDashboard = ({ user, setUser }) => {
   // console.log(allOrders);
   // console.log(completedOrders);
 
+  console.log(order);
+
   useEffect(() => {
-    if (order.length > 0) {
+    if (Array.isArray(order) && order.length > 0) {
       // pending orders
       const pendingList = order.filter((o) => o.order_status == "P"); //using === seems
       setPendingOrders(pendingList);
@@ -104,6 +108,35 @@ const UserDashboard = ({ user, setUser }) => {
     const modal = modalRef.current;
   };
 
+  const [currentPass, setCurrentPass] = useState();
+  const [newPass, setNewPass] = useState();
+  const [confirmPass, setConfirmPass] = useState();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (currentPass && newPass && confirmPass) {
+      if (newPass === confirmPass) {
+        let passData = new FormData();
+        passData.append("user_id", id);
+        passData.append("current_pass", currentPass);
+        passData.append("new_pass", newPass);
+
+        axios
+          .post(
+            "https://localhost/10kg-collective/userModule/update_password.php",
+            passData
+          )
+          .then((response) => {
+            toast.success(response.data);
+            console.log(response.data);
+            setActive("profile");
+          });
+      } else {
+        toast.warning("New Password did not match Confirm Password");
+      }
+    }
+  };
+
   return (
     <>
       <Navbar user={user} setUser={setUser} />
@@ -150,7 +183,10 @@ const UserDashboard = ({ user, setUser }) => {
                     >
                       Profile
                     </div>
-                    <div class="accordion-body dashboard-sublinks my-3">
+                    <div
+                      class="accordion-body dashboard-sublinks my-3"
+                      onClick={() => setActive("Change Password")}
+                    >
                       Change Password
                     </div>
                   </div>
@@ -293,7 +329,11 @@ const UserDashboard = ({ user, setUser }) => {
                       <div className="col-md-2 ">
                         {/* image */}
                         <div className="order-track-img-wrapper w-100">
-                          <img src="#" alt="img" className="img-fluid" />
+                          <img
+                            src={o.image_src}
+                            alt={o.image_name}
+                            className="img-fluid"
+                          />
                         </div>
                       </div>
 
@@ -516,6 +556,68 @@ const UserDashboard = ({ user, setUser }) => {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* Change Pass */}
+            <div
+              className={`update-pw-form ${
+                active === "Change Password" ? "" : "display-none"
+              }`}
+            >
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-md-12 shadow p-5">
+                    <h3 className="section-title mb-3 text-center">
+                      Change Password
+                    </h3>
+                    <form
+                      className="w-50 mx-auto"
+                      onSubmit={(e) => handleSubmit(e)}
+                    >
+                      <div class="form-floating mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="floatingCurrentPassword"
+                          placeholder="Password"
+                          value={currentPass}
+                          onChange={(e) => setCurrentPass(e.target.value)}
+                        />
+                        <label for="floatingCurrentPassword">Password</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="floatingNewPassword"
+                          placeholder="Password"
+                          value={newPass}
+                          onChange={(e) => setNewPass(e.target.value)}
+                        />
+                        <label for="floatingNewPassword">New Password</label>
+                      </div>
+                      <div class="form-floating mb-3">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="floatingConfirmPassword"
+                          placeholder="Password"
+                          value={confirmPass}
+                          onChange={(e) => setConfirmPass(e.target.value)}
+                        />
+                        <label for="floatingConfirmPassword">
+                          Confirm Password
+                        </label>
+                      </div>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <button type="submit" className="btn btn-secondary">
+                          SUBMIT
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

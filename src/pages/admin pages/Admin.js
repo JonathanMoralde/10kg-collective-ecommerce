@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserLineChart from "../../components/UserLineChart";
+import TodayBarChart from "../../components/TodayBarChart";
+import MonthLineChart from "../../components/MonthLineChart";
+import YearBarChart from "../../components/YearBarChart";
 
 const Admin = ({ adminUser }) => {
   const [data, setData] = useState([]);
@@ -13,6 +16,8 @@ const Admin = ({ adminUser }) => {
 
   const [display, setDisplay] = useState([]);
   const [active, setActive] = useState("Sales Report");
+  const [chartActive, setChartActive] = useState("");
+  const [monthSales, setMonthSales] = useState([]);
 
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
@@ -62,6 +67,67 @@ const Admin = ({ adminUser }) => {
         setItemSold(response.data);
       });
   };
+  // const date = new Date("2023-04-28");
+  // Today filter
+  const handleToday = () => {
+    const date = new Date();
+
+    // extract values
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    let dateData = new FormData();
+    dateData.append("date_ordered", formattedDate);
+
+    axios
+      .post(
+        "https://localhost/10kg-collective/admin/reports_item_sold.php",
+        dateData
+      )
+      .then((response) => {
+        setItemSold(response.data);
+        setDisplay([]);
+        setChartActive("today");
+        console.log(response.data);
+      });
+  };
+
+  // This month filter
+  const handleMonth = () => {
+    let action = new FormData();
+    action.append("get_month", 1);
+
+    axios
+      .post("https://localhost/10kg-collective/admin/month_sales.php", action)
+      .then((response) => {
+        setChartActive("month");
+        setMonthSales(response.data);
+        setItemSold([]);
+        setDisplay([]);
+        console.log(response.data);
+      });
+  };
+  // This year filter
+  const handleYear = () => {
+    let action = new FormData();
+    action.append("get_year", 1);
+
+    axios
+      .post(
+        "https://localhost/10kg-collective/admin/this_year_sales.php",
+        action
+      )
+      .then((response) => {
+        setChartActive("year");
+        setMonthSales(response.data);
+        setItemSold([]);
+        setDisplay([]);
+        console.log(response.data);
+      });
+  };
 
   const handleInputChange = (e) => {
     setDateRange({
@@ -79,6 +145,7 @@ const Admin = ({ adminUser }) => {
       filterData.append("filter_range", JSON.stringify(dateRange));
       axios.post(url, filterData).then((response) => {
         setDisplay(response.data);
+        setChartActive("");
       });
 
       // console.log(dateRange);
@@ -90,6 +157,7 @@ const Admin = ({ adminUser }) => {
         // console.log(response.data);
 
         setDisplay(response.data);
+        setChartActive("");
       });
       console.log(date);
     }
@@ -97,11 +165,12 @@ const Admin = ({ adminUser }) => {
     if (e.target.name === "reset") {
       setDisplay(data);
       setDate("");
+      setChartActive("");
       setDateRange({ ...dateRange, start_date: "", end_date: "" });
     }
   };
 
-  console.log(data);
+  console.log(itemSold);
   return (
     <>
       <section className="container-fluid container-fix my-5 reports-page">
@@ -215,6 +284,8 @@ const Admin = ({ adminUser }) => {
                         />
                       </div>
                     </form>
+
+                    {/* Clear specific date & date range */}
                     <div className="col-md-2">
                       <button
                         name="reset"
@@ -224,6 +295,37 @@ const Admin = ({ adminUser }) => {
                         className="btn btn-secondary"
                       >
                         Clear Filter
+                      </button>
+                    </div>
+                  </div>
+                )}
+                {active === "Sales Report" && (
+                  <div className="row">
+                    <h5>More filter</h5>
+                    <div className="col-md-3 ">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          handleToday();
+                        }}
+                      >
+                        Sales This Day
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleMonth()}
+                      >
+                        Monthly Sales
+                      </button>
+                    </div>
+                    <div className="col-md-3">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleYear()}
+                      >
+                        This Year
                       </button>
                     </div>
                   </div>
@@ -314,13 +416,16 @@ const Admin = ({ adminUser }) => {
                                   </div>
                                   <div class="modal-body container-fluid">
                                     <div className="row">
-                                      <div className="col-md-4">
+                                      <div className="col-md-3">
                                         <h5>Name</h5>
                                       </div>
-                                      <div className="col-md-4">
+                                      <div className="col-md-3">
                                         <h5>Orders</h5>
                                       </div>
-                                      <div className="col-md-4">
+                                      <div className="col-md-3">
+                                        <h5>Total Qty</h5>
+                                      </div>
+                                      <div className="col-md-3">
                                         <h5>Sales Amount</h5>
                                       </div>
                                     </div>
@@ -331,19 +436,24 @@ const Admin = ({ adminUser }) => {
                                           className="row border-top pt-3 text-capitalize"
                                           key={index}
                                         >
-                                          <div className="col-md-4">
+                                          <div className="col-md-3">
                                             <h5 className="fw-normal">
                                               {i.item_name}
                                             </h5>
                                           </div>
-                                          <div className="col-md-4">
+                                          <div className="col-md-3">
                                             <h5 className="fw-normal">
                                               {i.order_count}
                                             </h5>
                                           </div>
-                                          <div className="col-md-4">
+                                          <div className="col-md-3">
                                             <h5 className="fw-normal">
-                                              {i.sales_amount}
+                                              {i.total_qty}
+                                            </h5>
+                                          </div>
+                                          <div className="col-md-3">
+                                            <h5 className="fw-normal">
+                                              PHP {i.sales_amount}
                                             </h5>
                                           </div>
                                         </div>
@@ -361,6 +471,11 @@ const Admin = ({ adminUser }) => {
                   ) : (
                     <UserLineChart data={display} />
                   )}
+                  {chartActive === "today" && <TodayBarChart data={itemSold} />}
+                  {chartActive === "month" && (
+                    <MonthLineChart data={monthSales} />
+                  )}
+                  {chartActive === "year" && <YearBarChart data={monthSales} />}
                 </div>
               </div>
             </div>
