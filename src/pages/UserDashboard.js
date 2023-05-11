@@ -373,7 +373,7 @@ const UserDashboard = ({ user, setUser }) => {
 
                             {/* bottom half */}
                             <div className="col-md-12 pt-3 d-flex ">
-                              {isOlderThan24Hrs(o) ||
+                              {o.delivery_status != "NS" ||
                               o.order_status === "Canceled" ? (
                                 ""
                               ) : (
@@ -441,7 +441,7 @@ const UserDashboard = ({ user, setUser }) => {
                               )}
                               <div
                                 className={`${
-                                  isOlderThan24Hrs(o) ||
+                                  o.delivery_status != "NS" ||
                                   o.order_status === "Canceled"
                                     ? "w-100"
                                     : "w-50"

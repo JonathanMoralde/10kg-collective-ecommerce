@@ -30,11 +30,38 @@ const ProductForm = () => {
 
   // IMAGE HANDLE VALUE
   const handleThumbnailFileChange = (e) => {
-    setThumbnailFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file && validateFileExtension(file.name)) {
+      setThumbnailFile(file);
+      // Valid file extension
+      // Perform further actions or validations here
+    } else {
+      // Invalid file extension
+      toast.warning("Invalid file extension");
+      e.target.value = null;
+    }
   };
 
   const handleShowcaseFilesChange = (e) => {
-    setShowcaseFiles(Array.from(e.target.files));
+    const files = Array.from(e.target.files);
+    const validFiles = files.filter((file) => validateFileExtension(file.name));
+    if (validFiles.length === files.length) {
+      setShowcaseFiles(files);
+      // All files have valid extensions
+      // Perform further actions or validations here
+    } else {
+      // Some files have invalid extensions
+      toast.warning("Invalid file extension");
+      e.target.value = null; // Clear the input form
+    }
+  };
+
+  const validateFileExtension = (fileName) => {
+    const allowedExtensions = [".jpg", ".jpeg", ".png"];
+    const extension = fileName
+      .substring(fileName.lastIndexOf("."))
+      .toLowerCase();
+    return allowedExtensions.includes(extension);
   };
 
   // DYNAMIC VARIATION FIELDS

@@ -266,6 +266,7 @@ const Cart = ({ user, active, setActive }) => {
 
   // console.log(subtotal);
   // console.log(cartSelected);
+  console.log(cartOrders);
   return (
     <>
       {loading ? (
@@ -339,8 +340,12 @@ const Cart = ({ user, active, setActive }) => {
                     />
                   </div>
 
-                  <div className="cart-img-container ">
-                    <img src="/" alt="-img" className="w-100 h-100" />
+                  <div className="cart-img-container me-3">
+                    <img
+                      src={order.image_src}
+                      alt="-img"
+                      className="w-100 h-100"
+                    />
                   </div>
 
                   <div className="cart-item-info d-flex justify-content-between text-capitalize">

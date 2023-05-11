@@ -21,7 +21,7 @@ const Shop = ({ user }) => {
       setLoading(true);
 
       const response = await axios.get(
-        "https:/localhost/10kg-collective/displayModule/display.php" //php file
+        "https:/localhost/10kg-collective/displayModule/display_shop.php" //php file
       );
 
       // Get the itemlist object from the response

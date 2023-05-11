@@ -75,6 +75,12 @@ const Users = ({ adminUser }) => {
 
         axios.post(url, adminData).then((response) => {
           console.log(response.data);
+          toast.success("Account registered!");
+          setAFullName("");
+          setAAddress("");
+          setACNumber("");
+          setAEmail("");
+          setAPassword("");
         });
       } else {
         toast.warning("Please fill up all the fields");
@@ -90,7 +96,12 @@ const Users = ({ adminUser }) => {
         courierData.append("password", cPassword);
 
         axios.post(url, courierData).then((response) => {
-          console.log(response.data);
+          toast.success("Account registered!");
+          setCFullName("");
+          setCAddress("");
+          setCCNumber("");
+          setCEmail("");
+          setCPassword("");
         });
       } else {
         toast.warning("Please fill up all the fields");

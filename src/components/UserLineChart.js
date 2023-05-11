@@ -8,7 +8,11 @@ import {
   Tooltip,
 } from "recharts";
 
-const UserLineChart = ({ data }) => {
+const UserLineChart = ({ data, active, setChartActive }) => {
+  if (active === "User Activity") {
+    setChartActive("");
+  }
+
   return (
     <>
       <section>

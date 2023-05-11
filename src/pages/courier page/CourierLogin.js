@@ -32,30 +32,12 @@ const CourierLogin = ({ setCourier }) => {
           if (response.data.response_status === 1) {
             // Check for the expected response
 
-            toast.success("Welcome Courier!", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.success("Welcome Courier!");
             setCourier(response.data);
             navigate("/Courier");
           } else {
             // wrong password or email
-            toast.warn("Incorrect Email or Password", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.warn("Incorrect Email or Password");
           }
         })
         .catch((error) => {

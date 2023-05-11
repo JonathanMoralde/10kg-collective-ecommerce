@@ -469,7 +469,11 @@ const Admin = ({ adminUser }) => {
                       );
                     })
                   ) : (
-                    <UserLineChart data={display} />
+                    <UserLineChart
+                      data={display}
+                      active={active}
+                      setChartActive={setChartActive}
+                    />
                   )}
                   {chartActive === "today" && <TodayBarChart data={itemSold} />}
                   {chartActive === "month" && (

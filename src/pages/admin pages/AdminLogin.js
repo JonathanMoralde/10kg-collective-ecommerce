@@ -32,32 +32,14 @@ const AdminLogin = ({ setAdminUser }) => {
           if (response.data.response_status === 1) {
             // Check for the expected response
 
-            toast.success("Welcome Admin!", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.success("Welcome Admin!");
             setAdminUser(response.data);
             // get the session data and store in variable
             // navigate to admin panel
             navigate("/admin");
           } else {
             // wrong password or email
-            toast.warn(response.data, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
+            toast.warn("Wrong Password or Email");
           }
         })
         .catch((error) => {
@@ -65,17 +47,7 @@ const AdminLogin = ({ setAdminUser }) => {
           if (error.response && error.response.data === "maintenance mode") {
             // Check for the "maintenance mode" error message
             toast.error(
-              "The website is currently under maintenance. Please try again later.",
-              {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-              }
+              "The website is currently under maintenance. Please try again later."
             );
           }
         });
