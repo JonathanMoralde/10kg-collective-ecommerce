@@ -98,7 +98,7 @@ const UserDashboard = ({ user, setUser }) => {
     axios.post(url, cancelData).then((response) => {
       if (response.data === 1) {
         // console.log(response.data);
-        alert("Order Canceled, status re-render to be fixed");
+        toast.success("Order cancelled");
         // alert("To fix, canceled re-render");
       }
     });
