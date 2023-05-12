@@ -233,26 +233,28 @@ const ProductEdit = () => {
                 {/* Category */}
                 <h5 className="input-label">Category</h5>
                 <div className="d-flex mb-4">
-                  {catDisplay.map((c) => {
-                    return (
-                      <div className="form-check me-5" key={c.category_id}>
-                        <input
-                          className="form-check-input"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id={`flexRadioDefault${c.category_id}`}
-                          value={c.category_id}
-                          onChange={(e) => handleCategoryChange(e)}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`flexRadioDefault${c.category_id}`}
-                        >
-                          {c.category_name}
-                        </label>
-                      </div>
-                    );
-                  })}
+                  {catDisplay
+                    ? catDisplay.map((c) => {
+                        return (
+                          <div className="form-check me-5" key={c.category_id}>
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id={`flexRadioDefault${c.category_id}`}
+                              value={c.category_id}
+                              onChange={(e) => handleCategoryChange(e)}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor={`flexRadioDefault${c.category_id}`}
+                            >
+                              {c.category_name}
+                            </label>
+                          </div>
+                        );
+                      })
+                    : ""}
                 </div>
 
                 {/* Size */}

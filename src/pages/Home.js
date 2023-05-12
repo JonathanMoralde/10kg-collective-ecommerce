@@ -183,7 +183,7 @@ const Home = () => {
             <FaShippingFast size="6.25rem" className="icon-color" />
             <h5 className="quality-title mt-4">Free Shipping</h5>
             <p className="quality-text mt-2">
-              We provide free shipping in Polangui Area
+              We provide fast shipping Nationwide
             </p>
           </div>
         </div>
