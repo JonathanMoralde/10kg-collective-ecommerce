@@ -94,7 +94,13 @@ function App() {
 
           <Route
             path="/UserDashboard"
-            element={<UserDashboard user={user} setUser={setUser} />}
+            element={
+              user ? (
+                <UserDashboard user={user} setUser={setUser} />
+              ) : (
+                <User setUser={setUser} />
+              )
+            }
           />
 
           {/* admin routes */}

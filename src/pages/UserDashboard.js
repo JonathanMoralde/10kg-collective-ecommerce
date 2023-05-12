@@ -127,9 +127,15 @@ const UserDashboard = ({ user, setUser }) => {
             passData
           )
           .then((response) => {
-            toast.success(response.data);
-            console.log(response.data);
-            setActive("profile");
+            if (response.data === 1) {
+              toast.success("Password Changed Successfully!");
+              console.log(response.data);
+              setActive("profile");
+            } else if (response.data === 2) {
+              toast.warn("Failed to change password");
+            } else {
+              toast.warn("Wrong Password");
+            }
           });
       } else {
         toast.warning("New Password did not match Confirm Password");

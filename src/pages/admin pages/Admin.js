@@ -301,7 +301,7 @@ const Admin = ({ adminUser }) => {
                 )}
                 {active === "Sales Report" && (
                   <div className="row">
-                    <h5>More filter</h5>
+                    <h5>Chart filters: </h5>
                     <div className="col-md-3 ">
                       <button
                         className="btn btn-secondary"
