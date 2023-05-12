@@ -101,6 +101,7 @@ const UserDashboard = ({ user, setUser }) => {
         toast.success("Order cancelled");
         // alert("To fix, canceled re-render");
         setIsNewOrder(true);
+        setActive("profile");
       }
     });
   };
