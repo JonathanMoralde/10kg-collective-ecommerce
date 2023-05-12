@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaTrash } from "react-icons/fa";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +15,26 @@ const ProductEdit = () => {
 
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [showcaseFiles, setShowcaseFiles] = useState([]);
+
+  let componentMounted = true;
+  const [catDisplay, setCatDisplay] = useState([]);
+
+  useEffect(() => {
+    const getCategory = async () => {
+      let response = await axios.get(
+        "https://localhost/10kg-collective/displayModule/display_category.php"
+      );
+
+      if (componentMounted) {
+        setCatDisplay(response.data);
+      }
+
+      return () => {
+        componentMounted = false;
+      };
+    };
+    getCategory();
+  }, []);
 
   // handleCategory
   const handleCategoryChange = (e) => {
@@ -213,38 +233,26 @@ const ProductEdit = () => {
                 {/* Category */}
                 <h5 className="input-label">Category</h5>
                 <div className="d-flex mb-4">
-                  <div className="form-check me-5">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                      value={1}
-                      onChange={(e) => handleCategoryChange(e)}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexRadioDefault1"
-                    >
-                      Tees
-                    </label>
-                  </div>
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
-                      value={2}
-                      onChange={(e) => handleCategoryChange(e)}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexRadioDefault2"
-                    >
-                      Shorts
-                    </label>
-                  </div>
+                  {catDisplay.map((c) => {
+                    return (
+                      <div className="form-check me-5" key={c.category_id}>
+                        <input
+                          className="form-check-input"
+                          type="radio"
+                          name="flexRadioDefault"
+                          id={`flexRadioDefault${c.category_id}`}
+                          value={c.category_id}
+                          onChange={(e) => handleCategoryChange(e)}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`flexRadioDefault${c.category_id}`}
+                        >
+                          {c.category_name}
+                        </label>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* Size */}
