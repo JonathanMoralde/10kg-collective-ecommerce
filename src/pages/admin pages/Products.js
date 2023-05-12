@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 const Products = ({ adminUser }) => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
-  // const [images, setImages] = useState([]);
 
   let componentMounted = true;
   const [loading, setLoading] = useState(false);
@@ -28,27 +27,6 @@ const Products = ({ adminUser }) => {
 
     getProduct();
   }, []);
-
-  // // get IMAGES
-  // useEffect(() => {
-  //   const getImages = async () => {
-  //     setLoading(true);
-  //     const response = await axios.get(
-  //       "https://localhost/10kg-collective/displayModule/images.php"
-  //     );
-
-  //     if (componentMounted) {
-  //       setImages(response.data);
-  //       setLoading(false);
-  //     }
-
-  //     return () => {
-  //       componentMounted = false;
-  //     };
-  //   };
-
-  //   getImages();
-  // }, []);
 
   // Product delete
   const handleDel = (item_id) => {
@@ -100,34 +78,114 @@ const Products = ({ adminUser }) => {
       );
   };
 
-  // const [thumbnails, setThumbnails] = useState([]);
-  // const [showcaseImage, setShowcaseImage] = useState([]);
+  // NEW CATEGORY HANDLE
+  const [category, setCategory] = useState("");
+  const handleCatSubmit = (e) => {
+    e.preventDefault();
 
-  // useEffect(() => {
-  //   let filteredThumbnails = images.filter((i) => i.image_use === "thumbnail");
-  //   let filteredShowcaseImage = images.filter(
-  //     (i) => i.image_use === "showcase"
-  //   );
+    if (category) {
+      let catData = new FormData();
+      catData.append("category_name", category);
 
-  //   setThumbnails(filteredThumbnails);
-  //   setShowcaseImage(filteredShowcaseImage);
-  // }, images);
-
-  // console.log(images);
-  // console.log(thumbnails);
+      axios
+        .post(
+          "https://localhost/10kg-collective/admin/insert_category.php",
+          catData
+        )
+        .then((response) => {
+          if (response.data === 1) {
+            toast.success("Successfully added new category!");
+            setCategory("");
+          } else {
+            toast.warn("Could not add category");
+          }
+        });
+    }
+  };
 
   return (
     <>
       <div className="container-fluid container-fix">
         <div className="d-flex justify-content-between align-items-center py-5">
           <h3 className="section-title">Products</h3>
-          <Link
-            className="btn btn-secondary"
-            to="/admin/product-form"
-            role="button"
-          >
-            Add New
-          </Link>
+          <div className="d-flex">
+            {/* <!-- Button trigger modal --> */}
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#categoryModal"
+            >
+              Add New Category
+            </button>
+
+            {/* <!-- Modal --> */}
+            <div
+              class="modal fade"
+              id="categoryModal"
+              tabindex="-1"
+              aria-labelledby="categoryModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="categoryModalLabel">
+                      Add New Category
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <form
+                      className="w-50 mx-auto mt-3"
+                      onSubmit={(e) => handleCatSubmit(e)}
+                    >
+                      <div class="form-floating mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInputCat"
+                          placeholder="Category Name"
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                        />
+                        <label for="floatingInputCat">Category Name</label>
+                      </div>
+                      <div className="mb-3 d-flex justify-content-center">
+                        <button
+                          type="button"
+                          className="btn btn-secondary me-3"
+                          data-bs-dismiss="modal"
+                          onClick={() => setCategory("")}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <Link
+              className="btn btn-secondary ms-3"
+              to="/admin/product-form"
+              role="button"
+            >
+              Add New
+            </Link>
+          </div>
         </div>
         <div className="row">
           {data.map((product) => {
