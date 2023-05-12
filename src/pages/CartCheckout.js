@@ -72,6 +72,8 @@ const CartCheckout = ({ user }) => {
 
   // console.log(subtotal);
 
+  console.log(cartCheckout);
+
   return (
     <>
       <div className="container-md container-fix checkout-page my-5 shadow">
@@ -96,7 +98,7 @@ const CartCheckout = ({ user }) => {
                 <div className="col-md-6 d-flex">
                   <div className="card me-5">
                     <img
-                      src=""
+                      src={order.image_src}
                       className="card-img-top"
                       alt="product-img"
                       height="150px"

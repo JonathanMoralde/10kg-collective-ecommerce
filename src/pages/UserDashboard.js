@@ -100,6 +100,7 @@ const UserDashboard = ({ user, setUser }) => {
         // console.log(response.data);
         toast.success("Order cancelled");
         // alert("To fix, canceled re-render");
+        setIsNewOrder(true);
       }
     });
   };

@@ -2,11 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Checkout = ({ user }) => {
   const { id, size, variant, qty, name, price } = useParams();
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [product, setProduct] = useState();
 
   // this will get all Items
   useEffect(() => {
@@ -24,8 +26,11 @@ const Checkout = ({ user }) => {
     getProduct();
   }, []);
 
-  // Filter to the Single product
-  const product = data.find((product) => product.item_id == id);
+  useEffect(() => {
+    // Filter to the Single product
+    let product = data.find((product) => product.item_id == id);
+    setProduct(product);
+  }, [data]);
 
   const handleClick = () => {
     // POST
@@ -45,15 +50,17 @@ const Checkout = ({ user }) => {
         .post(url, buyData)
         .then((response) => {
           if (response.data === 1) {
-            alert("Ordered Successfully");
+            toast.success("Ordered Successfully");
             navigate("/UserDashboard");
           } else {
-            alert("Order Failed");
+            toast.warn(`Order Failed ${response.data}`);
           }
         })
-        .catch((error) => alert(error));
+        .catch((error) => toast.error(error.data));
     }
   };
+
+  console.log(product);
 
   return (
     <>
@@ -78,7 +85,7 @@ const Checkout = ({ user }) => {
             <div className="col-md-6 d-flex">
               <div className="card mb-3 me-5">
                 <img
-                  src=""
+                  src={product ? product.image_src : ""}
                   className="card-img-top"
                   alt="product-img"
                   height="150px"

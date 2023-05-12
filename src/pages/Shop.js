@@ -15,6 +15,8 @@ const Shop = ({ user }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [clickedSort, setClickedSort] = useState("Newest");
 
+  const [catDisplay, setCatDisplay] = useState([]);
+
   // get products from db
   useEffect(() => {
     const getProducts = async () => {
@@ -39,6 +41,19 @@ const Shop = ({ user }) => {
     };
 
     getProducts();
+  }, []);
+
+  useEffect(() => {
+    const getCat = async () => {
+      let response = await axios.get(
+        "https://localhost/10kg-collective/displayModule/display_category.php"
+      );
+      if (componentMounted) {
+        setCatDisplay(response.data);
+      }
+    };
+
+    getCat();
   }, []);
 
   // category btns
@@ -85,6 +100,7 @@ const Shop = ({ user }) => {
     }
   };
 
+  console.log(catDisplay);
   return (
     <>
       <main className="container-fluid container-fix shop-section">
@@ -115,28 +131,22 @@ const Shop = ({ user }) => {
                 All Item
               </button>
 
-              <button
-                className={`menu-btn ${
-                  clickedFilter === "Tees" ? "active-cat" : ""
-                }`}
-                onClick={(e) => {
-                  filterProduct(1);
-                  setClickedFilter(e.currentTarget.textContent);
-                }}
-              >
-                Tees
-              </button>
-              <button
-                className={`menu-btn ${
-                  clickedFilter === "Shorts" ? "active-cat" : ""
-                }`}
-                onClick={(e) => {
-                  filterProduct(2);
-                  setClickedFilter(e.currentTarget.textContent);
-                }}
-              >
-                Shorts
-              </button>
+              {catDisplay.map((c) => {
+                return (
+                  <button
+                    className={`menu-btn ${
+                      clickedFilter === c.category_name ? "active-cat" : ""
+                    }`}
+                    onClick={(e) => {
+                      filterProduct(c.category_id);
+                      setClickedFilter(e.currentTarget.textContent);
+                    }}
+                    key={c.category_id}
+                  >
+                    {c.category_name}
+                  </button>
+                );
+              })}
             </div>
           </div>
           <div className="col-md-9 ps-5">

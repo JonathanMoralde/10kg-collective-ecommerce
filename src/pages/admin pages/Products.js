@@ -204,28 +204,32 @@ const Products = ({ adminUser }) => {
                       {product.item_name}
                     </h5>
                     <p className="card-text">{product.item_price}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={() => {
-                          navigate(
-                            `/admin/edit-product/${product.item_id}/${product.item_name}/${product.item_price}`
-                          );
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-outline-secondary"
-                        onClick={() => {
-                          handleDel(product.item_id);
-                        }}
-                      >
-                        Remove
-                      </button>
-                    </div>
+                    {product.item_status === "I" ? (
+                      <h5 className="text-danger-emphasis">Phased Out</h5>
+                    ) : (
+                      <div className="d-flex justify-content-between align-items-center">
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={() => {
+                            navigate(
+                              `/admin/edit-product/${product.item_id}/${product.item_name}/${product.item_price}`
+                            );
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={() => {
+                            handleDel(product.item_id);
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
