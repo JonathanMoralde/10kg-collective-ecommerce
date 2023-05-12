@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import AppContext from "../../AppContext";
-
+import {toast} from "react-toastify";
 const Orders = ({ adminUser }) => {
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -83,10 +83,10 @@ const Orders = ({ adminUser }) => {
       .post(url, btnData)
       .then((response) => {
         setIsNewOrder(true);
-        alert("Success");
+        toast.success("Success");
       })
       .catch((error) => {
-        alert(error.data);
+        toast.error("Error");
       });
   };
 
