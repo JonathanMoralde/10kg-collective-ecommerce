@@ -27,13 +27,13 @@ const SingleProduct = ({ user }) => {
         const [productResponse, sizesResponse, variantsResponse] =
           await Promise.all([
             axios.get(
-              "https://localhost/10kg-collective/displayModule/display.php"
+              "https://10kgcollective.000webhostapp.com/displayModule/display.php"
             ),
             axios.get(
-              "https://localhost/10kg-collective/displayModule/sizes.php"
+              "https://10kgcollective.000webhostapp.com/displayModule/sizes.php"
             ),
             axios.get(
-              "https://localhost/10kg-collective/displayModule/variant.php"
+              "https://10kgcollective.000webhostapp.com/displayModule/variant.php"
             ),
           ]);
 
@@ -89,7 +89,7 @@ const SingleProduct = ({ user }) => {
   useEffect(() => {
     const fetchImages = async () => {
       const response = await axios.get(
-        `https://localhost/10kg-collective/displayModule/images.php?item_id=${id}`
+        `https://10kgcollective.000webhostapp.com/displayModule/images.php?item_id=${id}`
       );
 
       setImages(response.data);
@@ -103,7 +103,8 @@ const SingleProduct = ({ user }) => {
     if (e.target.name === "cart") {
       if (selectedSize && selectedVariant && quantity) {
         // POST TO THIS FILE (cart.php can be changed)
-        const url = "http://localhost/10kg-collective/orderModule/cart.php";
+        const url =
+          "https://10kgcollective.000webhostapp.com/orderModule/cart.php";
 
         let cartData = new FormData();
 

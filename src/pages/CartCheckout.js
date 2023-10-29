@@ -20,7 +20,7 @@ const CartCheckout = ({ user }) => {
   // handle checkout
   const handleCheckout = () => {
     const url =
-      "https://localhost/10kg-collective/orderModule/multiple_checkout.php"; //this checkout should handle multiple pending orders (checkout.js only sends 1 order)
+      "https://10kgcollective.000webhostapp.com/orderModule/multiple_checkout.php"; //this checkout should handle multiple pending orders (checkout.js only sends 1 order)
 
     let checkoutData = new FormData();
     checkoutData.append("user_id", id); //user_id

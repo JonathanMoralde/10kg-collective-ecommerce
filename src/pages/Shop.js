@@ -23,7 +23,7 @@ const Shop = ({ user }) => {
       setLoading(true);
 
       const response = await axios.get(
-        "https:/localhost/10kg-collective/displayModule/display_shop.php" //php file
+        "https://10kgcollective.000webhostapp.com/displayModule/display_shop.php" //php file
       );
 
       // Get the itemlist object from the response
@@ -46,7 +46,7 @@ const Shop = ({ user }) => {
   useEffect(() => {
     const getCat = async () => {
       let response = await axios.get(
-        "https://localhost/10kg-collective/displayModule/display_category.php"
+        "https://10kgcollective.000webhostapp.com/displayModule/display_category.php"
       );
       if (componentMounted) {
         setCatDisplay(response.data);

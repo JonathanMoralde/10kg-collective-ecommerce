@@ -20,7 +20,7 @@ const ProductForm = () => {
   useEffect(() => {
     const getCategory = async () => {
       let response = await axios.get(
-        "https://localhost/10kg-collective/displayModule/display_category.php"
+        "https://10kgcollective.000webhostapp.com/displayModule/display_category.php"
       );
 
       if (componentMounted) {

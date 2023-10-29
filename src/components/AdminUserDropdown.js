@@ -8,7 +8,8 @@ const AdminUserDropdown = ({ setAdminUser }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const url = "http://localhost/10kg-collective/userModule/updateSession.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/userModule/updateSession.php";
 
     const logData = new FormData();
     logData.append("logout", 1);

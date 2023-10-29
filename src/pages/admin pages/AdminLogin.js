@@ -15,7 +15,8 @@ const AdminLogin = ({ setAdminUser }) => {
     e.preventDefault();
 
     // POST
-    const url = "https://localhost/10kg-collective/userModule/login_user.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/userModule/login_user.php";
 
     // create POST data
     let adminData = new FormData();

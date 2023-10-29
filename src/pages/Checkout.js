@@ -14,7 +14,7 @@ const Checkout = ({ user }) => {
   useEffect(() => {
     const getProduct = async () => {
       const response = await axios.get(
-        "https:/localhost/10kg-collective/displayModule/display.php"
+        "https://10kgcollective.000webhostapp.com/displayModule/display.php"
       );
 
       // Get the itemlist object from the response
@@ -34,7 +34,8 @@ const Checkout = ({ user }) => {
 
   const handleClick = () => {
     // POST
-    const url = "https://localhost/10kg-collective/orderModule/checkout.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/orderModule/checkout.php";
 
     let buyData = new FormData();
 

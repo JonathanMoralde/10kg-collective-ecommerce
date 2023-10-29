@@ -29,12 +29,12 @@ const Admin = ({ adminUser }) => {
 
       if (active === "Sales Report") {
         response = await axios.get(
-          "https://localhost/10kg-collective/admin/reports.php"
+          "https://10kgcollective.000webhostapp.com/admin/reports.php"
         );
       }
       if (active === "User Activity") {
         response = await axios.get(
-          "https://localhost/10kg-collective/admin/user_activity.php"
+          "https://10kgcollective.000webhostapp.com/admin/user_activity.php"
         );
       }
 
@@ -60,7 +60,7 @@ const Admin = ({ adminUser }) => {
 
     axios
       .post(
-        "https://localhost/10kg-collective/admin/reports_item_sold.php",
+        "https://10kgcollective.000webhostapp.com/admin/reports_item_sold.php",
         selectedData
       )
       .then((response) => {
@@ -84,7 +84,7 @@ const Admin = ({ adminUser }) => {
 
     axios
       .post(
-        "https://localhost/10kg-collective/admin/reports_item_sold.php",
+        "https://10kgcollective.000webhostapp.com/admin/reports_item_sold.php",
         dateData
       )
       .then((response) => {
@@ -101,7 +101,10 @@ const Admin = ({ adminUser }) => {
     action.append("get_month", 1);
 
     axios
-      .post("https://localhost/10kg-collective/admin/month_sales.php", action)
+      .post(
+        "https://10kgcollective.000webhostapp.com/admin/month_sales.php",
+        action
+      )
       .then((response) => {
         setChartActive("month");
         setMonthSales(response.data);
@@ -117,7 +120,7 @@ const Admin = ({ adminUser }) => {
 
     axios
       .post(
-        "https://localhost/10kg-collective/admin/this_year_sales.php",
+        "https://10kgcollective.000webhostapp.com/admin/this_year_sales.php",
         action
       )
       .then((response) => {
@@ -140,7 +143,7 @@ const Admin = ({ adminUser }) => {
     e.preventDefault();
 
     let filterData = new FormData();
-    const url = "https://localhost/10kg-collective/admin/reports.php";
+    const url = "https://10kgcollective.000webhostapp.com/admin/reports.php";
     if (e.target.name === "date_range") {
       filterData.append("filter_range", JSON.stringify(dateRange));
       axios.post(url, filterData).then((response) => {

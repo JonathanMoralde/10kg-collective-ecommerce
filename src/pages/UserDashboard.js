@@ -20,7 +20,7 @@ const UserDashboard = ({ user, setUser }) => {
     const fetchUserOrder = async () => {
       setLoading(true);
       const response = await axios.get(
-        `https://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
+        `https://10kgcollective.000webhostapp.com/displayModule/user_order.php?user_id=${id}`
       );
 
       if (componentMounted) {
@@ -89,7 +89,7 @@ const UserDashboard = ({ user, setUser }) => {
   const handleCancel = (order_id) => {
     const canceledOrder = order_id;
     const url =
-      "https://localhost/10kg-collective/orderModule/cancel_order.php";
+      "https://10kgcollective.000webhostapp.com/orderModule/cancel_order.php";
 
     // console.log(canceledOrder);
     let cancelData = new FormData();
@@ -125,7 +125,7 @@ const UserDashboard = ({ user, setUser }) => {
 
         axios
           .post(
-            "https://localhost/10kg-collective/userModule/update_password.php",
+            "https://10kgcollective.000webhostapp.com/userModule/update_password.php",
             passData
           )
           .then((response) => {

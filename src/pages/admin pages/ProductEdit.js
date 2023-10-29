@@ -22,7 +22,7 @@ const ProductEdit = () => {
   useEffect(() => {
     const getCategory = async () => {
       let response = await axios.get(
-        "https://localhost/10kg-collective/displayModule/display_category.php"
+        "https://10kgcollective.000webhostapp.com/displayModule/display_category.php"
       );
 
       if (componentMounted) {
@@ -125,7 +125,8 @@ const ProductEdit = () => {
       productData.append("showcase[]", file);
     });
 
-    const url = "http://localhost/10kg-collective/admin/edit_product.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/admin/edit_product.php";
 
     // console.log(name, price);
 

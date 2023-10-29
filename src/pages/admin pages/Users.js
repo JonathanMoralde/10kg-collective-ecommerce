@@ -15,7 +15,7 @@ const Users = ({ adminUser }) => {
       setLoading(true);
       try {
         axios
-          .get("https://localhost/10kg-collective/admin/userlist.php")
+          .get("https://10kgcollective.000webhostapp.com/admin/userlist.php")
           .then((response) => {
             if (componentMounted) {
               setData(response.data);
@@ -39,7 +39,10 @@ const Users = ({ adminUser }) => {
     selected.append("user_id", user_id);
 
     axios
-      .post("https://localhost/10kg-collective/admin/user_orders.php", selected)
+      .post(
+        "https://10kgcollective.000webhostapp.com/admin/user_orders.php",
+        selected
+      )
       .then((response) => {
         setOrders(response.data);
         console.log(response.data);
@@ -62,7 +65,8 @@ const Users = ({ adminUser }) => {
 
   const signUpSubmit = (e) => {
     e.preventDefault();
-    const url = "https://localhost/10kg-collective/userModule/reg_user.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/userModule/reg_user.php";
     if (e.target.name === "admin_submit") {
       if ((aFullName, aAddress, aCNumber, aEmail, aPassword)) {
         let adminData = new FormData();

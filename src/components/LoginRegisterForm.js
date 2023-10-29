@@ -27,7 +27,8 @@ const LoginRegisterForm = ({ setUser }) => {
 
     if (fName && address && cNumber && reg_Email && reg_Password) {
       // POST
-      const url = "http://localhost/10kg-collective/userModule/reg_user.php";
+      const url =
+        "https://10kgcollective.000webhostapp.com/userModule/reg_user.php";
 
       // data
       let regData = new FormData();
@@ -111,7 +112,8 @@ const LoginRegisterForm = ({ setUser }) => {
     e.preventDefault();
 
     // POST
-    const url = "http://localhost/10kg-collective/userModule/login_user.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/userModule/login_user.php";
 
     // data
     let logData = new FormData();

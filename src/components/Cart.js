@@ -29,7 +29,7 @@ const Cart = ({ user, active, setActive }) => {
       let response;
       if (user) {
         response = await axios.get(
-          `http://localhost/10kg-collective/displayModule/user_order.php?user_id=${id}`
+          `https://10kgcollective.000webhostapp.com/displayModule/user_order.php?user_id=${id}`
         );
       } else {
         response = { data: [] };
@@ -95,7 +95,8 @@ const Cart = ({ user, active, setActive }) => {
       updateData.append("order_id", order_id);
       updateData.append("order_qty", newOrders[index].order_qty);
 
-      const url = "http://localhost/10kg-collective/orderModule/cart_qty.php";
+      const url =
+        "https://10kgcollective.000webhostapp.com/orderModule/cart_qty.php";
 
       // SEND TO BACKEND
       axios.post(url, updateData).then((response) => {
@@ -134,7 +135,8 @@ const Cart = ({ user, active, setActive }) => {
     updateData.append("order_id", order_id);
     updateData.append("order_qty", newOrders[index].order_qty);
 
-    const url = "http://localhost/10kg-collective/orderModule/cart_qty.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/orderModule/cart_qty.php";
 
     // SEND TO BACKEND
     axios.post(url, updateData).then((response) => {
@@ -167,7 +169,8 @@ const Cart = ({ user, active, setActive }) => {
     let delData = new FormData();
     delData.append("order_id", order_id);
 
-    const url = "http://localhost/10kg-collective/orderModule/cart_delete.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/orderModule/cart_delete.php";
 
     axios.post(url, delData).then((response) => {
       // if order deleted, remove it from my orders list

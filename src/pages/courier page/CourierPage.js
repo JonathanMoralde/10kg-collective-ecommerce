@@ -18,7 +18,7 @@ const CourierPage = ({ courier, setCourier }) => {
       setLoading(true);
 
       const response = await axios.get(
-        "https://localhost/10kg-collective/courier/courier_order_list.php"
+        "https://10kgcollective.000webhostapp.com/courier/courier_order_list.php"
       );
 
       if (componenMounted) {
@@ -44,7 +44,8 @@ const CourierPage = ({ courier, setCourier }) => {
   const handleBtn = (e, order_id) => {
     const btnClicked = e.target.innerHTML;
 
-    const url = "https://localhost/10kg-collective/admin/order_page_btn.php";
+    const url =
+      "https://10kgcollective.000webhostapp.com/admin/order_page_btn.php";
 
     let btnData = new FormData();
     btnData.append("action", btnClicked);
@@ -67,7 +68,7 @@ const CourierPage = ({ courier, setCourier }) => {
 
     axios
       .post(
-        "https://localhost/10kg-collective/userModule/updateSession.php",
+        "https://10kgcollective.000webhostapp.com/userModule/updateSession.php",
         logData
       )
       .then((response) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { FaEdit } from "react-icons/fa";
 import AppContext from "../../AppContext";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 const Orders = ({ adminUser }) => {
   const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const Orders = ({ adminUser }) => {
     const fetchData = async () => {
       setLoading(true);
       const response = await axios.get(
-        "https://localhost/10kg-collective/admin/orderlist.php"
+        "https://10kgcollective.000webhostapp.com/admin/orderlist.php"
       );
 
       if (componentMounted) {

@@ -16,7 +16,7 @@ const Products = ({ adminUser }) => {
   useEffect(() => {
     const getProduct = async () => {
       const response = await axios.get(
-        "https://localhost/10kg-collective/displayModule/display.php"
+        "https://10kgcollective.000webhostapp.com/displayModule/display.php"
       );
 
       // Get the itemlist object from the response
@@ -35,7 +35,7 @@ const Products = ({ adminUser }) => {
 
     axios
       .post(
-        "https:/localhost/10kg-collective/admin/delete_product_handle.php",
+        "https://10kgcollective.000webhostapp.com/admin/delete_product_handle.php",
         delData
       ) //update item status
       .then((response) => {
@@ -89,7 +89,7 @@ const Products = ({ adminUser }) => {
 
       axios
         .post(
-          "https://localhost/10kg-collective/admin/insert_category.php",
+          "https://10kgcollective.000webhostapp.com/admin/insert_category.php",
           catData
         )
         .then((response) => {
